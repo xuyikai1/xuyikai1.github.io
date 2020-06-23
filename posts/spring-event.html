@@ -605,11 +605,12 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="Spring事件发布监听机制实现业务解耦"><a href="#Spring事件发布监听机制实现业务解耦" class="headerlink" title="Spring事件发布监听机制实现业务解耦"></a>Spring事件发布监听机制实现业务解耦</h1><h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1.引言"></a>1.引言</h2><blockquote>
+                <h1 id="Spring事件发布监听机制实现业务解耦"><a href="#Spring事件发布监听机制实现业务解耦" class="headerlink" title="Spring事件发布监听机制实现业务解耦"></a>Spring事件发布监听机制实现业务解耦</h1><p>[TOC]</p>
+<h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1.引言"></a>1.引言</h2><blockquote>
 <p>假设一个下单场景，订单创建成功后可能有一些后续逻辑要处理，但是和创建订单本身没有关系，此时就可以在创建订单完成后，发送一个消息，有相应部分的代码进行监听处理，避免代码耦合到一起</p>
 </blockquote>
 <p>这样的解决思路类似于MQ，但是小项目有时候又不需要MQ这样的第三方队列来实现，那么就可以使用Spring Context包的<strong>事件发布监听的机制来进行处理</strong></p>
-<h2 id="2-Spring事件发布监听机制"><a href="#2-Spring事件发布监听机制" class="headerlink" title="2.Spring事件发布监听机制"></a>2.Spring事件发布监听机制</h2><p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://upload-images.jianshu.io/upload_images/20879827-ad950b74cd0eb7e3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1.png"></p>
+<h2 id="2-Spring事件发布监听机制"><a href="#2-Spring事件发布监听机制" class="headerlink" title="2.Spring事件发布监听机制"></a>2.Spring事件发布监听机制</h2><p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://cdn.jsdelivr.net/gh/xuyikai1/PictureBedCDN/img/1.png" alt="1.png"></p>
 <p><strong>流程：</strong> 当事件源（发布者）发布事件时，相应监听此事件的监听者接收到事件对象并且进行处理</p>
 <p>Spring的事件发布监听机制本质上就是<strong>发布-订阅</strong>，即<strong>生产者-消费者</strong>，也体现了设计模式中的<strong>观察者模式</strong></p>
 <h2 id="3-三要素"><a href="#3-三要素" class="headerlink" title="3.三要素"></a>3.三要素</h2><ul>
@@ -1713,7 +1714,7 @@ List<span class="token operator">&lt;</span>EventListenerFactory<span class="tok
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1592917085315')
+  navigator.serviceWorker.register('/sw.js?t=1592917925069')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }
