@@ -22,12 +22,6 @@
             
             <tag> Spring </tag>
             
-            <tag> ApplicationEvent </tag>
-            
-            <tag> ApplicationListener </tag>
-            
-            <tag> ApplicationEventPublisher </tag>
-            
             <tag> 事件监听 </tag>
             
         </tags>
