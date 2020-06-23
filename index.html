@@ -638,39 +638,6 @@
                         
 
                         
-                            
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/aplayer/APlayer.min.css">
-<div class="music-player">
-    
-    <div class="row">
-        
-        
-        <div class="col s12 ">
-            <div id="aplayer" class="music"></div>
-        </div>
-    </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/aplayer/APlayer.min.js"></script>
-<script>
-    $(function () {
-        new APlayer({
-            container: document.getElementById('aplayer'),
-            fixed: 'false' === 'true',
-            autoplay: 'false' === 'true',
-            theme: '#542674',
-            loop: 'all',
-            order: 'list',
-            preload: 'auto',
-            volume: Number('0.7'),
-            listFolded: 'false' === 'true',
-            listMaxHeight: '197px',
-            audio: JSON.parse('[{"name":"贝加尔湖畔","artist":"李健","url":"http://music.163.com/song/media/outer/url?id=109998.mp3","cover":"http://p1.music.126.net/vSdrZFQn3uMetLL_j3AnQg==/109951163432562414.jpg?param=130y130"}]')
-        });
-    });
-</script>
-                        
                         
                         <div id="recommend-sections" class="recommend">
                             
@@ -971,7 +938,7 @@
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1592909747217')
+  navigator.serviceWorker.register('/sw.js?t=1592909973775')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }
