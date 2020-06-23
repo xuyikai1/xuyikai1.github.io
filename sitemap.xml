@@ -4,7 +4,7 @@
   <url>
     <loc>http://xuyk.top/posts/spring-event.html</loc>
     
-    <lastmod>2020-06-23T12:44:09.888Z</lastmod>
+    <lastmod>2020-06-23T12:57:51.629Z</lastmod>
     
   </url>
   
@@ -23,13 +23,6 @@
   </url>
   
   <url>
-    <loc>http://xuyk.top/categories/index.html</loc>
-    
-    <lastmod>2020-06-14T11:18:47.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://xuyk.top/about/index.html</loc>
     
     <lastmod>2020-06-14T11:18:47.000Z</lastmod>
@@ -37,14 +30,21 @@
   </url>
   
   <url>
-    <loc>http://xuyk.top/contact/index.html</loc>
+    <loc>http://xuyk.top/archives/index.html</loc>
     
     <lastmod>2020-06-14T11:18:47.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://xuyk.top/archives/index.html</loc>
+    <loc>http://xuyk.top/categories/index.html</loc>
+    
+    <lastmod>2020-06-14T11:18:47.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xuyk.top/contact/index.html</loc>
     
     <lastmod>2020-06-14T11:18:47.000Z</lastmod>
     
