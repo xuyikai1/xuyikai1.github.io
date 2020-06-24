@@ -4,8 +4,8 @@
 
 <head><link rel=manifest href=/manifest.json>
     <meta charset="utf-8">
-    <meta name="keywords" content="友链, Java">
-    <meta name="description" content="友链 | 寒暄">
+    <meta name="keywords" content="布隆过滤器 bloom-filter">
+    <meta name="description" content="高效性能的数据结构">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +14,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="white"/>
-    <title>友链 | 寒暄</title>
+    <title>5分钟搞懂布隆过滤器 | 寒暄</title>
     <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/apple-touch-icon.png">
     <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/favicon.ico">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/awesome/css/font-awesome.min.css">
@@ -402,293 +402,282 @@
     </nav>
 
 </header>
-<div class="bg-cover pd-header about-cover">
-    <div class="container">
-        <div class="row">
-    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
-        <div class="brand">
-            <div class="title center-align">
-                
-                    寒暄
-                
-            </div>
 
-            <div class="description center-align">
-                
-                    <span id="subtitle"></span>
-                    <script src="https://cdn.jsdelivr.net/npm/typed.js"></script>
-                    <script>
-                        var typed = new Typed("#subtitle", {
-                            strings: ['Java的日常',''],
-                            startDelay: 300,
-                            typeSpeed: 100,
-                            loop: true,
-                            backSpeed: 50,
-                            showCursor: true
-                        });
-                    </script>
-                
+    <script src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/cryptojs/crypto-js.min.js"></script>
+    <script>
+        (function () {
+            let pwd = '';
+            if (pwd && pwd.length > 0) {
+                if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                    alert('密码错误，将返回主页！');
+                    location.href = '/';
+                }
+            }
+        })();
+    </script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/10.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">5分钟搞懂布隆过滤器</h1>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 
-    <script>
-        // 每天切换 banner 图.  Switch banner image every day.
-        $('.bg-cover').css('background-image', 'url(https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/banner/3.jpg)');
-    </script>
 
-    </div>
-</div>
+<main class="post-container content">
+
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/tocbot/tocbot.css">
 <style>
-    .friends-container {
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
         margin-top: -100px;
-        margin-bottom: 30px;
+        visibility: hidden;
     }
 
-    .friends-container .tag-title {
-        margin-bottom: 10px;
-        color: #3C4858;
-        font-size: 1.75rem;
-        font-weight: 400;
+    #articleContent :focus {
+        outline: none;
     }
 
-    .frind-ship img {
-        border-radius: 50%;
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
     }
 
-    /* 以下是按钮样式 */
-
-    .frind-ship {
-        padding: 10px 20px;
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
     }
 
-    .frind-ship .title {
-        display: flex;
-        align-items: center;
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
     }
 
-    .frind-ship .title div {
-        color: #fff;
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
         padding-left: 10px;
     }
 
-    .frind-ship .title img {
-        width: 100px;
-        height: 100px;
-        flex-shrink: 0;
+    #toc-content ol li {
+        padding-left: 10px;
     }
 
-    .frind-ship .title h1 {
-        padding-bottom: 5px;
-        border-bottom: 2px solid #fff;
-        position: relative;
-        top: -15px;
-        left: 3px;
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
     }
 
-    .friend-button {
-        display: flex;
-        justify-content: center;
-        margin-bottom: -27px;
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
     }
 
-    .friend-button a {
-        border-radius: 40px;
+    #toc-content .is-active-link {
+        color: #42b983;
     }
 
-    .friend-all .tag-post {
-        margin-bottom: 30px;
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
     }
 
-    .button-caution {
-        background-color: #FF4351;
-        border-color: #FF4351;
-        color: #FFF;
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
     }
 
-    .button {
-        font-weight: 300;
-        font-size: 16px;
-        font-family: "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-        text-decoration: none;
-        text-align: center;
-        line-height: 40px;
-        height: 40px;
-        padding: 0 40px;
-        margin: 0;
-        display: inline-block;
-        appearance: none;
-        cursor: pointer;
-        border: none;
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
-        -webkit-transition-property: all;
-        transition-property: all;
-        -webkit-transition-duration: .3s;
-        transition-duration: .3s;
-    }
-
-    .title {
-        margin-bottom: 0rem !important;
-    }
-
-    .card {
-        margin: 3rem 0 1rem 0 !important;
-    }
-
-    .button-glow.button-caution {
-        -webkit-animation-name: glowing-caution;
-        animation-name: glowing-caution;
-    }
-
-    @-webkit-keyframes glowing-caution {
-        from {
-            -webkit-box-shadow: 0 0 0 rgba(255, 67, 81, 0.3);
-            box-shadow: 0 0 0 rgba(255, 67, 81, 0.3);
-        }
-
-        50% {
-            -webkit-box-shadow: 0 0 20px rgba(255, 67, 81, 0.8);
-            box-shadow: 0 0 20px rgba(255, 67, 81, 0.8);
-        }
-
-        to {
-            -webkit-box-shadow: 0 0 0 rgba(255, 67, 81, 0.3);
-            box-shadow: 0 0 0 rgba(255, 67, 81, 0.3);
-        }
-    }
-
-    @keyframes glowing-caution {
-        from {
-            -webkit-box-shadow: 0 0 0 rgba(255, 67, 81, 0.3);
-            box-shadow: 0 0 0 rgba(255, 67, 81, 0.3);
-        }
-
-        50% {
-            -webkit-box-shadow: 0 0 20px rgba(255, 67, 81, 0.8);
-            box-shadow: 0 0 20px rgba(255, 67, 81, 0.8);
-        }
-
-        to {
-            -webkit-box-shadow: 0 0 0 rgba(255, 67, 81, 0.3);
-            box-shadow: 0 0 0 rgba(255, 67, 81, 0.3);
-        }
-    }
-
-    .button-caution:hover {
-        background-color: #ff7680;
-        border-color: #ff7680;
-        color: #FFF;
-        text-decoration: none;
-    }
-
-    .frind-card1 {
-        background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
-    }
-
-    .frind-card2 {
-        background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    }
-
-    .frind-card3 {
-        background-image: linear-gradient(to right, #b8cbb8 0%, #b8cbb8 0%, #b465da 0%, #cf6cc9 33%, #ee609c 66%, #ee609c 100%);
-    }
-
-    .frind-card4 {
-        background-image: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
-    }
-
-    .frind-card5 {
-        background-image: linear-gradient(to top, #c471f5 0%, #fa71cd 100%);
-    }
-
-    .frind-card6 {
-        background-image: linear-gradient(to top, #48c6ef 0%, #6f86d6 100%);
-    }
-
-    .frind-card7 {
-        background-image: linear-gradient(to top, #0ba360 0%, #3cba92 100%);
-    }
-
-    .frind-card8 {
-        background-image: linear-gradient(to top, #0c3483 0%, #a2b6df 100%, #6b8cce 100%, #a2b6df 100%);
-    }
-
-    .frind-card9 {
-        background-image: linear-gradient(to right, #ff758c 0%, #ff7eb3 100%);
-    }
-
-    .frind-card10 {
-        background-image: linear-gradient(to top, #f77062 0%, #fe5196 100%);
-    }
-
-    article .card {
-        overflow: visible !important;
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
     }
 </style>
-
-<main class="content">
-    <div class="container friends-container">
-        <div class="card">
-            <div class="card-content">
-                <div class="tag-title center-align">
-                    <i class="fa fa-address-book"></i>&nbsp;&nbsp;友链
-                </div>
-                <article id="friends-link">
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
                     
-                        
-                        <div class="row tags-posts friend-all">
+                        <div class="article-tag">
                             
-                                
-                                <div class="col s12 m6 l4 friend-div" data-aos="zoom-in-up">
-                                    <div class="card frind-card1">
-                                        <div class="frind-ship">
-                                            <div class="title">
-                                                <img src="https://sitoi.cn/medias/avatars/avatar.jpg" alt="img">
-                                                <div>
-                                                    <h1 class="friend-name">Sitoi</h1>
-                                                    <p style="position: relative;top: -35px;">活到老，学到老</p>
-                                                </div>
-                                            </div>
-                                            <div class="friend-button">
-                                                <a href="https://sitoi.cn/" target="_blank"
-                                                   class="button button-glow button-rounded button-caution">
-                                                    访问博客
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <a href="/tags/bloom-filter/">
+                                    <span class="chip bg-color">bloom filter</span>
+                                </a>
                             
                         </div>
                     
-                </article>
+                </div>
+                <div class="col s5 right-align">
+                    
+                        <div class="post-cate">
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                                <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="post-category">
+                                    数据结构
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                    <div class="post-date info-break-policy">
+                        <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                        2020-05-19
+                    </div>
+                
+
+                
+                    <div class="post-date info-break-policy">
+                        <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
+                        2020-06-24
+                    </div>
+                
+
+                
+                    <div class="info-break-policy">
+                        <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                        1k
+                    </div>
+                
+
+                
+                    <div class="info-break-policy">
+                        <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                        4 分
+                    </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+                
             </div>
         </div>
-        <div class="card">
-            <div class="card-content">
-                <h3 id="感谢在建站中给我提供帮助的各位大大！"><a href="#感谢在建站中给我提供帮助的各位大大！" class="headerlink" title="感谢在建站中给我提供帮助的各位大大！"></a>感谢在建站中给我提供帮助的各位大大！</h3><h3 id="也欢迎各位大神交换友链！"><a href="#也欢迎各位大神交换友链！" class="headerlink" title="也欢迎各位大神交换友链！"></a>也欢迎各位大神交换友链！</h3><br>
-
-<p><strong>友链格式①：</strong></p>
-<pre class="line-numbers language-json"><code class="language-json"><span class="token punctuation">{</span>
-    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Xuyk"</span><span class="token punctuation">,</span>
-    <span class="token property">"avatar"</span><span class="token operator">:</span> <span class="token string">"https://sitoi.cn/medias/avatars/avatar.jpg"</span><span class="token punctuation">,</span>
-    <span class="token property">"url"</span><span class="token operator">:</span> <span class="token string">"http://xuyk.top/"</span><span class="token punctuation">,</span>
-    <span class="token property">"introduction"</span><span class="token operator">:</span> <span class="token string">"Java的日常"</span><span class="token punctuation">,</span>
-    <span class="token property">"title"</span><span class="token operator">:</span> <span class="token string">"访问主页"</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<br>
-
-<p><strong>友链格式②：</strong></p>
-<pre class="line-numbers language-text"><code class="language-text">博客名字： Xuyk
-博客地址： http://xuyk.top/
-博客头像： https://sitoi.cn/medias/avatars/avatar.jpg
-博客简介： Java的日常<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="布隆过滤器-Bloom-Filter"><a href="#布隆过滤器-Bloom-Filter" class="headerlink" title="布隆过滤器 - Bloom Filter"></a>布隆过滤器 - Bloom Filter</h1><h2 id="0-引言"><a href="#0-引言" class="headerlink" title="0.引言"></a>0.引言</h2><p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://cdn.jsdelivr.net/gh/xuyikai1/PictureBedCDN/img/douyin.jpg" alt="douyin.jpg"></p>
+<p>P：我们平时在刷抖音时，开发人员如何保证 <strong>不会刷到同样的内容</strong> ？</p>
+<ul>
+<li>1：<strong>把算法推荐中的内容根据历史记录做一遍筛选</strong>？在用户量大，用户查看内容多的场景，<strong>性能低</strong></li>
+<li>2：<strong>历史记录全部计入缓存</strong>？资源量大，并且会随着时间逐渐上涨，<strong>服务器耗费up</strong></li>
+<li>3：<strong>布隆过滤器</strong>？专门用于解决去重问题，存在一定误判概率但是在去重的同时能节省90%的空间</li>
+</ul>
+<h2 id="1-使用场景"><a href="#1-使用场景" class="headerlink" title="1.使用场景"></a>1.使用场景</h2><ul>
+<li>1：<strong>在数据量很大(5亿以上)的场景下判断某一数据是否存在</strong>。对比hashMap节省了很大的存储空间</li>
+<li>2：<strong>黑名单、邮箱的垃圾邮件过滤</strong>。正常邮件被放入垃圾邮箱，就是布隆过滤器的误判导致</li>
+<li>3：<strong>去重</strong>。例如爬虫时，对已经爬取过的内容去重</li>
+<li>4：<strong>缓存穿透</strong>（非法用户会使用一般数据库里没有的key来进行访问导致请求一直打到数据库，导致数据库崩溃）。布隆过滤器删除key困难（会影响其他key），更建议直接使用redis set（设置过期时间）</li>
+</ul>
+<h2 id="2-什么是布隆过滤器"><a href="#2-什么是布隆过滤器" class="headerlink" title="2.什么是布隆过滤器"></a>2.什么是布隆过滤器</h2><h3 id="1-数据结构"><a href="#1-数据结构" class="headerlink" title="(1) 数据结构"></a>(1) 数据结构</h3><p>布隆过滤器（Bloom Filter）1970年由Bloom的老哥提出</p>
+<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://cdn.jsdelivr.net/gh/xuyikai1/PictureBedCDN/img/init.jpg" alt="init.jpg"></p>
+<p>它由一个二进制数组来记录数据的相关性,数组中只有1或0</p>
 <blockquote>
-<p>注：如果需要交换友链，请在下面留言</p>
+<p>二进制数组的优势：申请一个 100w 个元素的位数组只占用 1000000Bit / 8 = 125000 Byte = 125000/1024 kb ≈ 122kb 的空间。</p>
+</blockquote>
+<p>因为数组为固定长度，在数据量越多而空间越少的情况，判断误差率会变大</p>
+<h3 id="2-原理"><a href="#2-原理" class="headerlink" title="(2) 原理"></a>(2) 原理</h3><p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://cdn.jsdelivr.net/gh/xuyikai1/PictureBedCDN/img/add.jpg" alt="add.jpg"></p>
+<p><strong>当一个元素加入布隆过滤器时：</strong></p>
+<ol>
+<li>布隆过滤器中的多个哈希函数对元素值进行计算，得到索引值，之后数组长度对该索引值取模算的数组位置</li>
+<li>多个哈希函数有多个计算后的数组位置，置为1，完成add操作</li>
+</ol>
+<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://cdn.jsdelivr.net/gh/xuyikai1/PictureBedCDN/img/exist.jpg" alt="exist.jpg"></p>
+<p><strong>当判断一个元素是否存在时：</strong></p>
+<ol>
+<li>多个哈希函数对元素值计算出位置后，如果有一个位置值为0，则肯定不存在</li>
+<li>如果多个位置值都为1，则表示极有可能存在（可能其他元素把这几个位置提前置为1了，导致的误判）</li>
+</ol>
+<h3 id="3-使用"><a href="#3-使用" class="headerlink" title="(3) 使用"></a>(3) 使用</h3><p><strong>使用注意点：</strong></p>
+<ol>
+<li>使用时 不要让实际元素数量远大于初始化数量；</li>
+<li>当实际元素数量超过初始化数量时，应该对布隆过滤器进行 重建，重新分配一个 size 更大的过滤器，再将所有的历史元素批量 add 进行；</li>
+<li>初始化的数量和误判率根据实际业务场景分配</li>
+</ol>
+<p><strong>场景：</strong></p>
+<ol>
+<li>单机场景中 - Guava Bloom Filter<pre class="line-numbers language-java"><code class="language-java"># <span class="token number">1</span><span class="token punctuation">.</span>依赖
+<span class="token operator">&lt;</span>dependency<span class="token operator">></span>
+ <span class="token operator">&lt;</span>groupId<span class="token operator">></span>com<span class="token punctuation">.</span>google<span class="token punctuation">.</span>guava<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
+ <span class="token operator">&lt;</span>artifactId<span class="token operator">></span>guava<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
+ <span class="token operator">&lt;</span>version<span class="token operator">></span><span class="token number">28.0</span><span class="token operator">-</span>jre<span class="token operator">&lt;</span><span class="token operator">/</span>version<span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>dependency<span class="token operator">></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ol>
+<h1 id="2-使用"><a href="#2-使用" class="headerlink" title="2.使用"></a>2.使用</h1><h1 id="2-1-创建布隆过滤器对象"><a href="#2-1-创建布隆过滤器对象" class="headerlink" title="2.1 创建布隆过滤器对象"></a>2.1 创建布隆过滤器对象</h1><p>BloomFilter<integer> filter = BloomFilter.create(<br>        Funnels.integerFunnel(),<br>        1500,<br>        0.01);</integer></p>
+<h1 id="2-2-判断指定元素是否存在"><a href="#2-2-判断指定元素是否存在" class="headerlink" title="2.2 判断指定元素是否存在"></a>2.2 判断指定元素是否存在</h1><p>System.out.println(filter.mightContain(1));<br>System.out.println(filter.mightContain(2));</p>
+<h1 id="2-3-将元素添加进布隆过滤器"><a href="#2-3-将元素添加进布隆过滤器" class="headerlink" title="2.3 将元素添加进布隆过滤器"></a>2.3 将元素添加进布隆过滤器</h1><p>filter.put(1);<br>filter.put(2);<br>System.out.println(filter.mightContain(1));<br>System.out.println(filter.mightContain(2));</p>
+<pre><code>
+2. 分布式场景中 - Redisson Bloom Filter
+```java 
+# 1.依赖
+&lt;dependency&gt;
+    &lt;groupId&gt;org.redisson&lt;/groupId&gt;
+    &lt;artifactId&gt;redisson&lt;/artifactId&gt;
+    &lt;version&gt;3.7.5&lt;/version&gt;
+&lt;/dependency&gt;
+
+# 2.获取存储在redis中的布隆过滤器
+RBloomFilter&lt;String&gt; filter = redissonClient.getBloomFilter("BloomFilter");
+
+# 3.不存在时初始化,
+filter.tryInit(10000, 0.01);
+for (int i=0;i&lt;20;i++){
+    # 4.新增
+    filter.add(StrUtil.toString(i));
+}
+
+# 5.判断是否存在
+for (int i=0;i&lt;20;i++){
+    log.info("key:{},是否存在：{}",i,filter.contains(StrUtil.toString(i)));
+}</code></pre><blockquote>
+<p>参考链接：<br>1：<a href="https://github.com/Snailclimb/JavaGuide/blob/master/docs/dataStructures-algorithms/data-structure/bloom-filter.md">JavaGuide - 布隆过滤器</a><br>2：<a href="https://mp.weixin.qq.com/s/wNtpO7TtxnhoiDHuv1grXg">亿级数据过滤和布隆过滤器</a></p>
 </blockquote>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -710,19 +699,54 @@
           });
       </script>
             </div>
+            <hr/>
+
+            
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/bloom-filter/">
+                                    <span class="chip bg-color">bloom filter</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share"
+                     style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/share/css/share.min.css">
+<div id="article-share">
+    
+        <div class="social-share" data-sites="wechat,qq,weibo,twitter,facebook,linkedin"
+             data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+        <script src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
         </div>
-        <div class="card">
+    </div>
 
-            
+    
 
-            
+    
 
-            
+    
 
-            
+    
 
-            
-                <style>
+    
+        <style>
     .valine-card {
         margin: 1.5rem auto;
     }
@@ -988,12 +1012,121 @@
         placeholder: 'just go go'
     });
 </script>
-            
+    
 
-            
-        </div>
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+            <div class="article col s12 m6" data-aos="fade-up">
+                <div class="article-badge left-badge text-color">
+                    <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <div class="card">
+                    <a href="/posts/spring-event.html">
+                        <div class="card-image">
+                            
+                                
+                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/15.jpg" class="responsive-img" alt="Spring 事件发布监听机制实现业务解耦">
+                            
+                            <span class="card-title">Spring 事件发布监听机制实现业务解耦</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                告别冗长的代码的开始
+                            
+                        </div>
+                        <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-06-10
+                        </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/categories/Spring/" class="post-category">
+                                    Spring
+                                </a>
+                                    
+                                
+                            </span>
+                        </div>
+                    </div>
+                    
+                        <div class="card-action article-tags">
+                            
+                                <a href="/tags/Spring/">
+                                    <span class="chip bg-color">Spring</span>
+                                </a>
+                            
+                                <a href="/tags/%E4%BA%8B%E4%BB%B6%E7%9B%91%E5%90%AC/">
+                                    <span class="chip bg-color">事件监听</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+            </div>
+        
+        
+            <div class="article col s12 m6" data-aos="fade-up">
+                <div class="article-badge right-badge text-color">
+                    本篇&nbsp;<i class="fa fa-dot-circle-o"></i>
+                </div>
+                <div class="card">
+                    <a href="/posts/bloom-filter.html">
+                        <div class="card-image">
+                            
+                                
+                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/10.jpg" class="responsive-img" alt="5分钟搞懂布隆过滤器">
+                            
+                            <span class="card-title">5分钟搞懂布隆过滤器</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                高效性能的数据结构
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-05-19
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="post-category">
+                                    数据结构
+                                </a>
+                                    
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                        <div class="card-action article-tags">
+                            
+                                <a href="/tags/bloom-filter/">
+                                    <span class="chip bg-color">bloom filter</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+            </div>
+        
     </div>
-</main>
+</article>
+</div>
+
+
 
 
 <!-- 代码块功能依赖 -->
@@ -1020,14 +1153,104 @@
         }
     </style>
 
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
 
+<!-- TOC 悬浮按钮. -->
+
+    <div id="floating-toc-btn" class="hide-on-med-and-down">
+        <a class="btn-floating btn-large bg-color">
+            <i class="fa fa-list"></i>
+        </a>
+    </div>
+
+
+<script src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/tocbot/tocbot.min.js"></script>
 <script>
     $(function () {
-        $('#friends-link').masonry({
-            itemSelector: '.friend-div'
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4, h5'
         });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4, h5').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换 TOC 目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
     });
 </script>
+    
+
+</main>
+
+
 <footer class="page-footer bg-color">
     <div class="container row center-align">
         <div class="col s12 m8 l8 copy-right">
