@@ -24,6 +24,8 @@ var precacheUrls = [];
 
   precacheUrls.push('/');
 
+  precacheUrls.push('/posts/redisson.html');
+
   precacheUrls.push('/posts/spring-event.html');
 
 toolbox.precache(precacheUrls);

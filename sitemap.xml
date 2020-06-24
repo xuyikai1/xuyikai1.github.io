@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://xuyk.top/posts/redisson.html</loc>
+    
+    <lastmod>2020-06-24T02:33:10.931Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://xuyk.top/posts/spring-event.html</loc>
     
     <lastmod>2020-06-23T13:16:04.689Z</lastmod>
@@ -30,14 +37,14 @@
   </url>
   
   <url>
-    <loc>http://xuyk.top/archives/index.html</loc>
+    <loc>http://xuyk.top/contact/index.html</loc>
     
     <lastmod>2020-06-14T11:18:47.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://xuyk.top/contact/index.html</loc>
+    <loc>http://xuyk.top/archives/index.html</loc>
     
     <lastmod>2020-06-14T11:18:47.000Z</lastmod>
     
