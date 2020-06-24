@@ -601,8 +601,7 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="布隆过滤器-Bloom-Filter"><a href="#布隆过滤器-Bloom-Filter" class="headerlink" title="布隆过滤器 - Bloom Filter"></a>布隆过滤器 - Bloom Filter</h1><p>[TOC]</p>
-<h2 id="0-引言"><a href="#0-引言" class="headerlink" title="0.引言"></a>0.引言</h2><p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://cdn.jsdelivr.net/gh/xuyikai1/PictureBedCDN/img/douyin.jpg" alt="douyin.jpg"></p>
+                <h1 id="布隆过滤器-Bloom-Filter"><a href="#布隆过滤器-Bloom-Filter" class="headerlink" title="布隆过滤器 - Bloom Filter"></a>布隆过滤器 - Bloom Filter</h1><h2 id="0-引言"><a href="#0-引言" class="headerlink" title="0.引言"></a>0.引言</h2><p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://cdn.jsdelivr.net/gh/xuyikai1/PictureBedCDN/img/douyin.jpg" alt="douyin.jpg"></p>
 <p>P：我们平时在刷抖音时，开发人员如何保证 <strong>不会刷到同样的内容</strong> ？</p>
 <ul>
 <li>1：<strong>把算法推荐中的内容根据历史记录做一遍筛选</strong>？在用户量大，用户查看内容多的场景，<strong>性能低</strong></li>
@@ -642,45 +641,43 @@
 </ol>
 <p><strong>场景：</strong></p>
 <ol>
-<li>单机场景中 - Guava Bloom Filter<pre class="line-numbers language-java"><code class="language-java"># <span class="token number">1</span><span class="token punctuation">.</span>依赖
-<span class="token operator">&lt;</span>dependency<span class="token operator">></span>
- <span class="token operator">&lt;</span>groupId<span class="token operator">></span>com<span class="token punctuation">.</span>google<span class="token punctuation">.</span>guava<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
- <span class="token operator">&lt;</span>artifactId<span class="token operator">></span>guava<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
- <span class="token operator">&lt;</span>version<span class="token operator">></span><span class="token number">28.0</span><span class="token operator">-</span>jre<span class="token operator">&lt;</span><span class="token operator">/</span>version<span class="token operator">></span>
-<span class="token operator">&lt;</span><span class="token operator">/</span>dependency<span class="token operator">></span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
+<li>单机场景中 - Guava Bloom Filter</li>
 </ol>
-<h1 id="2-使用"><a href="#2-使用" class="headerlink" title="2.使用"></a>2.使用</h1><h1 id="2-1-创建布隆过滤器对象"><a href="#2-1-创建布隆过滤器对象" class="headerlink" title="2.1 创建布隆过滤器对象"></a>2.1 创建布隆过滤器对象</h1><p>BloomFilter<integer> filter = BloomFilter.create(<br>        Funnels.integerFunnel(),<br>        1500,<br>        0.01);</integer></p>
-<h1 id="2-2-判断指定元素是否存在"><a href="#2-2-判断指定元素是否存在" class="headerlink" title="2.2 判断指定元素是否存在"></a>2.2 判断指定元素是否存在</h1><p>System.out.println(filter.mightContain(1));<br>System.out.println(filter.mightContain(2));</p>
-<h1 id="2-3-将元素添加进布隆过滤器"><a href="#2-3-将元素添加进布隆过滤器" class="headerlink" title="2.3 将元素添加进布隆过滤器"></a>2.3 将元素添加进布隆过滤器</h1><p>filter.put(1);<br>filter.put(2);<br>System.out.println(filter.mightContain(1));<br>System.out.println(filter.mightContain(2));</p>
-<pre><code>
-2. 分布式场景中 - Redisson Bloom Filter
-``` java 
-# 1.依赖
+<pre class="line-numbers language-java"><code class="language-java"><span class="token number">1</span><span class="token punctuation">.</span>依赖
+<span class="token operator">&lt;</span>dependency<span class="token operator">></span>
+    <span class="token operator">&lt;</span>groupId<span class="token operator">></span>com<span class="token punctuation">.</span>google<span class="token punctuation">.</span>guava<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
+    <span class="token operator">&lt;</span>artifactId<span class="token operator">></span>guava<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
+    <span class="token operator">&lt;</span>version<span class="token operator">></span><span class="token number">28.0</span><span class="token operator">-</span>jre<span class="token operator">&lt;</span><span class="token operator">/</span>version<span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>dependency<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre><code># 2.使用
+# 2.1 创建布隆过滤器对象
+BloomFilter&lt;Integer&gt; filter = BloomFilter.create(
+        Funnels.integerFunnel(),
+        1500,
+        0.01);
+# 2.2 判断指定元素是否存在
+System.out.println(filter.mightContain(1));
+System.out.println(filter.mightContain(2));
+# 2.3 将元素添加进布隆过滤器
+filter.put(1);
+filter.put(2);
+System.out.println(filter.mightContain(1));
+System.out.println(filter.mightContain(2));</code></pre><ol start="2">
+<li>分布式场景中 - Redisson Bloom Filter<pre><code># 1.依赖
 &lt;dependency&gt;
-    &lt;groupId&gt;org.redisson&lt;/groupId&gt;
-    &lt;artifactId&gt;redisson&lt;/artifactId&gt;
-    &lt;version&gt;3.7.5&lt;/version&gt;
+ &lt;groupId&gt;org.redisson&lt;/groupId&gt;
+ &lt;artifactId&gt;redisson&lt;/artifactId&gt;
+ &lt;version&gt;3.7.5&lt;/version&gt;
 &lt;/dependency&gt;
-
-# 2.获取存储在redis中的布隆过滤器
-RBloomFilter&lt;String&gt; filter = redissonClient.getBloomFilter("BloomFilter");
-
-# 3.不存在时初始化,
-filter.tryInit(10000, 0.01);
-for (int i=0;i&lt;20;i++){
-    # 4.新增
-    filter.add(StrUtil.toString(i));
-}
-
-# 5.判断是否存在
-for (int i=0;i&lt;20;i++){
-    log.info("key:{},是否存在：{}",i,filter.contains(StrUtil.toString(i)));
-}</code></pre><blockquote>
-<p>参考链接：<br>1：<a href="https://github.com/Snailclimb/JavaGuide/blob/master/docs/dataStructures-algorithms/data-structure/bloom-filter.md">JavaGuide - 布隆过滤器</a><br>2：<a href="https://mp.weixin.qq.com/s/wNtpO7TtxnhoiDHuv1grXg">亿级数据过滤和布隆过滤器</a></p>
-</blockquote>
-<script>
+</code></pre></li>
+</ol>
+<h1 id="2-获取存储在redis中的布隆过滤器"><a href="#2-获取存储在redis中的布隆过滤器" class="headerlink" title="2.获取存储在redis中的布隆过滤器"></a>2.获取存储在redis中的布隆过滤器</h1><p>RBloomFilter<string> filter = redissonClient.getBloomFilter(“BloomFilter”);</string></p>
+<h1 id="3-不存在时初始化"><a href="#3-不存在时初始化" class="headerlink" title="3.不存在时初始化,"></a>3.不存在时初始化,</h1><p>filter.tryInit(10000, 0.01);<br>for (int i=0;i&lt;20;i++){<br>    # 4.新增<br>    filter.add(StrUtil.toString(i));<br>}</p>
+<h1 id="5-判断是否存在"><a href="#5-判断是否存在" class="headerlink" title="5.判断是否存在"></a>5.判断是否存在</h1><p>for (int i=0;i&lt;20;i++){<br>    log.info(“key:{},是否存在：{}”,i,filter.contains(StrUtil.toString(i)));<br>}</p>
+<pre><code>
+&gt; 参考链接：
+&gt; 1：[JavaGuide - 布隆过滤器](https://github.com/Snailclimb/JavaGuide/blob/master/docs/dataStructures-algorithms/data-structure/bloom-filter.md)
+&gt; 2：[亿级数据过滤和布隆过滤器](https://mp.weixin.qq.com/s/wNtpO7TtxnhoiDHuv1grXg)</code></pre><script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -1283,7 +1280,7 @@ for (int i=0;i&lt;20;i++){
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">4.1k</span>&nbsp;字
+                            class="white-color">4.2k</span>&nbsp;字
                 
                 
                 <script>
@@ -1471,7 +1468,7 @@ for (int i=0;i&lt;20;i++){
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1592968201190')
+  navigator.serviceWorker.register('/sw.js?t=1592968756434')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }
