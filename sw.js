@@ -24,13 +24,13 @@ var precacheUrls = [];
 
   precacheUrls.push('/');
 
-  precacheUrls.push('/posts/bloom-filter.html');
+  precacheUrls.push('/posts/redisson.html');
 
   precacheUrls.push('/posts/spring-event.html');
 
   precacheUrls.push('/posts/design-pattern.html');
 
-  precacheUrls.push('/posts/redisson.html');
+  precacheUrls.push('/posts/bloom-filter.html');
 
 toolbox.precache(precacheUrls);
 toolbox.options = {"networkTimeoutSeconds":30};
