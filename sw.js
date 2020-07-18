@@ -28,6 +28,8 @@ var precacheUrls = [];
 
   precacheUrls.push('/posts/design-pattern.html');
 
+  precacheUrls.push('/posts/design-pattern.html');
+
   precacheUrls.push('/posts/redisson.html');
 
   precacheUrls.push('/posts/bloom-filter.html');

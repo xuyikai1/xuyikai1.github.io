@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://xuyk.top/posts/design-pattern.html</loc>
+    
+    <lastmod>2020-07-18T06:42:22.524Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://xuyk.top/posts/xxl-job.html</loc>
     
     <lastmod>2020-07-16T01:07:44.110Z</lastmod>
@@ -65,6 +72,13 @@
   </url>
   
   <url>
+    <loc>http://xuyk.top/categories/index.html</loc>
+    
+    <lastmod>2020-06-14T11:18:47.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://xuyk.top/contact/index.html</loc>
     
     <lastmod>2020-06-14T11:18:47.000Z</lastmod>
@@ -73,13 +87,6 @@
   
   <url>
     <loc>http://xuyk.top/tags/index.html</loc>
-    
-    <lastmod>2020-06-14T11:18:47.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xuyk.top/categories/index.html</loc>
     
     <lastmod>2020-06-14T11:18:47.000Z</lastmod>
     
