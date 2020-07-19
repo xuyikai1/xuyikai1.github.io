@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://xuyk.top/posts/spring-annotation.html</loc>
+    
+    <lastmod>2020-07-19T04:55:10.191Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xuyk.top/posts/spring-event.html</loc>
+    
+    <lastmod>2020-07-19T04:53:58.962Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://xuyk.top/posts/strategy-pattern.html</loc>
     
     <lastmod>2020-07-18T08:38:03.169Z</lastmod>
@@ -33,13 +47,6 @@
     <loc>http://xuyk.top/posts/redisson.html</loc>
     
     <lastmod>2020-06-24T02:33:10.931Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xuyk.top/posts/spring-event.html</loc>
-    
-    <lastmod>2020-06-23T13:16:04.689Z</lastmod>
     
   </url>
   
