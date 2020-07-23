@@ -4,8 +4,8 @@
 
 <head><link rel=manifest href=/manifest.json>
     <meta charset="utf-8">
-    <meta name="keywords" content="留言, Java">
-    <meta name="description" content="留言 | 寒暄">
+    <meta name="keywords" content="消息队列 RabbitMQ design pattern">
+    <meta name="description" content="轻松理解策略模式">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +14,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="white"/>
-    <title>留言 | 寒暄</title>
+    <title>RabbitMQ消息投递组件封装 | 寒暄</title>
     <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/apple-touch-icon.png">
     <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/favicon.ico">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/awesome/css/font-awesome.min.css">
@@ -402,55 +402,241 @@
     </nav>
 
 </header>
-<div class="bg-cover pd-header about-cover">
-    <div class="container">
-        <div class="row">
-    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
-        <div class="brand">
-            <div class="title center-align">
-                
-                    寒暄
-                
-            </div>
 
-            <div class="description center-align">
-                
-                    <span id="subtitle"></span>
-                    <script src="https://cdn.jsdelivr.net/npm/typed.js"></script>
-                    <script>
-                        var typed = new Typed("#subtitle", {
-                            strings: ['Java的日常',''],
-                            startDelay: 300,
-                            typeSpeed: 100,
-                            loop: true,
-                            backSpeed: 50,
-                            showCursor: true
-                        });
-                    </script>
-                
+    <script src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/cryptojs/crypto-js.min.js"></script>
+    <script>
+        (function () {
+            let pwd = '';
+            if (pwd && pwd.length > 0) {
+                if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                    alert('密码错误，将返回主页！');
+                    location.href = '/';
+                }
+            }
+        })();
+    </script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/0.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">RabbitMQ消息投递组件封装</h1>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 
-    <script>
-        // 每天切换 banner 图.  Switch banner image every day.
-        $('.bg-cover').css('background-image', 'url(https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/banner/4.jpg)');
-    </script>
 
-    </div>
-</div>
+<main class="post-container content">
 
-<main class="content">
-    <div id="contact" class="container chip-container">
-        <div class="card">
-            <div class="card-content">
-                <div class="tag-title center-align">
-                    <i class="fa fa-comments"></i>&nbsp;&nbsp;留言
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/">
+                                    <span class="chip bg-color">消息队列</span>
+                                </a>
+                            
+                                <a href="/tags/RabbitMQ/">
+                                    <span class="chip bg-color">RabbitMQ</span>
+                                </a>
+                            
+                        </div>
+                    
                 </div>
-                <h2 id="畅所欲言"><a href="#畅所欲言" class="headerlink" title="畅所欲言"></a>畅所欲言</h2><hr>
-<p>在这里可以留下你的足迹，欢迎在下方留言，欢迎交换友链，一起交流学习！</p>
+                <div class="col s5 right-align">
+                    
+                        <div class="post-cate">
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                                <a href="/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" class="post-category">
+                                    消息队列
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                    <div class="post-date info-break-policy">
+                        <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                        2020-07-23
+                    </div>
+                
+
+                
+                    <div class="post-date info-break-policy">
+                        <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
+                        2020-07-23
+                    </div>
+                
+
+                
+                    <div class="info-break-policy">
+                        <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                        1.3k
+                    </div>
+                
+
+                
+                    <div class="info-break-policy">
+                        <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                        4 分
+                    </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="RabbitMQ消息投递组件封装"><a href="#RabbitMQ消息投递组件封装" class="headerlink" title="RabbitMQ消息投递组件封装"></a>RabbitMQ消息投递组件封装</h1><h2 id="0-引言"><a href="#0-引言" class="headerlink" title="0.引言"></a>0.引言</h2><p>  在如今越来越内卷的IT行业，高并发，基本会出现在每一场面试中。而面试者关于此的回答中，我们也始终能听到一个熟悉的名词：消息队列，以及他所存在的一些特性和问题。例如：<strong>削峰填谷</strong>，<strong>异步化缓冲</strong>等，借着学习课程的契机以及自身的理解，也对消息队列中的RabbitMQ进行封装，做到开箱即用。</p>
+<h2 id="1-架构图解"><a href="#1-架构图解" class="headerlink" title="1.架构图解"></a>1.架构图解</h2><p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://cdn.jsdelivr.net/gh/xuyikai1/PictureBedCDN/img/%E6%9E%B6%E6%9E%84%E5%9B%BE%E8%A7%A3.png" alt="架构图解"></p>
+<p>|名称|说明|<br>|:-:|:-:|:-:|<br>|Sender|生产消息-生产端|<br>|MQ Broker|接收生产端发出的消息，MQ Broker接收|<br>|Confirm Listener|接收RabbitMQ响应给生产端，表示RabbitMQ收到消息，返回确认，而Listener接收确认消息|<br>|分布式定时任务|xxl-job分布式调度，定时轮询未投递/消费成功的消息，重新让Sender进行二次/重复投递|</p>
+<blockquote>
+<p>大体流程：消息生产端Sender在发送消息前，对消息进行初始化并且落库MSG DB（业务上也可同时记录-&gt; BIZ DB），而后发送至MQ，MQ Broker收到消息后发回该条消息的响应，表示消息已收到，Comfirm Listener负责接收响应，并且更新MSG DB的该条消息状态为已投递。而另一端定时任务会抽取待确认的消息，到达重试时间并且重试多次（自定义），让Sender进行再次投递，保证消息投递成功。</p>
+</blockquote>
+<h2 id="2-组件关键点概述"><a href="#2-组件关键点概述" class="headerlink" title="2.组件关键点概述"></a>2.组件关键点概述</h2><p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://cdn.jsdelivr.net/gh/xuyikai1/PictureBedCDN/img/%E7%BB%84%E4%BB%B6%E6%A6%82%E8%BF%B0.png" alt="组件概述"></p>
+<p>根据上图，组件封装的关键点清晰可见</p>
+<p>|部分要点|技术选型|说明|<br>|:-:|:-:|:–:|:-:|<br>|数据交互层|tk-mybatis|通用性mapper|<br>|序列化|jackson|保证自定义message与amqp message的转换|<br>|定时任务|xxl-job分布式调度|定时任务|</p>
+<h3 id="1-1-消息类型区分"><a href="#1-1-消息类型区分" class="headerlink" title="1.1 消息类型区分"></a>1.1 消息类型区分</h3><p>消息在组件中分为三种类型：<br>（1）<strong>迅速/普通消息</strong>：普通消息，不要求MQ返回ack确认收到，力求消息投递速度<br>（2）<strong>可靠消息</strong>：要求MQ返回ack确认收到，生产端发出的每一条消息不回丢失<br>（3）<strong>延迟消息</strong>：要求MQ返回ack确认收到，生产端发出的消息会在自定义的时间后要求MQ返回ack确认收到</p>
+<h3 id="1-2-消息异步化-序列化"><a href="#1-2-消息异步化-序列化" class="headerlink" title="1.2 消息异步化/序列化"></a>1.2 消息异步化/序列化</h3><p>（1）消息通过JacksonSerializer序列化和反序列化，做到amqp Message与自定义Message之间的转换。发送的时候是自定义的message，能通过自定义序列化保证收到也是自定义的message<br>（2）生产消息异步化</p>
+<h3 id="1-3-链接池化-高性能"><a href="#1-3-链接池化-高性能" class="headerlink" title="1.3 链接池化/高性能"></a>1.3 链接池化/高性能</h3><p>（1）RabbitMQ每个topic对应一个RabbitTemplate，缓存起来，有效节约创建销毁开支。template单例模式下，在多生产者时（不同topic不同exchange）性能会受到影响，以topic为key生成多生产者，不同种类的topic对应相应的template，做不同的定制操作，提升性能<br>（2）在生产消息的过程中，由线程池统一调度</p>
+<h3 id="1-4-完备的补偿机制"><a href="#1-4-完备的补偿机制" class="headerlink" title="1.4 完备的补偿机制"></a>1.4 完备的补偿机制</h3><p>消息信息落库，并且对消息进行状态标记，再由xxl-job分布式定时任务扫描进行重新投递，保证消息不因为网络抖动发生丢失，以达到准确投递</p>
+<h2 id="2-可靠性投递剖析与改进点"><a href="#2-可靠性投递剖析与改进点" class="headerlink" title="2.可靠性投递剖析与改进点"></a>2.可靠性投递剖析与改进点</h2><p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://cdn.jsdelivr.net/gh/xuyikai1/PictureBedCDN/img/%E7%94%9F%E4%BA%A7%E7%AB%AF%E7%9A%84%E5%8F%AF%E9%9D%A0%E6%80%A7%E6%8A%95%E9%80%92.png" alt="可靠性投递"></p>
+<h3 id="3-1-消息不可靠要点"><a href="#3-1-消息不可靠要点" class="headerlink" title="3.1 消息不可靠要点"></a>3.1 消息不可靠要点</h3><ul>
+<li>RabbitMQ收到消息生产端发送的消息之后，因为负载压力过大等因素，返回给生产端的失败(confirm失败)，但实际是成功的</li>
+<li>broker因为网络抖动没收到消息，消息丢失</li>
+<li>broker收到消息，confirm因为网络抖动没收到消息，消息丢失</li>
+</ul>
+<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://cdn.jsdelivr.net/gh/xuyikai1/PictureBedCDN/img/%E4%BA%92%E8%81%94%E7%BD%91%E5%A4%A7%E5%8E%82%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88.png" alt="解决方案"></p>
+<h3 id="3-2-消息落库，消息打标"><a href="#3-2-消息落库，消息打标" class="headerlink" title="3.2 消息落库，消息打标"></a>3.2 消息落库，消息打标</h3><p>此项目采用的就是这一解决方案来做到可靠性投递</p>
+<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://cdn.jsdelivr.net/gh/xuyikai1/PictureBedCDN/img/%E6%B6%88%E6%81%AF%E4%BF%A1%E6%81%AF%E8%90%BD%E5%BA%93.png" alt="消息落库"></p>
+<h3 id="3-3-消息的延迟投递，做二次确认，回调检查"><a href="#3-3-消息的延迟投递，做二次确认，回调检查" class="headerlink" title="3.3 消息的延迟投递，做二次确认，回调检查"></a>3.3 消息的延迟投递，做二次确认，回调检查</h3><blockquote>
+<p>（99.99%的可靠性） - 减少数据库操作，保证性能</p>
+</blockquote>
+<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://cdn.jsdelivr.net/gh/xuyikai1/PictureBedCDN/img/%E4%BA%8C%E6%AC%A1%E7%A1%AE%E8%AE%A4.png" alt="延迟投递二次确认"></p>
+<blockquote>
+<p><strong>upstream service：</strong> 上游服务<br><strong>callback service：</strong> 回调服务<br><strong>重点：</strong> 一定是数据库操作完了再去发送消息，互联网大厂不加事务（导致性能瓶颈）<br><strong>优点：</strong> 主流程中，相比第一种方案少了一次DB操作，而是使用callback service异步来承担</p>
+</blockquote>
+<p>1.一次性生成两条MQ消息（第二条为延迟消息投递- 用来n分钟之后检查，两条消息投递的队列不同，查看图中线的颜色）</p>
+<p>2.消费端处理完消息之后，再发一条处理成功的消息并且入库msg db，callback service来专门监听消费端的处理成功的消息队列，也同时监听生产端发出的延迟消息队列，callback收到延迟消息时查询db</p>
+<p>3.如果消费端返回处理失败或者没有响应时，callback service要做消息补偿（即收到延迟消息查询之后发现没有处理成功，则主动发起rpc通信，给上游服务发送reSend命令，生产端再根据biz的业务相关id来查询biz db再次发送两条消息）</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -471,18 +657,58 @@
           });
       </script>
             </div>
+            <hr/>
+
+            
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/">
+                                    <span class="chip bg-color">消息队列</span>
+                                </a>
+                            
+                                <a href="/tags/RabbitMQ/">
+                                    <span class="chip bg-color">RabbitMQ</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share"
+                     style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/share/css/share.min.css">
+<div id="article-share">
+    
+        <div class="social-share" data-sites="wechat,qq,weibo,twitter,facebook,linkedin"
+             data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+        <script src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
         </div>
-        <div class="card">
-            
+    </div>
 
-            
+    
 
-            
+    
 
-            
+    
 
-            
-                <style>
+    
+
+    
+        <style>
     .valine-card {
         margin: 1.5rem auto;
     }
@@ -748,19 +974,256 @@
         placeholder: 'just go go'
     });
 </script>
-            
+    
 
-            
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+            <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+                <div class="article-badge left-badge text-color">
+                    <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+                </div>
+                <div class="card">
+                    <a href="/posts/rabbitmq.html">
+                        <div class="card-image">
+                            
+                                
+                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/0.jpg" class="responsive-img" alt="RabbitMQ消息投递组件封装">
+                            
+                            <span class="card-title">RabbitMQ消息投递组件封装</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                轻松理解策略模式
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-07-23
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" class="post-category">
+                                    消息队列
+                                </a>
+                                    
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                        <div class="card-action article-tags">
+                            
+                                <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/">
+                                    <span class="chip bg-color">消息队列</span>
+                                </a>
+                            
+                                <a href="/tags/RabbitMQ/">
+                                    <span class="chip bg-color">RabbitMQ</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+            </div>
+        
+        
+            <div class="article col s12 m6" data-aos="fade-up">
+                <div class="article-badge right-badge text-color">
+                    下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+                </div>
+                <div class="card">
+                    <a href="/posts/spring-annotation.html">
+                        <div class="card-image">
+                            
+                                
+                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/0.jpg" class="responsive-img" alt="Spring注解">
+                            
+                            <span class="card-title">Spring注解</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                解释那些形形色色的注解
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-07-19
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/categories/Spring/" class="post-category">
+                                    Spring
+                                </a>
+                                    
+                                
+                            </span>
+                        </div>
+                    </div>
+                    
+                        <div class="card-action article-tags">
+                            
+                                <a href="/tags/Spring/">
+                                    <span class="chip bg-color">Spring</span>
+                                </a>
+                            
+                                <a href="/tags/%E6%B3%A8%E8%A7%A3/">
+                                    <span class="chip bg-color">注解</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+            </div>
+        
+    </div>
+</article>
+</div>
+
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+
+<!-- 代码块折行 -->
+
+    <style type="text/css">
+        code[class*="language-"], pre[class*="language-"] {
+            white-space: pre !important;
+        }
+    </style>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
         </div>
     </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+    <div id="floating-toc-btn" class="hide-on-med-and-down">
+        <a class="btn-floating btn-large bg-color">
+            <i class="fa fa-list"></i>
+        </a>
+    </div>
+
+
+<script src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4, h5'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4, h5').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换 TOC 目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
 </main>
+
 
 <footer class="page-footer bg-color">
     <div class="container row center-align">
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             <span id="year">2020</span>
-            <a href="/about" rel="external nofollow noreferrer">Xuyk</a>
+            <a href="/about" rel="external nofollow noreferrer">xuyk</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>

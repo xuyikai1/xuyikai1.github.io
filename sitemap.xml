@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://xuyk.top/posts/rabbitmq.html</loc>
+    
+    <lastmod>2020-07-23T12:06:49.133Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://xuyk.top/posts/spring-annotation.html</loc>
     
     <lastmod>2020-07-19T04:55:10.191Z</lastmod>
@@ -72,13 +79,6 @@
   </url>
   
   <url>
-    <loc>http://xuyk.top/archives/index.html</loc>
-    
-    <lastmod>2020-06-14T11:18:47.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://xuyk.top/categories/index.html</loc>
     
     <lastmod>2020-06-14T11:18:47.000Z</lastmod>
@@ -86,7 +86,7 @@
   </url>
   
   <url>
-    <loc>http://xuyk.top/contact/index.html</loc>
+    <loc>http://xuyk.top/archives/index.html</loc>
     
     <lastmod>2020-06-14T11:18:47.000Z</lastmod>
     
@@ -94,6 +94,13 @@
   
   <url>
     <loc>http://xuyk.top/tags/index.html</loc>
+    
+    <lastmod>2020-06-14T11:18:47.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xuyk.top/contact/index.html</loc>
     
     <lastmod>2020-06-14T11:18:47.000Z</lastmod>
     
