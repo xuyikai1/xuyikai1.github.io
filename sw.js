@@ -24,6 +24,8 @@ var precacheUrls = [];
 
   precacheUrls.push('/');
 
+  precacheUrls.push('/posts/spring-event.html');
+
   precacheUrls.push('/posts/rabbitmq.html');
 
   precacheUrls.push('/posts/redisson.html');
@@ -32,11 +34,9 @@ var precacheUrls = [];
 
   precacheUrls.push('/posts/xxl-job.html');
 
-  precacheUrls.push('/posts/strategy-pattern.html');
-
-  precacheUrls.push('/posts/spring-event.html');
-
   precacheUrls.push('/posts/spring-annotation.html');
+
+  precacheUrls.push('/posts/strategy-pattern.html');
 
   precacheUrls.push('/posts/design-pattern.html');
 
