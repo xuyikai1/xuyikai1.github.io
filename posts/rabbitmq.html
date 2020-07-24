@@ -576,7 +576,7 @@
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
-                        2020-07-23
+                        2020-07-24
                     </div>
                 
 
@@ -605,7 +605,7 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="基于RabbitMQ的消息投递组件封装"><a href="#基于RabbitMQ的消息投递组件封装" class="headerlink" title="基于RabbitMQ的消息投递组件封装"></a>基于RabbitMQ的消息投递组件封装</h1><h2 id="0-引言"><a href="#0-引言" class="headerlink" title="0.引言"></a>0.引言</h2><p>  在如今越来越内卷的IT行业，高并发，基本会出现在每一场面试中。而面试者关于此的回答中，我们也始终能听到一个熟悉的名词：消息队列，以及他所存在的一些特性和问题。例如：<strong>削峰填谷</strong>，<strong>异步化缓冲</strong>等，借着学习课程的契机以及自身的理解，也对消息队列中的RabbitMQ进行封装，做到开箱即用。</p>
+                <h1 id="RabbitMQ消息投递组件封装"><a href="#RabbitMQ消息投递组件封装" class="headerlink" title="RabbitMQ消息投递组件封装"></a>RabbitMQ消息投递组件封装</h1><h2 id="0-引言"><a href="#0-引言" class="headerlink" title="0.引言"></a>0.引言</h2><p>  在如今越来越内卷的IT行业，高并发，基本会出现在每一场面试中。而面试者关于此的回答中，我们也始终能听到一个熟悉的名词：消息队列，以及他所存在的一些特性和问题。例如：<strong>削峰填谷</strong>，<strong>异步化缓冲</strong>等，借着学习课程的契机以及自身的理解，也对消息队列中的RabbitMQ进行封装，做到开箱即用。</p>
 <h2 id="1-架构图解"><a href="#1-架构图解" class="headerlink" title="1.架构图解"></a>1.架构图解</h2><p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://cdn.jsdelivr.net/gh/xuyikai1/PictureBedCDN/img/%E6%9E%B6%E6%9E%84%E5%9B%BE%E8%A7%A3.png" alt="架构图解"></p>
 <table>
 <thead>
@@ -664,7 +664,7 @@
 <h3 id="1-2-消息异步化-序列化"><a href="#1-2-消息异步化-序列化" class="headerlink" title="1.2 消息异步化/序列化"></a>1.2 消息异步化/序列化</h3><p>（1）消息通过JacksonSerializer序列化和反序列化，做到amqp Message与自定义Message之间的转换。发送的时候是自定义的message，能通过自定义序列化保证收到也是自定义的message<br>（2）生产消息异步化</p>
 <h3 id="1-3-链接池化-高性能"><a href="#1-3-链接池化-高性能" class="headerlink" title="1.3 链接池化/高性能"></a>1.3 链接池化/高性能</h3><p>（1）RabbitMQ每个topic对应一个RabbitTemplate，缓存起来，有效节约创建销毁开支。template单例模式下，在多生产者时（不同topic不同exchange）性能会受到影响，以topic为key生成多生产者，不同种类的topic对应相应的template，做不同的定制操作，提升性能<br>（2）在生产消息的过程中，由线程池统一调度</p>
 <h3 id="1-4-完备的补偿机制"><a href="#1-4-完备的补偿机制" class="headerlink" title="1.4 完备的补偿机制"></a>1.4 完备的补偿机制</h3><p>消息信息落库，并且对消息进行状态标记，再由xxl-job分布式定时任务扫描进行重新投递，保证消息不因为网络抖动发生丢失，以达到准确投递</p>
-<h2 id="2-可靠性投递剖析与改进点"><a href="#2-可靠性投递剖析与改进点" class="headerlink" title="2.可靠性投递剖析与改进点"></a>2.可靠性投递剖析与改进点</h2><p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://cdn.jsdelivr.net/gh/xuyikai1/PictureBedCDN/img/%E7%94%9F%E4%BA%A7%E7%AB%AF%E7%9A%84%E5%8F%AF%E9%9D%A0%E6%80%A7%E6%8A%95%E9%80%92.png" alt="可靠性投递"></p>
+<h2 id="3-可靠性投递剖析与改进点"><a href="#3-可靠性投递剖析与改进点" class="headerlink" title="3.可靠性投递剖析与改进点"></a>3.可靠性投递剖析与改进点</h2><p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://cdn.jsdelivr.net/gh/xuyikai1/PictureBedCDN/img/%E7%94%9F%E4%BA%A7%E7%AB%AF%E7%9A%84%E5%8F%AF%E9%9D%A0%E6%80%A7%E6%8A%95%E9%80%92.png" alt="可靠性投递"></p>
 <h3 id="3-1-消息不可靠要点"><a href="#3-1-消息不可靠要点" class="headerlink" title="3.1 消息不可靠要点"></a>3.1 消息不可靠要点</h3><ul>
 <li>RabbitMQ收到消息生产端发送的消息之后，因为负载压力过大等因素，返回给生产端的失败(confirm失败)，但实际是成功的</li>
 <li>broker因为网络抖动没收到消息，消息丢失</li>
@@ -683,7 +683,7 @@
 <p>1.一次性生成两条MQ消息（第二条为延迟消息投递- 用来n分钟之后检查，两条消息投递的队列不同，查看图中线的颜色）</p>
 <p>2.消费端处理完消息之后，再发一条处理成功的消息并且入库msg db，callback service来专门监听消费端的处理成功的消息队列，也同时监听生产端发出的延迟消息队列，callback收到延迟消息时查询db</p>
 <p>3.如果消费端返回处理失败或者没有响应时，callback service要做消息补偿（即收到延迟消息查询之后发现没有处理成功，则主动发起rpc通信，给上游服务发送reSend命令，生产端再根据biz的业务相关id来查询biz db再次发送两条消息）</p>
-<p>封装组件源码：<strong><a href="https://github.com/xuyikai1/rabbit-parent">源码</a></strong></p>
+<h2 id="4-封装组件源码"><a href="#4-封装组件源码" class="headerlink" title="4.封装组件源码"></a>4.封装组件源码</h2><p><strong><a href="https://github.com/xuyikai1/rabbit-parent">源码link下载</a></strong></p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -1484,7 +1484,7 @@
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1595507253172')
+  navigator.serviceWorker.register('/sw.js?t=1595555851432')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }
