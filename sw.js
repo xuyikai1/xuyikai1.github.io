@@ -28,13 +28,13 @@ var precacheUrls = [];
 
   precacheUrls.push('/posts/redisson.html');
 
-  precacheUrls.push('/posts/spring-annotation.html');
-
   precacheUrls.push('/posts/spring-event.html');
 
-  precacheUrls.push('/posts/bloom-filter.html');
-
   precacheUrls.push('/posts/xxl-job.html');
+
+  precacheUrls.push('/posts/spring-annotation.html');
+
+  precacheUrls.push('/posts/bloom-filter.html');
 
   precacheUrls.push('/posts/strategy-pattern.html');
 
