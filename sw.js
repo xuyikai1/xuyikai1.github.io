@@ -24,13 +24,7 @@ var precacheUrls = [];
 
   precacheUrls.push('/');
 
-  precacheUrls.push('/posts/operation.html');
-
   precacheUrls.push('/posts/redisson.html');
-
-  precacheUrls.push('/posts/spring-annotation.html');
-
-  precacheUrls.push('/posts/strategy-pattern.html');
 
   precacheUrls.push('/posts/rabbitmq.html');
 
@@ -38,7 +32,13 @@ var precacheUrls = [];
 
   precacheUrls.push('/posts/xxl-job.html');
 
+  precacheUrls.push('/posts/spring-annotation.html');
+
   precacheUrls.push('/posts/bloom-filter.html');
+
+  precacheUrls.push('/posts/strategy-pattern.html');
+
+  precacheUrls.push('/posts/operation.html');
 
   precacheUrls.push('/posts/design-pattern.html');
 

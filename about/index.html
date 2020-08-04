@@ -716,7 +716,7 @@
                 type: 'pie',
                 radius: '50%',
                 color: ['#6772e5', '#ff9e0f', '#fa755a', '#3ecf8e', '#82d3f4', '#ab47bc', '#525f7f', '#f51c47', '#26A69A'],
-                data: [{"name":"运维","value":1},{"name":"Redis","value":1},{"name":"Spring","value":2},{"name":"design pattern","value":2},{"name":"消息队列","value":1},{"name":"distributed task","value":1},{"name":"Data Structure","value":1}],
+                data: [{"name":"Redis","value":1},{"name":"消息队列","value":1},{"name":"Spring","value":2},{"name":"distributed task","value":1},{"name":"Data Structure","value":1},{"name":"design pattern","value":2},{"name":"运维","value":1}],
                 itemStyle: {
                     emphasis: {
                         shadowBlur: 10,
@@ -740,7 +740,7 @@
         xAxis: [
             {
                 type: 'category',
-                data: ["Spring","design pattern","operation","Redis","注解","消息队列","RabbitMQ","事件监听","distributed task","bloom filter"]
+                data: ["Spring","design pattern","Redis","消息队列","RabbitMQ","事件监听","distributed task","注解","bloom filter","operation"]
             }
         ],
         yAxis: [
@@ -873,30 +873,6 @@
             <div class="tag-chips center-align">
                 
                     
-                        <a href="/tags/operation/">
-                            <span class="chip center-align waves-effect waves-light chip-default">operation</span>
-                        </a>
-                    
-                
-                    
-                
-                    
-                        <a href="/tags/Spring/">
-                            <span class="chip center-align waves-effect waves-light chip-default">Spring</span>
-                        </a>
-                    
-                
-                    
-                        <a href="/tags/%E6%B3%A8%E8%A7%A3/">
-                            <span class="chip center-align waves-effect waves-light chip-default">注解</span>
-                        </a>
-                    
-                
-                    
-                        <a href="/tags/design-pattern/">
-                            <span class="chip center-align waves-effect waves-light chip-default">design pattern</span>
-                        </a>
-                    
                 
                     
                         <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/">
@@ -907,6 +883,12 @@
                     
                         <a href="/tags/RabbitMQ/">
                             <span class="chip center-align waves-effect waves-light chip-default">RabbitMQ</span>
+                        </a>
+                    
+                
+                    
+                        <a href="/tags/Spring/">
+                            <span class="chip center-align waves-effect waves-light chip-default">Spring</span>
                         </a>
                     
                 
@@ -923,8 +905,26 @@
                     
                 
                     
+                        <a href="/tags/%E6%B3%A8%E8%A7%A3/">
+                            <span class="chip center-align waves-effect waves-light chip-default">注解</span>
+                        </a>
+                    
+                
+                    
                         <a href="/tags/bloom-filter/">
                             <span class="chip center-align waves-effect waves-light chip-default">bloom filter</span>
+                        </a>
+                    
+                
+                    
+                        <a href="/tags/design-pattern/">
+                            <span class="chip center-align waves-effect waves-light chip-default">design pattern</span>
+                        </a>
+                    
+                
+                    
+                        <a href="/tags/operation/">
+                            <span class="chip center-align waves-effect waves-light chip-default">operation</span>
                         </a>
                     
                 
@@ -1157,7 +1157,7 @@
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1596522128177')
+  navigator.serviceWorker.register('/sw.js?t=1596522289187')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }
