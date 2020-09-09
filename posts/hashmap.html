@@ -609,13 +609,13 @@
 <li>两者查询指定内容的时间复杂度为O(n)</li>
 </ul>
 <p>他们的特点也是由他们本身的数据结构息息相关的，如下图：</p>
-<h3 id="1-1-数组"><a href="#1-1-数组" class="headerlink" title="1.1 数组"></a>1.1 数组</h3><p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/%E6%95%B0%E7%BB%84.png" alt=""></p>
+<h3 id="1-1-数组"><a href="#1-1-数组" class="headerlink" title="1.1 数组"></a>1.1 数组</h3><p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/%E6%95%B0%E7%BB%84.png" alt="1"></p>
 <p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/%E6%95%B0%E7%BB%84%E6%8F%92%E5%85%A51.png" alt="2"></p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/%E6%95%B0%E7%BB%84%E6%8F%92%E5%85%A52.png" alt=""></p>
+<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/%E6%95%B0%E7%BB%84%E6%8F%92%E5%85%A52.png" alt="3"></p>
 <p>如图：<br>（1）<strong>说明</strong>：数组是一段连续的内存，创建时必须定义好长度，创建后无法修改<br>（2）<strong>查询</strong>：在这个Int array[8]的数组中，如果想要查询下标为1的数据，则直接可以使用array[1]来获取<br>（3）<strong>插入</strong>：270需要插入到268和289中，先让289和320向后移动一位，然后插入。由此看出插入过程繁杂</p>
 <h3 id="1-2-单链表"><a href="#1-2-单链表" class="headerlink" title="1.2 单链表"></a>1.2 单链表</h3><p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/%E9%93%BE%E8%A1%A8%E4%B8%AD%E9%97%B4%E6%8F%92%E5%85%A5%E8%8A%82%E7%82%B9.png" alt="单链表"></p>
 <p>如图：<br>（1）<strong>说明</strong>：单链表只存储头结点和尾结点的信息，链表中的每个节点都保存了一个指向下一个节点的指针<br>（2）<strong>查询</strong>：从头结点根据指针向下遍历查询，过程繁杂<br>（3）<strong>插入</strong>：上图可看出，270插入到268和289之间，只需要两步：a.270的指针指向289 b.268的指针指向270</p>
-<h2 id="2-数据结构"><a href="#2-数据结构" class="headerlink" title="2. 数据结构"></a>2. 数据结构</h2><p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/hashmap%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.jpg" alt=""></p>
+<h2 id="2-数据结构"><a href="#2-数据结构" class="headerlink" title="2. 数据结构"></a>2. 数据结构</h2><p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/hashmap%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.jpg" alt="数据结构"></p>
 <blockquote>
 <p>备注：当<strong>链表长度大于8</strong> 并且 <strong>数组长度大于64时</strong> 链表才转换为红黑树</p>
 </blockquote>
@@ -691,7 +691,7 @@
 <blockquote>
 <p>问：jdk 1.7做了四次移位和四次异或，为什么jdk 1.8只用一次异或？<br>答：做1次扰动效率更高，并且两者实际效果差距不大</p>
 </blockquote>
-<h3 id="4-4-插入方法"><a href="#4-4-插入方法" class="headerlink" title="4.4 插入方法"></a>4.4 插入方法</h3><p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/HashMap-put.png" alt=""></p>
+<h3 id="4-4-插入方法"><a href="#4-4-插入方法" class="headerlink" title="4.4 插入方法"></a>4.4 插入方法</h3><p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/HashMap-put.png" alt="插入原理"></p>
 <ul>
 <li>（1）对key做hash操作（扰动函数）：如果key为null则返回0，不为null时，key的hashCode对自身无符号向右移后的hashCode做^操作，也就是按位异或，返回值假设为i</li>
 <li>（2）判断键值对数组table是否为空或为null，否则执行resize()进行扩容（对应前方的无参构造函数）；</li>
@@ -707,7 +707,7 @@
 <blockquote>
 <p>【问】：为什么jdk 1.7插入链表采用头插法，而jdk 1.8采用尾插法？<br>【答】：<br>jdk 1.7：作者认为最新插入的往往是查询中最希望被找到的<br>jdk 1.8：在1.7版本中，多线程环境下，A、B线程同时插入，A线程插入后，B线程扩容后重新hash，导致形成环</p>
 </blockquote>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/HashMap%E5%A4%B4%E6%8F%92%E6%B3%95%E5%BC%8A%E7%AB%AF.jpg" alt=""></p>
+<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/HashMap%E5%A4%B4%E6%8F%92%E6%B3%95%E5%BC%8A%E7%AB%AF.jpg" alt="环"></p>
 <h2 id="5-线程安全性"><a href="#5-线程安全性" class="headerlink" title="5. 线程安全性"></a>5. 线程安全性</h2><p>  HashMap是<strong>线程不安全</strong>的，举个数据覆盖的例子：当A线程判断index位置为空后正好挂起，B线程开始往index位置的写入节点数据，这时A线程恢复现场，执行赋值操作，就把A线程的数据给覆盖了；还有++size这个地方也会造成多线程同时扩容等问题。</p>
 <p>  可以使用<strong>ConcurrentHashMap</strong>保证线程安全性（分段锁）</p>
 <blockquote>
@@ -1514,7 +1514,7 @@
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1599661273625')
+  navigator.serviceWorker.register('/sw.js?t=1599661654606')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }
