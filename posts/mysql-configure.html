@@ -4,8 +4,8 @@
 
 <head><link rel=manifest href=/manifest.json>
     <meta charset="utf-8">
-    <meta name="keywords" content="友链, Java">
-    <meta name="description" content="友链 | 寒暄">
+    <meta name="keywords" content="configure mysql">
+    <meta name="description" content="MYSQL主从">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +14,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="white"/>
-    <title>友链 | 寒暄</title>
+    <title>MySQL8.0主从配置 | 寒暄</title>
     <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/apple-touch-icon.png">
     <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/favicon.ico">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/awesome/css/font-awesome.min.css">
@@ -402,293 +402,286 @@
     </nav>
 
 </header>
-<div class="bg-cover pd-header about-cover">
-    <div class="container">
-        <div class="row">
-    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
-        <div class="brand">
-            <div class="title center-align">
-                
-                    寒暄
-                
-            </div>
 
-            <div class="description center-align">
-                
-                    <span id="subtitle"></span>
-                    <script src="https://cdn.jsdelivr.net/npm/typed.js"></script>
-                    <script>
-                        var typed = new Typed("#subtitle", {
-                            strings: ['Java的日常',''],
-                            startDelay: 300,
-                            typeSpeed: 100,
-                            loop: true,
-                            backSpeed: 50,
-                            showCursor: true
-                        });
-                    </script>
-                
+    <script src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/cryptojs/crypto-js.min.js"></script>
+    <script>
+        (function () {
+            let pwd = '';
+            if (pwd && pwd.length > 0) {
+                if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                    alert('密码错误，将返回主页！');
+                    location.href = '/';
+                }
+            }
+        })();
+    </script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/16.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">MySQL8.0主从配置</h1>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 
-    <script>
-        // 每天切换 banner 图.  Switch banner image every day.
-        $('.bg-cover').css('background-image', 'url(https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/banner/2.jpg)');
-    </script>
 
-    </div>
-</div>
+<main class="post-container content">
+
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/tocbot/tocbot.css">
 <style>
-    .friends-container {
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
         margin-top: -100px;
-        margin-bottom: 30px;
+        visibility: hidden;
     }
 
-    .friends-container .tag-title {
-        margin-bottom: 10px;
-        color: #3C4858;
-        font-size: 1.75rem;
-        font-weight: 400;
+    #articleContent :focus {
+        outline: none;
     }
 
-    .frind-ship img {
-        border-radius: 50%;
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
     }
 
-    /* 以下是按钮样式 */
-
-    .frind-ship {
-        padding: 10px 20px;
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
     }
 
-    .frind-ship .title {
-        display: flex;
-        align-items: center;
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
     }
 
-    .frind-ship .title div {
-        color: #fff;
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
         padding-left: 10px;
     }
 
-    .frind-ship .title img {
-        width: 100px;
-        height: 100px;
-        flex-shrink: 0;
+    #toc-content ol li {
+        padding-left: 10px;
     }
 
-    .frind-ship .title h1 {
-        padding-bottom: 5px;
-        border-bottom: 2px solid #fff;
-        position: relative;
-        top: -15px;
-        left: 3px;
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
     }
 
-    .friend-button {
-        display: flex;
-        justify-content: center;
-        margin-bottom: -27px;
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
     }
 
-    .friend-button a {
-        border-radius: 40px;
+    #toc-content .is-active-link {
+        color: #42b983;
     }
 
-    .friend-all .tag-post {
-        margin-bottom: 30px;
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
     }
 
-    .button-caution {
-        background-color: #FF4351;
-        border-color: #FF4351;
-        color: #FFF;
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
     }
 
-    .button {
-        font-weight: 300;
-        font-size: 16px;
-        font-family: "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-        text-decoration: none;
-        text-align: center;
-        line-height: 40px;
-        height: 40px;
-        padding: 0 40px;
-        margin: 0;
-        display: inline-block;
-        appearance: none;
-        cursor: pointer;
-        border: none;
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
-        -webkit-transition-property: all;
-        transition-property: all;
-        -webkit-transition-duration: .3s;
-        transition-duration: .3s;
-    }
-
-    .title {
-        margin-bottom: 0rem !important;
-    }
-
-    .card {
-        margin: 3rem 0 1rem 0 !important;
-    }
-
-    .button-glow.button-caution {
-        -webkit-animation-name: glowing-caution;
-        animation-name: glowing-caution;
-    }
-
-    @-webkit-keyframes glowing-caution {
-        from {
-            -webkit-box-shadow: 0 0 0 rgba(255, 67, 81, 0.3);
-            box-shadow: 0 0 0 rgba(255, 67, 81, 0.3);
-        }
-
-        50% {
-            -webkit-box-shadow: 0 0 20px rgba(255, 67, 81, 0.8);
-            box-shadow: 0 0 20px rgba(255, 67, 81, 0.8);
-        }
-
-        to {
-            -webkit-box-shadow: 0 0 0 rgba(255, 67, 81, 0.3);
-            box-shadow: 0 0 0 rgba(255, 67, 81, 0.3);
-        }
-    }
-
-    @keyframes glowing-caution {
-        from {
-            -webkit-box-shadow: 0 0 0 rgba(255, 67, 81, 0.3);
-            box-shadow: 0 0 0 rgba(255, 67, 81, 0.3);
-        }
-
-        50% {
-            -webkit-box-shadow: 0 0 20px rgba(255, 67, 81, 0.8);
-            box-shadow: 0 0 20px rgba(255, 67, 81, 0.8);
-        }
-
-        to {
-            -webkit-box-shadow: 0 0 0 rgba(255, 67, 81, 0.3);
-            box-shadow: 0 0 0 rgba(255, 67, 81, 0.3);
-        }
-    }
-
-    .button-caution:hover {
-        background-color: #ff7680;
-        border-color: #ff7680;
-        color: #FFF;
-        text-decoration: none;
-    }
-
-    .frind-card1 {
-        background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
-    }
-
-    .frind-card2 {
-        background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    }
-
-    .frind-card3 {
-        background-image: linear-gradient(to right, #b8cbb8 0%, #b8cbb8 0%, #b465da 0%, #cf6cc9 33%, #ee609c 66%, #ee609c 100%);
-    }
-
-    .frind-card4 {
-        background-image: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
-    }
-
-    .frind-card5 {
-        background-image: linear-gradient(to top, #c471f5 0%, #fa71cd 100%);
-    }
-
-    .frind-card6 {
-        background-image: linear-gradient(to top, #48c6ef 0%, #6f86d6 100%);
-    }
-
-    .frind-card7 {
-        background-image: linear-gradient(to top, #0ba360 0%, #3cba92 100%);
-    }
-
-    .frind-card8 {
-        background-image: linear-gradient(to top, #0c3483 0%, #a2b6df 100%, #6b8cce 100%, #a2b6df 100%);
-    }
-
-    .frind-card9 {
-        background-image: linear-gradient(to right, #ff758c 0%, #ff7eb3 100%);
-    }
-
-    .frind-card10 {
-        background-image: linear-gradient(to top, #f77062 0%, #fe5196 100%);
-    }
-
-    article .card {
-        overflow: visible !important;
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
     }
 </style>
-
-<main class="content">
-    <div class="container friends-container">
-        <div class="card">
-            <div class="card-content">
-                <div class="tag-title center-align">
-                    <i class="fa fa-address-book"></i>&nbsp;&nbsp;友链
-                </div>
-                <article id="friends-link">
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
                     
-                        
-                        <div class="row tags-posts friend-all">
+                        <div class="article-tag">
                             
-                                
-                                <div class="col s12 m6 l4 friend-div" data-aos="zoom-in-up">
-                                    <div class="card frind-card1">
-                                        <div class="frind-ship">
-                                            <div class="title">
-                                                <img src="https://sitoi.cn/medias/avatars/avatar.jpg" alt="img">
-                                                <div>
-                                                    <h1 class="friend-name">Sitoi</h1>
-                                                    <p style="position: relative;top: -35px;">活到老，学到老</p>
-                                                </div>
-                                            </div>
-                                            <div class="friend-button">
-                                                <a href="https://sitoi.cn/" target="_blank"
-                                                   class="button button-glow button-rounded button-caution">
-                                                    访问博客
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <a href="/tags/configure/">
+                                    <span class="chip bg-color">configure</span>
+                                </a>
                             
                         </div>
                     
-                </article>
+                </div>
+                <div class="col s5 right-align">
+                    
+                        <div class="post-cate">
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                                <a href="/categories/configure/" class="post-category">
+                                    configure
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                    <div class="post-date info-break-policy">
+                        <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                        2020-09-15
+                    </div>
+                
+
+                
+                    <div class="post-date info-break-policy">
+                        <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
+                        2020-09-15
+                    </div>
+                
+
+                
+                    <div class="info-break-policy">
+                        <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                        630
+                    </div>
+                
+
+                
+                    <div class="info-break-policy">
+                        <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                        2 分
+                    </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+                
             </div>
         </div>
-        <div class="card">
-            <div class="card-content">
-                <h3 id="感谢在建站中给我提供帮助的各位大大！"><a href="#感谢在建站中给我提供帮助的各位大大！" class="headerlink" title="感谢在建站中给我提供帮助的各位大大！"></a>感谢在建站中给我提供帮助的各位大大！</h3><h3 id="也欢迎各位大神交换友链！"><a href="#也欢迎各位大神交换友链！" class="headerlink" title="也欢迎各位大神交换友链！"></a>也欢迎各位大神交换友链！</h3><br>
-
-<p><strong>友链格式①：</strong></p>
-<pre class="line-numbers language-json"><code class="language-json"><span class="token punctuation">{</span>
-    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Xuyk"</span><span class="token punctuation">,</span>
-    <span class="token property">"avatar"</span><span class="token operator">:</span> <span class="token string">"https://sitoi.cn/medias/avatars/avatar.jpg"</span><span class="token punctuation">,</span>
-    <span class="token property">"url"</span><span class="token operator">:</span> <span class="token string">"http://xuyk.top/"</span><span class="token punctuation">,</span>
-    <span class="token property">"introduction"</span><span class="token operator">:</span> <span class="token string">"Java的日常"</span><span class="token punctuation">,</span>
-    <span class="token property">"title"</span><span class="token operator">:</span> <span class="token string">"访问主页"</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<br>
-
-<p><strong>友链格式②：</strong></p>
-<pre class="line-numbers language-text"><code class="language-text">博客名字： Xuyk
-博客地址： http://xuyk.top/
-博客头像： https://sitoi.cn/medias/avatars/avatar.jpg
-博客简介： Java的日常<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="MySQL8-0主从配置"><a href="#MySQL8-0主从配置" class="headerlink" title="MySQL8.0主从配置"></a>MySQL8.0主从配置</h1><h2 id="0-整体思路"><a href="#0-整体思路" class="headerlink" title="0.整体思路"></a>0.整体思路</h2><ul>
+<li>1.主节点和从节点配置my.cnf配置文件</li>
+<li>2.锁住主节点数据库，将主节点数据库转化成dumpdb文件加载入从节点数据库</li>
+<li>3.从节点设置主从配置，开启主从</li>
+<li>4.同步失效排查</li>
+</ul>
+<h2 id="1-节点说明"><a href="#1-节点说明" class="headerlink" title="1.节点说明"></a>1.节点说明</h2><table>
+<thead>
+<tr>
+<th align="center">节点</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">192.168.10.155</td>
+<td align="center">主节点</td>
+</tr>
+<tr>
+<td align="center">192.168.10.166</td>
+<td align="center">从节点</td>
+</tr>
+</tbody></table>
 <blockquote>
-<p>注：如果需要交换友链，请在下面留言</p>
+<p>MYSQL8.0安装可在我的有道云笔记中查看：<br><a href="http://note.youdao.com/s/mHRa5u3">MYSQL8.0安装概要笔记</a></p>
+</blockquote>
+<h2 id="2-主从节点配置配置"><a href="#2-主从节点配置配置" class="headerlink" title="2.主从节点配置配置"></a>2.主从节点配置配置</h2><pre class="line-numbers language-java"><code class="language-java"><span class="token number">1.155</span>主节点编辑mysql配置文件，在<span class="token punctuation">[</span>mysqld<span class="token punctuation">]</span>标签下加入如下信息：
+
+# 编辑my<span class="token punctuation">.</span>cnf文件
+vim <span class="token operator">/</span>etc<span class="token operator">/</span>my<span class="token punctuation">.</span>cnf
+
+log<span class="token operator">-</span>bin<span class="token operator">=</span>my_mysql
+# server<span class="token operator">-</span>id要与从节点的server<span class="token operator">-</span>id不一致
+server<span class="token operator">-</span>id<span class="token operator">=</span><span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token number">2.156</span>从节点编辑mysql配置文件（vim <span class="token operator">/</span>etc<span class="token operator">/</span>my<span class="token punctuation">.</span>cnf），在<span class="token punctuation">[</span>mysqld<span class="token punctuation">]</span>标签下加入如下信息：
+
+# server<span class="token operator">-</span>id要与主节点的server<span class="token operator">-</span>id不一致
+server<span class="token operator">-</span>id<span class="token operator">=</span><span class="token number">2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token number">3.155</span>主节点进入mysql客户端新增用于主从间同步的用户并且授权<span class="token punctuation">,</span>后刷新配置
+
+# 创建user用户
+create user <span class="token string">'repl'</span>@<span class="token string">'%'</span> identified by <span class="token string">'Xyk@950807'</span><span class="token punctuation">;</span>
+# 赋予user用户权限
+grant replication slave on <span class="token operator">*</span><span class="token punctuation">.</span>* to <span class="token string">'repl'</span>@<span class="token string">'%'</span><span class="token punctuation">;</span>
+# 刷新配置
+flush privileges<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token number">4.155</span>主节点使用命令进行锁表，而后主库备份数据到从库
+
+# 锁表，无法插入数据
+flush tables with read lock<span class="token punctuation">;</span>
+# 查看当前主节点存储数据的文件File和存储位置position，并且记录下来
+show master status<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/master%20status.png" alt=""></p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token number">5</span><span class="token punctuation">.</span>新建一个<span class="token number">155</span>的会话，输入命令将锁之前的数据下载下来
+mysqldump <span class="token operator">--</span>all<span class="token operator">-</span>databases <span class="token operator">--</span>master<span class="token operator">-</span>data <span class="token operator">></span> dbdump<span class="token punctuation">.</span>db <span class="token operator">-</span>uroot <span class="token operator">-</span>p
+
+<span class="token number">6.156</span>节点使用scp命令将<span class="token number">155</span>的文件获取过来（在<span class="token number">156</span>节点输入命令）
+scp root<span class="token annotation punctuation">@192</span><span class="token punctuation">.</span><span class="token number">168.10</span><span class="token punctuation">.</span><span class="token number">155</span><span class="token operator">:</span><span class="token operator">~</span><span class="token operator">/</span>dbdump<span class="token punctuation">.</span>db <span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/dumpdb.png" alt=""></p>
+<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/scp%20dumpdb.png" alt=""></p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token number">7</span><span class="token punctuation">.</span>把dump<span class="token punctuation">.</span>db文件加载入<span class="token number">156</span>从库中（<span class="token number">156</span>从库执行）
+mysql <span class="token operator">&lt;</span> dbdump<span class="token punctuation">.</span>db <span class="token operator">-</span>uroot <span class="token operator">-</span>p
+输入密码
+
+<span class="token number">8.155</span>节点释放锁
+unlock tables<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token number">9.156</span>从节点上配置主从配置信息（mysql客户端）
+mysql<span class="token operator">></span> change master to
+    <span class="token operator">-</span><span class="token operator">></span> master_host<span class="token operator">=</span><span class="token string">'192.168.10.155'</span><span class="token punctuation">,</span>
+    <span class="token operator">-</span><span class="token operator">></span> master_user<span class="token operator">=</span><span class="token string">'repl'</span><span class="token punctuation">,</span>
+    <span class="token operator">-</span><span class="token operator">></span> master_password<span class="token operator">=</span><span class="token string">'Xyk@950807'</span><span class="token punctuation">,</span>
+    <span class="token operator">-</span><span class="token operator">></span> master_log_file<span class="token operator">=</span><span class="token string">'my_mysql.000001'</span><span class="token punctuation">,</span>
+    <span class="token operator">-</span><span class="token operator">></span> master_log_pos<span class="token operator">=</span><span class="token number">984</span><span class="token punctuation">;</span>
+
+<span class="token number">10</span><span class="token punctuation">.</span>开启主从
+start slave<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/change%20master%20to.png" alt=""></p>
+<h2 id="3-同步无效思路"><a href="#3-同步无效思路" class="headerlink" title="3.同步无效思路"></a>3.同步无效思路</h2><p>1.从库mysql 命令【show slave status】</p>
+<p>查看Slave_IO_Running和Slave_SQL_Running是否两个都是yes</p>
+<p>2.有No的情况，则根据Last_IO_Errno的错误码和错误报错排查问题谷歌或者百度解决</p>
+<blockquote>
+<p>【无效参考链接】<br>1.<a href="https://www.cnblogs.com/ryxiong-blog/p/12516875.html">[mysql] [主从同步错误] Last_IO_Errno: 2061</a><br>2.<a href="https://blog.csdn.net/qq_42395490/article/details/107451996">Last_IO_Errno: 13114(mysql主从复制)</a></p>
 </blockquote>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -710,19 +703,54 @@
           });
       </script>
             </div>
+            <hr/>
+
+            
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/configure/">
+                                    <span class="chip bg-color">configure</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share"
+                     style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/share/css/share.min.css">
+<div id="article-share">
+    
+        <div class="social-share" data-sites="wechat,qq,weibo,twitter,facebook,linkedin"
+             data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+        <script src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
         </div>
-        <div class="card">
+    </div>
 
-            
+    
 
-            
+    
 
-            
+    
 
-            
+    
 
-            
-                <style>
+    
+        <style>
     .valine-card {
         margin: 1.5rem auto;
     }
@@ -988,12 +1016,118 @@
         placeholder: 'just go go'
     });
 </script>
-            
+    
 
-            
-        </div>
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+            <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+                <div class="article-badge left-badge text-color">
+                    <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+                </div>
+                <div class="card">
+                    <a href="/posts/mysql-configure.html">
+                        <div class="card-image">
+                            
+                                
+                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/16.jpg" class="responsive-img" alt="MySQL8.0主从配置">
+                            
+                            <span class="card-title">MySQL8.0主从配置</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                MYSQL主从
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-09-15
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/categories/configure/" class="post-category">
+                                    configure
+                                </a>
+                                    
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                        <div class="card-action article-tags">
+                            
+                                <a href="/tags/configure/">
+                                    <span class="chip bg-color">configure</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+            </div>
+        
+        
+            <div class="article col s12 m6" data-aos="fade-up">
+                <div class="article-badge right-badge text-color">
+                    下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+                </div>
+                <div class="card">
+                    <a href="/posts/hashmap.html">
+                        <div class="card-image">
+                            
+                                
+                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/1.jpg" class="responsive-img" alt="HashMap-链表散列">
+                            
+                            <span class="card-title">HashMap-链表散列</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                熟识面试常客
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-09-09
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/categories/Data-Structure/" class="post-category">
+                                    Data Structure
+                                </a>
+                                    
+                                
+                            </span>
+                        </div>
+                    </div>
+                    
+                        <div class="card-action article-tags">
+                            
+                                <a href="/tags/Data-Structure/">
+                                    <span class="chip bg-color">Data Structure</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+            </div>
+        
     </div>
-</main>
+</article>
+</div>
+
+
 
 
 <!-- 代码块功能依赖 -->
@@ -1020,20 +1154,110 @@
         }
     </style>
 
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
 
+<!-- TOC 悬浮按钮. -->
+
+    <div id="floating-toc-btn" class="hide-on-med-and-down">
+        <a class="btn-floating btn-large bg-color">
+            <i class="fa fa-list"></i>
+        </a>
+    </div>
+
+
+<script src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/tocbot/tocbot.min.js"></script>
 <script>
     $(function () {
-        $('#friends-link').masonry({
-            itemSelector: '.friend-div'
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4, h5'
         });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4, h5').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换 TOC 目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
     });
 </script>
+    
+
+</main>
+
+
 <footer class="page-footer bg-color">
     <div class="container row center-align">
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             <span id="year">2020</span>
-            <a href="/about" rel="external nofollow noreferrer">Xuyk</a>
+            <a href="/about" rel="external nofollow noreferrer">xuyk</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
