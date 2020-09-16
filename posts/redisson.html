@@ -572,7 +572,7 @@
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
-                        2020-06-24
+                        2020-09-16
                     </div>
                 
 
@@ -683,7 +683,7 @@ redis 客户端命令例子：
 <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> publish KEY <span class="token string">"{\"action\":\"ALL\"}"</span>
 <span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span> publish KEY <span class="token string">"{\"action"</span><span class="token operator">:</span>\<span class="token string">"DEL\", \"Id\":\"1\"}"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="3-布隆过滤器-bloomfilter"><a href="#3-布隆过滤器-bloomfilter" class="headerlink" title="3.布隆过滤器 - bloomfilter"></a>3.布隆过滤器 - bloomfilter</h2><blockquote>
-<p>PS：创建布隆过滤器需要根据业务场关注 <strong>期望插入值</strong> 和 <strong>判断失误的概率</strong></p>
+<p>PS：创建布隆过滤器需要根据业务场关注 <strong>期望插入值</strong> 和 <strong>判断失误的概率</strong><br>详细了解布隆过滤器可参考笔者写的<a href="http://xuyk.top/posts/bloom-filter.html">5分钟搞懂布隆过滤器 | 寒暄</a></p>
 </blockquote>
 <pre class="line-numbers language-java"><code class="language-java"># <span class="token number">1</span><span class="token punctuation">.</span>从redis获取布隆过滤器
 RBloomFilter<span class="token operator">&lt;</span>String<span class="token operator">></span> filter <span class="token operator">=</span> redissonClient<span class="token punctuation">.</span><span class="token function">getBloomFilter</span><span class="token punctuation">(</span><span class="token string">"testBloomFilter"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -1320,7 +1320,7 @@ redissonClient <span class="token operator">=</span> Redisson<span class="token 
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">29.3k</span>&nbsp;字
+                            class="white-color">29.4k</span>&nbsp;字
                 
                 
                 <script>
@@ -1508,7 +1508,7 @@ redissonClient <span class="token operator">=</span> Redisson<span class="token 
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1600172451116')
+  navigator.serviceWorker.register('/sw.js?t=1600236523952')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }
