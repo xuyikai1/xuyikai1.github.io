@@ -716,7 +716,7 @@
                 type: 'pie',
                 radius: '50%',
                 color: ['#6772e5', '#ff9e0f', '#fa755a', '#3ecf8e', '#82d3f4', '#ab47bc', '#525f7f', '#f51c47', '#26A69A'],
-                data: [{"name":"Redis","value":1},{"name":"configure","value":1},{"name":"消息队列","value":1},{"name":"Spring","value":2},{"name":"distributed task","value":1},{"name":"Data Structure","value":2},{"name":"运维","value":1},{"name":"design pattern","value":2}],
+                data: [{"name":"configure","value":1},{"name":"消息队列","value":1},{"name":"Data Structure","value":2},{"name":"Redis","value":1},{"name":"Spring","value":2},{"name":"distributed task","value":1},{"name":"运维","value":1},{"name":"design pattern","value":2}],
                 itemStyle: {
                     emphasis: {
                         shadowBlur: 10,
@@ -740,7 +740,7 @@
         xAxis: [
             {
                 type: 'category',
-                data: ["Spring","design pattern","Redis","configure","消息队列","RabbitMQ","事件监听","注解","distributed task","Data Structure"]
+                data: ["Spring","design pattern","configure","消息队列","RabbitMQ","Data Structure","Redis","事件监听","distributed task","注解"]
             }
         ],
         yAxis: [
@@ -873,8 +873,6 @@
             <div class="tag-chips center-align">
                 
                     
-                
-                    
                         <a href="/tags/configure/">
                             <span class="chip center-align waves-effect waves-light chip-default">configure</span>
                         </a>
@@ -893,6 +891,14 @@
                     
                 
                     
+                        <a href="/tags/Data-Structure/">
+                            <span class="chip center-align waves-effect waves-light chip-default">Data Structure</span>
+                        </a>
+                    
+                
+                    
+                
+                    
                         <a href="/tags/Spring/">
                             <span class="chip center-align waves-effect waves-light chip-default">Spring</span>
                         </a>
@@ -905,20 +911,14 @@
                     
                 
                     
-                        <a href="/tags/%E6%B3%A8%E8%A7%A3/">
-                            <span class="chip center-align waves-effect waves-light chip-default">注解</span>
-                        </a>
-                    
-                
-                    
                         <a href="/tags/distributed-task/">
                             <span class="chip center-align waves-effect waves-light chip-default">distributed task</span>
                         </a>
                     
                 
                     
-                        <a href="/tags/Data-Structure/">
-                            <span class="chip center-align waves-effect waves-light chip-default">Data Structure</span>
+                        <a href="/tags/%E6%B3%A8%E8%A7%A3/">
+                            <span class="chip center-align waves-effect waves-light chip-default">注解</span>
                         </a>
                     
                 
@@ -929,14 +929,14 @@
                     
                 
                     
-                        <a href="/tags/design-pattern/">
-                            <span class="chip center-align waves-effect waves-light chip-default">design pattern</span>
+                        <a href="/tags/bloom-filter/">
+                            <span class="chip center-align waves-effect waves-light chip-default">bloom filter</span>
                         </a>
                     
                 
                     
-                        <a href="/tags/bloom-filter/">
-                            <span class="chip center-align waves-effect waves-light chip-default">bloom filter</span>
+                        <a href="/tags/design-pattern/">
+                            <span class="chip center-align waves-effect waves-light chip-default">design pattern</span>
                         </a>
                     
                 
@@ -1169,7 +1169,7 @@
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1600236523952')
+  navigator.serviceWorker.register('/sw.js?t=1600239374034')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }
