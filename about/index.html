@@ -458,7 +458,7 @@
                     <div class="post-statis col l4 hide-on-med-and-down" data-aos="zoom-in-right">
                         
     <div class="statis">
-        <span class="count"><a href="/">11</a></span>
+        <span class="count"><a href="/">12</a></span>
         <span class="name">文章</span>
     </div>
 
@@ -488,7 +488,7 @@
                                 <div class="post-statis hide-on-large-only" data-aos="zoom-in-right">
                                     
     <div class="statis">
-        <span class="count"><a href="/">11</a></span>
+        <span class="count"><a href="/">12</a></span>
         <span class="name">文章</span>
     </div>
 
@@ -674,7 +674,7 @@
                 name: '文章篇数',
                 type: 'line',
                 color: ['#6772e5'],
-                data: [0,0,0,0,0,0,0,0,1,3,4,1,2],
+                data: [0,0,0,0,0,0,0,0,1,3,5,1,2],
                 markPoint: {
                     symbolSize: 45,
                     color: ['#fa755a', '#3ecf8e', '#82d3f4'],
@@ -716,7 +716,7 @@
                 type: 'pie',
                 radius: '50%',
                 color: ['#6772e5', '#ff9e0f', '#fa755a', '#3ecf8e', '#82d3f4', '#ab47bc', '#525f7f', '#f51c47', '#26A69A'],
-                data: [{"name":"configure","value":1},{"name":"消息队列","value":1},{"name":"Data Structure","value":2},{"name":"Redis","value":1},{"name":"Spring","value":2},{"name":"distributed task","value":1},{"name":"运维","value":1},{"name":"design pattern","value":2}],
+                data: [{"name":"Data Structure","value":2},{"name":"configure","value":1},{"name":"Redis","value":1},{"name":"消息队列","value":1},{"name":"distributed task","value":1},{"name":"Spring","value":2},{"name":"运维","value":1},{"name":"design pattern","value":3}],
                 itemStyle: {
                     emphasis: {
                         shadowBlur: 10,
@@ -740,7 +740,7 @@
         xAxis: [
             {
                 type: 'category',
-                data: ["Spring","design pattern","configure","消息队列","RabbitMQ","Data Structure","Redis","事件监听","distributed task","注解"]
+                data: ["design pattern","Spring","Data Structure","configure","Redis","消息队列","RabbitMQ","distributed task","注解","operation"]
             }
         ],
         yAxis: [
@@ -753,7 +753,7 @@
                 type: 'bar',
                 color: ['#82d3f4'],
                 barWidth: 18,
-                data: [2,2,1,1,1,1,1,1,1,1],
+                data: [3,2,1,1,1,1,1,1,1,1],
                 markPoint: {
                     symbolSize: 45,
                     data: [{
@@ -873,9 +873,17 @@
             <div class="tag-chips center-align">
                 
                     
+                        <a href="/tags/Data-Structure/">
+                            <span class="chip center-align waves-effect waves-light chip-default">Data Structure</span>
+                        </a>
+                    
+                
+                    
                         <a href="/tags/configure/">
                             <span class="chip center-align waves-effect waves-light chip-default">configure</span>
                         </a>
+                    
+                
                     
                 
                     
@@ -891,28 +899,14 @@
                     
                 
                     
-                        <a href="/tags/Data-Structure/">
-                            <span class="chip center-align waves-effect waves-light chip-default">Data Structure</span>
+                        <a href="/tags/distributed-task/">
+                            <span class="chip center-align waves-effect waves-light chip-default">distributed task</span>
                         </a>
-                    
-                
                     
                 
                     
                         <a href="/tags/Spring/">
                             <span class="chip center-align waves-effect waves-light chip-default">Spring</span>
-                        </a>
-                    
-                
-                    
-                        <a href="/tags/%E4%BA%8B%E4%BB%B6%E7%9B%91%E5%90%AC/">
-                            <span class="chip center-align waves-effect waves-light chip-default">事件监听</span>
-                        </a>
-                    
-                
-                    
-                        <a href="/tags/distributed-task/">
-                            <span class="chip center-align waves-effect waves-light chip-default">distributed task</span>
                         </a>
                     
                 
@@ -925,6 +919,12 @@
                     
                         <a href="/tags/operation/">
                             <span class="chip center-align waves-effect waves-light chip-default">operation</span>
+                        </a>
+                    
+                
+                    
+                        <a href="/tags/%E4%BA%8B%E4%BB%B6%E7%9B%91%E5%90%AC/">
+                            <span class="chip center-align waves-effect waves-light chip-default">事件监听</span>
                         </a>
                     
                 
@@ -981,7 +981,7 @@
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">29.4k</span>&nbsp;字
+                            class="white-color">31.3k</span>&nbsp;字
                 
                 
                 <script>
@@ -1169,7 +1169,7 @@
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1600239374034')
+  navigator.serviceWorker.register('/sw.js?t=1600241000027')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }
