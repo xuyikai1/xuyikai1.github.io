@@ -14,7 +14,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="white"/>
-    <title>日常工作的设计模式(一):策略模式 | 寒暄</title>
+    <title>日常工作中的策略模式轻实践 | 寒暄</title>
     <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/apple-touch-icon.png">
     <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/favicon.ico">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/awesome/css/font-awesome.min.css">
@@ -419,12 +419,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/8.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/2.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">日常工作的设计模式(一):策略模式</h1>
+                    <h1 class="description center-align post-title">日常工作中的策略模式轻实践</h1>
                 </div>
             </div>
         </div>
@@ -572,7 +572,7 @@
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
-                        2020-09-16
+                        2020-09-17
                     </div>
                 
 
@@ -601,7 +601,7 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="日常工作的设计模式-一-策略模式"><a href="#日常工作的设计模式-一-策略模式" class="headerlink" title="日常工作的设计模式(一):策略模式"></a>日常工作的设计模式(一):策略模式</h1><h2 id="0-引言"><a href="#0-引言" class="headerlink" title="0.引言"></a>0.引言</h2><p>在座的各位应该都知道，在日常的面试中，设计模式都是面试官屡试不爽的面试主题，借这个话题，面试官可以从面试者的回答中了解他对设计模式的熟悉程度，是否有自己的理解，更可以挖掘平时是否付诸实践，从而初步判断面试者对代码解耦的理解程度。今天，我们就来谈谈其中之一也是最常见的设计模式-策略模式，在我们的日常工作中如何运用上，达到轻松解耦(zhuangbei)的目的。</p>
+                <h1 id="日常工作中的策略模式轻实践"><a href="#日常工作中的策略模式轻实践" class="headerlink" title="日常工作中的策略模式轻实践"></a>日常工作中的策略模式轻实践</h1><h2 id="0-引言"><a href="#0-引言" class="headerlink" title="0.引言"></a>0.引言</h2><p>在座的各位应该都知道，在日常的面试中，设计模式都是面试官屡试不爽的面试主题，借这个话题，面试官可以从面试者的回答中了解他对设计模式的熟悉程度，是否有自己的理解，更可以挖掘平时是否付诸实践，从而初步判断面试者对代码解耦的理解程度。今天，我们就来谈谈其中之一也是最常见的设计模式-策略模式，在我们的日常工作中如何运用上，达到轻松解耦(zhuangbei)的目的。</p>
 <p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://cdn.jsdelivr.net/gh/xuyikai1/PictureBedCDN/img/8cc9277adbb43727796776f86906828.png" alt="oh yeah"></p>
 <h2 id="1-场景简述"><a href="#1-场景简述" class="headerlink" title="1.场景简述"></a>1.场景简述</h2><p>基本在每个设计支付的项目中，我们都会涉及到这个场景：</p>
 <p>用户用手机下单之后，支付请求发送至服务端接口，api接口根据请求参数判断为属于<strong>支付宝支付</strong>还是<strong>微信支付</strong>，又或者是<strong>京东支付</strong>或者<strong>银联支付</strong>，经过校验/计算订单金额等通用流程后，来调用第三方支付接口进行支付和支付回调。这里包括我可能都选择第2点的做法，我们来看：</p>
@@ -1605,7 +1605,7 @@
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1600241000027')
+  navigator.serviceWorker.register('/sw.js?t=1600321891997')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }
