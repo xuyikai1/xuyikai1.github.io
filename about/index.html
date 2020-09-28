@@ -443,7 +443,7 @@
 
     <script>
         // 每天切换 banner 图.  Switch banner image every day.
-        $('.bg-cover').css('background-image', 'url(https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/banner/4.jpg)');
+        $('.bg-cover').css('background-image', 'url(https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/banner/1.jpg)');
     </script>
 
     </div>
@@ -472,7 +472,7 @@
 
 
     <div class="statis">
-        <span class="count"><a href="/tags">12</a></span>
+        <span class="count"><a href="/tags">13</a></span>
         <span class="name">标签</span>
     </div>
 
@@ -502,7 +502,7 @@
 
 
     <div class="statis">
-        <span class="count"><a href="/tags">12</a></span>
+        <span class="count"><a href="/tags">13</a></span>
         <span class="name">标签</span>
     </div>
 
@@ -674,7 +674,7 @@
                 name: '文章篇数',
                 type: 'line',
                 color: ['#6772e5'],
-                data: [0,0,0,0,0,0,0,0,1,3,5,1,2],
+                data: [0,0,0,0,0,0,0,0,1,3,4,1,3],
                 markPoint: {
                     symbolSize: 45,
                     color: ['#fa755a', '#3ecf8e', '#82d3f4'],
@@ -716,7 +716,7 @@
                 type: 'pie',
                 radius: '50%',
                 color: ['#6772e5', '#ff9e0f', '#fa755a', '#3ecf8e', '#82d3f4', '#ab47bc', '#525f7f', '#f51c47', '#26A69A'],
-                data: [{"name":"configure","value":1},{"name":"Data Structure","value":2},{"name":"Redis","value":1},{"name":"消息队列","value":1},{"name":"design pattern","value":3},{"name":"Spring","value":2},{"name":"distributed task","value":1},{"name":"运维","value":1}],
+                data: [{"name":"Data Structure","value":2},{"name":"Redis","value":2},{"name":"configure","value":1},{"name":"消息队列","value":1},{"name":"Spring","value":2},{"name":"design pattern","value":2},{"name":"distributed task","value":1},{"name":"运维","value":1}],
                 itemStyle: {
                     emphasis: {
                         shadowBlur: 10,
@@ -740,7 +740,7 @@
         xAxis: [
             {
                 type: 'category',
-                data: ["design pattern","Spring","configure","Data Structure","Redis","消息队列","RabbitMQ","事件监听","distributed task","注解"]
+                data: ["Spring","design pattern","Data Structure","redis cluster","configure","消息队列","RabbitMQ","Redis","事件监听","bloom filter"]
             }
         ],
         yAxis: [
@@ -753,7 +753,7 @@
                 type: 'bar',
                 color: ['#82d3f4'],
                 barWidth: 18,
-                data: [3,2,1,1,1,1,1,1,1,1],
+                data: [2,2,1,1,1,1,1,1,1,1],
                 markPoint: {
                     symbolSize: 45,
                     data: [{
@@ -873,17 +873,21 @@
             <div class="tag-chips center-align">
                 
                     
-                        <a href="/tags/configure/">
-                            <span class="chip center-align waves-effect waves-light chip-default">configure</span>
-                        </a>
-                    
-                
-                    
                         <a href="/tags/Data-Structure/">
                             <span class="chip center-align waves-effect waves-light chip-default">Data Structure</span>
                         </a>
                     
                 
+                    
+                        <a href="/tags/redis-cluster/">
+                            <span class="chip center-align waves-effect waves-light chip-default">redis cluster</span>
+                        </a>
+                    
+                
+                    
+                        <a href="/tags/configure/">
+                            <span class="chip center-align waves-effect waves-light chip-default">configure</span>
+                        </a>
                     
                 
                     
@@ -899,10 +903,6 @@
                     
                 
                     
-                        <a href="/tags/design-pattern/">
-                            <span class="chip center-align waves-effect waves-light chip-default">design pattern</span>
-                        </a>
-                    
                 
                     
                         <a href="/tags/Spring/">
@@ -917,8 +917,14 @@
                     
                 
                     
-                        <a href="/tags/distributed-task/">
-                            <span class="chip center-align waves-effect waves-light chip-default">distributed task</span>
+                        <a href="/tags/design-pattern/">
+                            <span class="chip center-align waves-effect waves-light chip-default">design pattern</span>
+                        </a>
+                    
+                
+                    
+                        <a href="/tags/bloom-filter/">
+                            <span class="chip center-align waves-effect waves-light chip-default">bloom filter</span>
                         </a>
                     
                 
@@ -929,14 +935,14 @@
                     
                 
                     
-                        <a href="/tags/operation/">
-                            <span class="chip center-align waves-effect waves-light chip-default">operation</span>
+                        <a href="/tags/distributed-task/">
+                            <span class="chip center-align waves-effect waves-light chip-default">distributed task</span>
                         </a>
                     
                 
                     
-                        <a href="/tags/bloom-filter/">
-                            <span class="chip center-align waves-effect waves-light chip-default">bloom filter</span>
+                        <a href="/tags/operation/">
+                            <span class="chip center-align waves-effect waves-light chip-default">operation</span>
                         </a>
                     
                 
@@ -981,7 +987,7 @@
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">31.3k</span>&nbsp;字
+                            class="white-color">30k</span>&nbsp;字
                 
                 
                 <script>
@@ -1169,7 +1175,7 @@
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1600321891997')
+  navigator.serviceWorker.register('/sw.js?t=1601284086833')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }
