@@ -716,7 +716,7 @@
                 type: 'pie',
                 radius: '50%',
                 color: ['#6772e5', '#ff9e0f', '#fa755a', '#3ecf8e', '#82d3f4', '#ab47bc', '#525f7f', '#f51c47', '#26A69A'],
-                data: [{"name":"configure","value":1},{"name":"Data Structure","value":2},{"name":"消息队列","value":1},{"name":"Redis","value":2},{"name":"Spring","value":2},{"name":"distributed task","value":1},{"name":"运维","value":1},{"name":"design pattern","value":2}],
+                data: [{"name":"configure","value":1},{"name":"消息队列","value":1},{"name":"Redis","value":2},{"name":"Data Structure","value":2},{"name":"Spring","value":2},{"name":"distributed task","value":1},{"name":"运维","value":1},{"name":"design pattern","value":2}],
                 itemStyle: {
                     emphasis: {
                         shadowBlur: 10,
@@ -740,7 +740,7 @@
         xAxis: [
             {
                 type: 'category',
-                data: ["Spring","design pattern","configure","Data Structure","消息队列","RabbitMQ","Redis","事件监听","redis cluster","distributed task"]
+                data: ["Spring","design pattern","configure","消息队列","RabbitMQ","redis cluster","Data Structure","事件监听","Redis","distributed task"]
             }
         ],
         yAxis: [
@@ -879,12 +879,6 @@
                     
                 
                     
-                        <a href="/tags/Data-Structure/">
-                            <span class="chip center-align waves-effect waves-light chip-default">Data Structure</span>
-                        </a>
-                    
-                
-                    
                         <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/">
                             <span class="chip center-align waves-effect waves-light chip-default">消息队列</span>
                         </a>
@@ -896,6 +890,16 @@
                         </a>
                     
                 
+                    
+                        <a href="/tags/redis-cluster/">
+                            <span class="chip center-align waves-effect waves-light chip-default">redis cluster</span>
+                        </a>
+                    
+                
+                    
+                        <a href="/tags/Data-Structure/">
+                            <span class="chip center-align waves-effect waves-light chip-default">Data Structure</span>
+                        </a>
                     
                 
                     
@@ -911,26 +915,10 @@
                     
                 
                     
-                        <a href="/tags/redis-cluster/">
-                            <span class="chip center-align waves-effect waves-light chip-default">redis cluster</span>
-                        </a>
-                    
                 
                     
                         <a href="/tags/distributed-task/">
                             <span class="chip center-align waves-effect waves-light chip-default">distributed task</span>
-                        </a>
-                    
-                
-                    
-                        <a href="/tags/operation/">
-                            <span class="chip center-align waves-effect waves-light chip-default">operation</span>
-                        </a>
-                    
-                
-                    
-                        <a href="/tags/bloom-filter/">
-                            <span class="chip center-align waves-effect waves-light chip-default">bloom filter</span>
                         </a>
                     
                 
@@ -941,8 +929,20 @@
                     
                 
                     
+                        <a href="/tags/operation/">
+                            <span class="chip center-align waves-effect waves-light chip-default">operation</span>
+                        </a>
+                    
+                
+                    
                         <a href="/tags/design-pattern/">
                             <span class="chip center-align waves-effect waves-light chip-default">design pattern</span>
+                        </a>
+                    
+                
+                    
+                        <a href="/tags/bloom-filter/">
+                            <span class="chip center-align waves-effect waves-light chip-default">bloom filter</span>
                         </a>
                     
                 
@@ -1175,7 +1175,7 @@
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1601284574636')
+  navigator.serviceWorker.register('/sw.js?t=1601284975408')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }

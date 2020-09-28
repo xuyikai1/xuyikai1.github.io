@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://xuyk.top/posts/mysql-configure.html</loc>
+    
+    <lastmod>2020-09-28T09:22:40.402Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://xuyk.top/posts/redis-cluster.html</loc>
     
-    <lastmod>2020-09-28T09:15:55.822Z</lastmod>
+    <lastmod>2020-09-28T09:20:51.056Z</lastmod>
     
   </url>
   
@@ -19,13 +26,6 @@
     <loc>http://xuyk.top/posts/redisson.html</loc>
     
     <lastmod>2020-09-16T06:06:49.046Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xuyk.top/posts/mysql-configure.html</loc>
-    
-    <lastmod>2020-09-15T12:18:48.490Z</lastmod>
     
   </url>
   
@@ -100,7 +100,7 @@
   </url>
   
   <url>
-    <loc>http://xuyk.top/about/index.html</loc>
+    <loc>http://xuyk.top/archives/index.html</loc>
     
     <lastmod>2020-06-14T11:18:47.000Z</lastmod>
     
@@ -114,14 +114,14 @@
   </url>
   
   <url>
-    <loc>http://xuyk.top/contact/index.html</loc>
+    <loc>http://xuyk.top/about/index.html</loc>
     
     <lastmod>2020-06-14T11:18:47.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://xuyk.top/archives/index.html</loc>
+    <loc>http://xuyk.top/contact/index.html</loc>
     
     <lastmod>2020-06-14T11:18:47.000Z</lastmod>
     
