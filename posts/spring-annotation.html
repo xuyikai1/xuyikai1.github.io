@@ -576,7 +576,7 @@
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
-                        2020-07-19
+                        2020-09-29
                     </div>
                 
 
@@ -614,12 +614,12 @@
 <blockquote>
 <p>其中<code>@EnableAutoConfiguration</code>的自动装配机制：该注解的Import注解导入了名为自动配置导入选择器的配置类(AutoConfigurationImportSelector)，自动装配导入选择器的selectImports方法中获取配置实例方法getAutoConfigurationEntry里，会有一个获取候选配置方法(getCandidateConfigurations)，有一个断言，表明选择器会从spring-boot-autoconfigure-2.1.5.RELEASE.jar包的META-INF目录下的spring,factories配置文件里获取到所有的候选配置，包括springboot内置的tomcat，事务等批量的自动装配，简化了很多繁琐的配置。</p>
 </blockquote>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://cdn.jsdelivr.net/gh/xuyikai1/PictureBedCDN/img/SpringbootApplication.png" alt="SpringbootApplication.png"></p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://cdn.jsdelivr.net/gh/xuyikai1/PictureBedCDN/img/EnableAutoConfiguration.png" alt="EnableAutoConfiguration.png"></p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://cdn.jsdelivr.net/gh/xuyikai1/PictureBedCDN/img/AutoConfigurationImportSelector.png" alt="AutoConfigurationImportSelector.png"></p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://cdn.jsdelivr.net/gh/xuyikai1/PictureBedCDN/img/getAutoConfigurationEntry%E6%96%B9%E6%B3%95.png" alt="getAutoConfigurationEntry方法.png"></p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://cdn.jsdelivr.net/gh/xuyikai1/PictureBedCDN/img/getCandidateConfigurations%E6%96%B9%E6%B3%95.png" alt="getCandidateConfigurations方法.png"></p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://cdn.jsdelivr.net/gh/xuyikai1/PictureBedCDN/img/spring.factories.png" alt="spring.factories.png"></p>
+<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/SpringbootApplication.png" alt="SpringbootApplication"></p>
+<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/EnableAutoConfiguration.png" alt="EnableAutoConfiguration"></p>
+<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/AutoConfigurationImportSelector.png" alt="AutoConfigurationImportSelector"></p>
+<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/getAutoConfigurationEntry%E6%96%B9%E6%B3%95.png" alt="getAutoConfigurationEntry方法"></p>
+<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/getCandidateConfigurations%E6%96%B9%E6%B3%95.png" alt="getCandidateConfigurations方法"></p>
+<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/spring.factories.png" alt="spring.factories"></p>
 <h2 id="2-Spring-Bean相关注解"><a href="#2-Spring-Bean相关注解" class="headerlink" title="2 Spring Bean相关注解"></a>2 Spring Bean相关注解</h2><h3 id="2-1-Autowired注解"><a href="#2-1-Autowired注解" class="headerlink" title="2.1 @Autowired注解"></a>2.1 <code>@Autowired</code>注解</h3><p>自动导入对象到类，被Spring容器管理</p>
 <pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Service</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserService</span> <span class="token punctuation">{</span>
@@ -708,10 +708,10 @@ String wuhan2020<span class="token punctuation">;</span><span aria-hidden="true"
 <p>需要注意的是@value这种方式是不被推荐的，Spring 比较建议的是下面几种读取配置信息的方式。</p>
 </blockquote>
 <h3 id="5-2-ConfigurationProperties-常用"><a href="#5-2-ConfigurationProperties-常用" class="headerlink" title="5.2 @ConfigurationProperties(常用)"></a>5.2 <code>@ConfigurationProperties</code>(常用)</h3><pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Component</span> 
-<span class="token comment" spellcheck="true">// 没有加@Component注解则需要在主类上加@EnableConfigurationProperties({LibraryProperties.class})</span>
+\\ 没有加<span class="token annotation punctuation">@Component</span>注解则需要在主类上加<span class="token annotation punctuation">@EnableConfigurationProperties</span><span class="token punctuation">(</span><span class="token punctuation">{</span>LibraryProperties<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
 <span class="token annotation punctuation">@Data</span>
 <span class="token annotation punctuation">@ConfigurationProperties</span><span class="token punctuation">(</span>prefix <span class="token operator">=</span> <span class="token string">"library"</span><span class="token punctuation">)</span>
-<span class="token annotation punctuation">@Validated</span> <span class="token comment" spellcheck="true">// 校验需要加此注解，校验失败则启动报错</span>
+<span class="token annotation punctuation">@Validated</span> \\ 校验需要加此注解，校验失败则启动报错
 <span class="token keyword">class</span> <span class="token class-name">LibraryProperties</span> <span class="token punctuation">{</span>
 
     <span class="token annotation punctuation">@NotEmpty</span>
@@ -743,11 +743,11 @@ String wuhan2020<span class="token punctuation">;</span><span aria-hidden="true"
 
   <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="5-4-题外话：配置文件读取优先级"><a href="#5-4-题外话：配置文件读取优先级" class="headerlink" title="5.4 题外话：配置文件读取优先级"></a>5.4 题外话：配置文件读取优先级</h3><p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original=":storage%5Ca242324e-4f8f-4377-a3a2-f84cf944f250%5Cba85eaf0.webp" alt="配置文件优先级.webp"></p>
+<h3 id="5-4-题外话：配置文件读取优先级"><a href="#5-4-题外话：配置文件读取优先级" class="headerlink" title="5.4 题外话：配置文件读取优先级"></a>5.4 题外话：配置文件读取优先级</h3><p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BC%98%E5%85%88%E7%BA%A7.png" alt="配置文件优先级"></p>
 <blockquote>
 <p>其中如果有集成spring-cloud-config配置中心的话,则优先级最高的是配置中心的配置文件</p>
 </blockquote>
-<h2 id="6-参数校验"><a href="#6-参数校验" class="headerlink" title="6 参数校验"></a>6 参数校验</h2><p><strong>不止前端需要对数据进行初步校验，为了防止绕过浏览器直接访问接口的请求(含有违法/恶意的数据)，后端也需要对参数进行校验</strong></p>
+<h2 id="6-参数校验"><a href="#6-参数校验" class="headerlink" title="6 参数校验"></a>6 参数校验</h2><p><strong>不止前端需要对数据进行初步校验，为了防止绕过浏览器直接访问接口的请求(含有违法\恶意的数据)，后端也需要对参数进行校验</strong></p>
 <p>JSR(Java Specification Requests） 是一套 JavaBean 参数校验的标准，它定义了很多常用的校验注解，我们可以直接将这些注解加在我们 JavaBean 的属性上面，这样就可以在需要校验的时候进行校验了，非常方便！</p>
 <p>SpringBoot 项目的 spring-boot-starter-web 依赖中已经有 hibernate-validator 包，不需要引用相关依赖。</p>
 <p>校验的时候我们实际用的是 Hibernate Validator 框架。</p>
@@ -768,7 +768,7 @@ String wuhan2020<span class="token punctuation">;</span><span aria-hidden="true"
 <li><code>@Future</code> 被注释的元素必须是一个将来的日期</li>
 </ul>
 <blockquote>
-<p>例子：<br>@Pattern(regexp=”/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,10}$/“, message=”密码必须是6~10位数字和字母的组合<br>private String password;</p>
+<p>例子：<br>@Pattern(regexp=”^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,10}$", message=”密码必须是6~10位数字和字母的组合<br>private String password;</p>
 </blockquote>
 <p><strong>Hibernate Validator提供的校验注解：</strong></p>
 <ul>
@@ -780,18 +780,18 @@ String wuhan2020<span class="token punctuation">;</span><span aria-hidden="true"
 </ul>
 <p><strong>Controller层在需要校验的接口参数上加上@Valid，类上加上@Validate注解，如果校验失败它将抛出<code>MethodArgumentNotValidException</code>的异常</strong></p>
 <pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@RestController</span>
-<span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/api"</span><span class="token punctuation">)</span>
+<span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"\api"</span><span class="token punctuation">)</span>
 <span class="token annotation punctuation">@Validate</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">PersonController</span> <span class="token punctuation">{</span>
 
-    <span class="token comment" spellcheck="true">/** PS： @RequestBody不加的话就通过url的方式拼接在后面**/</span>
-    <span class="token annotation punctuation">@PostMapping</span><span class="token punctuation">(</span><span class="token string">"/person"</span><span class="token punctuation">)</span>
+    \<span class="token operator">*</span><span class="token operator">*</span> PS： <span class="token annotation punctuation">@RequestBody</span>不加的话就通过url的方式拼接在后面<span class="token operator">*</span><span class="token operator">*</span>\
+    <span class="token annotation punctuation">@PostMapping</span><span class="token punctuation">(</span><span class="token string">"\person"</span><span class="token punctuation">)</span>
     <span class="token keyword">public</span> ResponseEntity<span class="token operator">&lt;</span>Person<span class="token operator">></span> <span class="token function">getPerson</span><span class="token punctuation">(</span><span class="token annotation punctuation">@RequestBody</span> <span class="token annotation punctuation">@Valid</span> Person person<span class="token punctuation">)</span> <span class="token punctuation">{</span>
         <span class="token keyword">return</span> ResponseEntity<span class="token punctuation">.</span><span class="token function">ok</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">body</span><span class="token punctuation">(</span>person<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
-<p>拓展：<a href="https://mp.weixin.qq.com/s?__biz=Mzg2OTA0Njk0OA==&amp;mid=2247485783&amp;idx=1&amp;sn=a407f3b75efa17c643407daa7fb2acd6&amp;chksm=cea2469cf9d5cf8afbcd0a8a1c9cc4294d6805b8e01bee6f76bb2884c5bc15478e91459def49&amp;token=292197051&amp;lang=zh_CN#rd">如何在 Spring/Spring Boot 中做参数校验</a></p>
+<p>拓展：<a href="https:\mp.weixin.qq.com\s?__biz=Mzg2OTA0Njk0OA==&amp;mid=2247485783&amp;idx=1&amp;sn=a407f3b75efa17c643407daa7fb2acd6&amp;chksm=cea2469cf9d5cf8afbcd0a8a1c9cc4294d6805b8e01bee6f76bb2884c5bc15478e91459def49&amp;token=292197051&amp;lang=zh_CN#rd">如何在 Spring\Spring Boot 中做参数校验</a></p>
 </blockquote>
 <h2 id="7-全局异常处理"><a href="#7-全局异常处理" class="headerlink" title="7 全局异常处理"></a>7 全局异常处理</h2><ul>
 <li>1：<code>@ControllerAdvice</code> :注解定义全局异常处理类</li>
@@ -802,16 +802,16 @@ String wuhan2020<span class="token punctuation">;</span><span aria-hidden="true"
 <span class="token annotation punctuation">@ResponseBody</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">GlobalExceptionHandler</span> <span class="token punctuation">{</span>
 
-    <span class="token comment" spellcheck="true">/**
-     * 请求参数异常处理
-     */</span>
+    \<span class="token operator">*</span><span class="token operator">*</span>
+     <span class="token operator">*</span> 请求参数异常处理
+     <span class="token operator">*</span>\
     <span class="token annotation punctuation">@ExceptionHandler</span><span class="token punctuation">(</span>MethodArgumentNotValidException<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
     <span class="token keyword">public</span> ResponseEntity<span class="token operator">&lt;</span><span class="token operator">?</span><span class="token operator">></span> <span class="token function">handleMethodArgumentNotValidException</span><span class="token punctuation">(</span>MethodArgumentNotValidException ex<span class="token punctuation">,</span> HttpServletRequest request<span class="token punctuation">)</span> <span class="token punctuation">{</span>
        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
-<p>拓展：<br><a href="https://mp.weixin.qq.com/s?__biz=Mzg2OTA0Njk0OA==&amp;mid=2247485568&amp;idx=2&amp;sn=c5ba880fd0c5d82e39531fa42cb036ac&amp;chksm=cea2474bf9d5ce5dcbc6a5f6580198fdce4bc92ef577579183a729cb5d1430e4994720d59b34&amp;token=2133161636&amp;lang=zh_CN#rd">SpringBoot 处理异常的几种常见姿势</a><br><a href="https://mp.weixin.qq.com/s?__biz=Mzg2OTA0Njk0OA==&amp;mid=2247486379&amp;idx=2&amp;sn=48c29ae65b3ed874749f0803f0e4d90e&amp;chksm=cea24460f9d5cd769ed53ad7e17c97a7963a89f5350e370be633db0ae8d783c3a3dbd58c70f8&amp;token=1054498516&amp;lang=zh_CN#rd">使用枚举简单封装一个优雅的 Spring Boot 全局异常处理！</a></p>
+<p>拓展：<br><a href="https:\mp.weixin.qq.com\s?__biz=Mzg2OTA0Njk0OA==&amp;mid=2247485568&amp;idx=2&amp;sn=c5ba880fd0c5d82e39531fa42cb036ac&amp;chksm=cea2474bf9d5ce5dcbc6a5f6580198fdce4bc92ef577579183a729cb5d1430e4994720d59b34&amp;token=2133161636&amp;lang=zh_CN#rd">SpringBoot 处理异常的几种常见姿势</a><br><a href="https:\mp.weixin.qq.com\s?__biz=Mzg2OTA0Njk0OA==&amp;mid=2247486379&amp;idx=2&amp;sn=48c29ae65b3ed874749f0803f0e4d90e&amp;chksm=cea24460f9d5cd769ed53ad7e17c97a7963a89f5350e370be633db0ae8d783c3a3dbd58c70f8&amp;token=1054498516&amp;lang=zh_CN#rd">使用枚举简单封装一个优雅的 Spring Boot 全局异常处理！</a></p>
 </blockquote>
 <h2 id="8-JPA相关-数据持久层"><a href="#8-JPA相关-数据持久层" class="headerlink" title="8 JPA相关(数据持久层)"></a>8 JPA相关(数据持久层)</h2><h3 id="8-1-创建表"><a href="#8-1-创建表" class="headerlink" title="8.1 创建表"></a>8.1 创建表</h3><ul>
 <li><code>@Entity</code> 声明一个类对应一个数据库实体(实体类)</li>
@@ -825,7 +825,7 @@ String wuhan2020<span class="token punctuation">;</span><span aria-hidden="true"
     <span class="token keyword">private</span> Long id<span class="token punctuation">;</span>
     <span class="token keyword">private</span> String name<span class="token punctuation">;</span>
     <span class="token keyword">private</span> String description<span class="token punctuation">;</span>
-    省略getter<span class="token operator">/</span>setter<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    省略getter\setter<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="8-2-创建主键"><a href="#8-2-创建主键" class="headerlink" title="8.2 创建主键"></a>8.2 创建主键</h3><ul>
 <li><code>@Id</code> 声明一个字段为主键。</li>
@@ -835,7 +835,7 @@ String wuhan2020<span class="token punctuation">;</span><span aria-hidden="true"
 <span class="token annotation punctuation">@GeneratedValue</span><span class="token punctuation">(</span>strategy <span class="token operator">=</span> GenerationType<span class="token punctuation">.</span>IDENTITY<span class="token punctuation">)</span>
 <span class="token keyword">private</span> Integer id<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <blockquote>
-<p>一般使用 MySQL 数据库的话，使用GenerationType.IDENTITY策略比较普遍一点（分布式系统的话需要另外考虑使用分布式 ID）<br>拓展：<a href="https://www.jianshu.com/p/34d8199ac551">@GeneratedValue注解</a></p>
+<p>一般使用 MySQL 数据库的话，使用GenerationType.IDENTITY策略比较普遍一点（分布式系统的话需要另外考虑使用分布式 ID）<br>拓展：<a href="https:\www.jianshu.com\p\34d8199ac551">@GeneratedValue注解</a></p>
 </blockquote>
 <h3 id="8-3-设置字段类型"><a href="#8-3-设置字段类型" class="headerlink" title="8.3 设置字段类型"></a>8.3 设置字段类型</h3><ul>
 <li><code>@Column</code> 声明字段。</li>
@@ -856,9 +856,9 @@ String wuhan2020<span class="token punctuation">;</span><span aria-hidden="true"
 </ul>
 <p><strong>更详细的声明：</strong></p>
 <pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Lob</span>
-<span class="token comment" spellcheck="true">//指定 Lob 类型数据的获取策略， FetchType.EAGER 表示非延迟 加载，而 FetchType. LAZY 表示延迟加载 ；</span>
+\\指定 Lob 类型数据的获取策略， FetchType<span class="token punctuation">.</span>EAGER 表示非延迟 加载，而 FetchType<span class="token punctuation">.</span> LAZY 表示延迟加载 ；
 <span class="token annotation punctuation">@Basic</span><span class="token punctuation">(</span>fetch <span class="token operator">=</span> FetchType<span class="token punctuation">.</span>EAGER<span class="token punctuation">)</span>
-<span class="token comment" spellcheck="true">//columnDefinition 属性指定数据表对应的 Lob 字段类型</span>
+\\columnDefinition 属性指定数据表对应的 Lob 字段类型
 <span class="token annotation punctuation">@Column</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"content"</span><span class="token punctuation">,</span> columnDefinition <span class="token operator">=</span> <span class="token string">"LONGTEXT NOT NULL"</span><span class="token punctuation">)</span>
 <span class="token keyword">private</span> String content<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="8-6-创建枚举类型的字段"><a href="#8-6-创建枚举类型的字段" class="headerlink" title="8.6 创建枚举类型的字段"></a>8.6 创建枚举类型的字段</h3><p>可以使用枚举类型的字段，不过枚举字段要用<code>@Enumerated</code>注解修饰。</p>
@@ -933,7 +933,7 @@ String wuhan2020<span class="token punctuation">;</span><span aria-hidden="true"
 </li>
 </ul>
 <blockquote>
-<p>数据库里面对应存储的是 MAIL/FEMAIL。</p>
+<p>数据库里面对应存储的是 MAIL\FEMAIL。</p>
 </blockquote>
 <h2 id="9-事务-Transactional"><a href="#9-事务-Transactional" class="headerlink" title="9 事务 @Transactional"></a>9 事务 <code>@Transactional</code></h2><p><code>@Transactional</code> 注解一般用在可以作用在类或者方法上。</p>
 <ul>
@@ -969,10 +969,10 @@ String wuhan2020<span class="token punctuation">;</span><span aria-hidden="true"
 <p>默认使用<code>@Transactional</code>注解的话，事务传播为<code>Propagation.REQUIRED</code>，rollback为<code>RuntimeException.class</code></p>
 <p>一般POST请求（新增修改删除）则事务传播使用<code>Propagation.REQUIRED</code>，GET请求事务传播使用<code>Propagation.SUPPORTS</code></p>
 <blockquote>
-<p>拓展：<a href="https://mp.weixin.qq.com/s?__biz=Mzg2OTA0Njk0OA==&amp;mid=2247486483&amp;idx=2&amp;sn=77be488e206186803531ea5d7164ec53&amp;chksm=cea243d8f9d5cacecaa5c5daae4cde4c697b9b5b21f96dfc6cce428cfcb62b88b3970c26b9c2&amp;token=816772476&amp;lang=zh_CN#rd">Spring 事务管理详解</a></p>
+<p>拓展：<a href="https:\mp.weixin.qq.com\s?__biz=Mzg2OTA0Njk0OA==&amp;mid=2247486483&amp;idx=2&amp;sn=77be488e206186803531ea5d7164ec53&amp;chksm=cea243d8f9d5cacecaa5c5daae4cde4c697b9b5b21f96dfc6cce428cfcb62b88b3970c26b9c2&amp;token=816772476&amp;lang=zh_CN#rd">Spring 事务管理详解</a></p>
 </blockquote>
 <h2 id="10-Json解析"><a href="#10-Json解析" class="headerlink" title="10 Json解析"></a>10 Json解析</h2><h3 id="10-1-过滤-json-数据"><a href="#10-1-过滤-json-数据" class="headerlink" title="10.1. 过滤 json 数据"></a>10.1. 过滤 json 数据</h3><p>@JsonIgnoreProperties 作用在类上用于过滤掉特定字段不返回或者不解析。</p>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//生成json时将userRoles属性过滤</span>
+<pre class="line-numbers language-java"><code class="language-java">\\生成json时将userRoles属性过滤
 <span class="token annotation punctuation">@JsonIgnoreProperties</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token string">"userRoles"</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">User</span> <span class="token punctuation">{</span>
 
@@ -988,7 +988,7 @@ String wuhan2020<span class="token punctuation">;</span><span aria-hidden="true"
     <span class="token keyword">private</span> String userName<span class="token punctuation">;</span>
     <span class="token keyword">private</span> String fullName<span class="token punctuation">;</span>
     <span class="token keyword">private</span> String password<span class="token punctuation">;</span>
-   <span class="token comment" spellcheck="true">//生成json时将userRoles属性过滤</span>
+   \\生成json时将userRoles属性过滤
     <span class="token annotation punctuation">@JsonIgnore</span>
     <span class="token keyword">private</span> List<span class="token operator">&lt;</span>UserRole<span class="token operator">></span> userRoles <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
@@ -1050,7 +1050,7 @@ String wuhan2020<span class="token punctuation">;</span><span aria-hidden="true"
   <span class="token string">"fullName"</span><span class="token operator">:</span> <span class="token string">"shaungkou"</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
-<p>参考链接：<br>1：<a href="https:\github.com\Snailclimb\JavaGuide\blob\master\docs\system-design\framework\spring\spring-annotations.md">Spring\Spring常用注解总结！- JavaGuide</a><br>2：<a href="https://mp.weixin.qq.com/s?__biz=Mzg2OTA0Njk0OA==&amp;mid=2247485544&amp;idx=1&amp;sn=3cc95b88979e28fe3bfe539eb421c6d8&amp;chksm=cea247a3f9d5ceb5e324ff4b8697adc3e828ecf71a3468445e70221cce768d1e722085359907&amp;token=1725092312&amp;lang=zh_CN#rd">@RestController vs @Controller</a><br>3：<a href="https://mp.weixin.qq.com/s?__biz=Mzg2OTA0Njk0OA==&amp;mid=2247486181&amp;idx=2&amp;sn=10db0ae64ef501f96a5b0dbc4bd78786&amp;chksm=cea2452ef9d5cc384678e456427328600971180a77e40c13936b19369672ca3e342c26e92b50&amp;token=816772476&amp;lang=zh_CN#rd">SpringBoot 如何优雅读取配置文件</a><br>4：<a href="https://mp.weixin.qq.com/s?__biz=Mzg2OTA0Njk0OA==&amp;mid=2247485783&amp;idx=1&amp;sn=a407f3b75efa17c643407daa7fb2acd6&amp;chksm=cea2469cf9d5cf8afbcd0a8a1c9cc4294d6805b8e01bee6f76bb2884c5bc15478e91459def49&amp;token=292197051&amp;lang=zh_CN#rd">如何在 Spring/Spring Boot 中做参数校验</a><br>5：<a href="https://mp.weixin.qq.com/s?__biz=Mzg2OTA0Njk0OA==&amp;mid=2247486483&amp;idx=2&amp;sn=77be488e206186803531ea5d7164ec53&amp;chksm=cea243d8f9d5cacecaa5c5daae4cde4c697b9b5b21f96dfc6cce428cfcb62b88b3970c26b9c2&amp;token=816772476&amp;lang=zh_CN#rd">Spring 事务管理详解</a></p>
+<p>参考链接：<br>1：<a href="https:\github.com\Snailclimb\JavaGuide\blob\master\docs\system-design\framework\spring\spring-annotations.md">Spring\Spring常用注解总结！- JavaGuide</a><br>2：<a href="https:\mp.weixin.qq.com\s?__biz=Mzg2OTA0Njk0OA==&amp;mid=2247485544&amp;idx=1&amp;sn=3cc95b88979e28fe3bfe539eb421c6d8&amp;chksm=cea247a3f9d5ceb5e324ff4b8697adc3e828ecf71a3468445e70221cce768d1e722085359907&amp;token=1725092312&amp;lang=zh_CN#rd">@RestController vs @Controller</a><br>3：<a href="https:\mp.weixin.qq.com\s?__biz=Mzg2OTA0Njk0OA==&amp;mid=2247486181&amp;idx=2&amp;sn=10db0ae64ef501f96a5b0dbc4bd78786&amp;chksm=cea2452ef9d5cc384678e456427328600971180a77e40c13936b19369672ca3e342c26e92b50&amp;token=816772476&amp;lang=zh_CN#rd">SpringBoot 如何优雅读取配置文件</a><br>4：<a href="https:\mp.weixin.qq.com\s?__biz=Mzg2OTA0Njk0OA==&amp;mid=2247485783&amp;idx=1&amp;sn=a407f3b75efa17c643407daa7fb2acd6&amp;chksm=cea2469cf9d5cf8afbcd0a8a1c9cc4294d6805b8e01bee6f76bb2884c5bc15478e91459def49&amp;token=292197051&amp;lang=zh_CN#rd">如何在 Spring\Spring Boot 中做参数校验</a><br>5：<a href="https:\mp.weixin.qq.com\s?__biz=Mzg2OTA0Njk0OA==&amp;mid=2247486483&amp;idx=2&amp;sn=77be488e206186803531ea5d7164ec53&amp;chksm=cea243d8f9d5cacecaa5c5daae4cde4c697b9b5b21f96dfc6cce428cfcb62b88b3970c26b9c2&amp;token=816772476&amp;lang=zh_CN#rd">Spring 事务管理详解</a></p>
 </blockquote>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -1658,7 +1658,7 @@ String wuhan2020<span class="token punctuation">;</span><span aria-hidden="true"
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">30k</span>&nbsp;字
+                            class="white-color">29.7k</span>&nbsp;字
                 
                 
                 <script>
@@ -1846,7 +1846,7 @@ String wuhan2020<span class="token punctuation">;</span><span aria-hidden="true"
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1601362579534')
+  navigator.serviceWorker.register('/sw.js?t=1601369769913')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }

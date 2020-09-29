@@ -601,7 +601,7 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="初涉自动化部署"><a href="#初涉自动化部署" class="headerlink" title="初涉自动化部署"></a>初涉自动化部署</h1><p>日常工作中，每个程序员都会经历<strong>项目部署</strong>，而很多人在这时大多会经历以下环节：</p>
+                <h1 id="自动化部署与持续交付"><a href="#自动化部署与持续交付" class="headerlink" title="自动化部署与持续交付"></a>自动化部署与持续交付</h1><p>日常工作中，每个程序员都会经历<strong>项目部署</strong>，而很多人在这时大多会经历以下环节：</p>
 <ul>
 <li><strong>Git</strong> ：分布式版本控制系统，负责项目代码的分支拉取与分支更新等；</li>
 <li><strong>Maven</strong> ：项目管理工具，负责项目打包；</li>
@@ -611,7 +611,7 @@
 <p>而如今更需要一个自动化部署与持续交付的组合拳来分担压力，更为准确和系统化的实现项目部署。接下来介绍一下Git\Maven + Jenkins + Ansible三剑客，能轻松解决这一难题，实现自动化部署。</p>
 <p>简单分析图：</p>
 <hr>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/1.png" alt=""></p>
+<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/deploy-1.png" alt=""></p>
 <p>Git\Maven + Jenkins + Ansible自动化部署三剑客分工：</p>
 <ul>
 <li><strong>Git</strong> ：分布式版本控制系统，负责项目代码的分支拉取与分支更新等工作；</li>
@@ -651,8 +651,8 @@
 <td align="left">2.9.2</td>
 </tr>
 </tbody></table>
-<h2 id="2-安装与部署"><a href="#2-安装与部署" class="headerlink" title="2. 安装与部署"></a>2. 安装与部署</h2><h3 id="2-1-Jenkins安装前的环境部署"><a href="#2-1-Jenkins安装前的环境部署" class="headerlink" title="2.1 Jenkins安装前的环境部署"></a>2.1 Jenkins安装前的环境部署</h3><p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/2.png" alt=""></p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/3.png" alt=""></p>
+<h2 id="2-安装与部署"><a href="#2-安装与部署" class="headerlink" title="2. 安装与部署"></a>2. 安装与部署</h2><h3 id="2-1-Jenkins安装前的环境部署"><a href="#2-1-Jenkins安装前的环境部署" class="headerlink" title="2.1 Jenkins安装前的环境部署"></a>2.1 Jenkins安装前的环境部署</h3><p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/deploy-2.png" alt=""></p>
+<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/deploy-3.png" alt=""></p>
 <blockquote>
 <p>生产环境中防火墙可能不能关闭，那么则需要放行相关程序所需要的端口(jenkins默认为8080)</p>
 </blockquote>
@@ -672,7 +672,7 @@ tar  <span class="token operator">-</span>zxvf apache<span class="token operator
 <span class="token number">3</span><span class="token punctuation">.</span>查看maven版本号
 进入maven目录
 <span class="token punctuation">.</span>\mvn <span class="token operator">--</span>version<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="2-2-Jenkins安装与部署"><a href="#2-2-Jenkins安装与部署" class="headerlink" title="2.2 Jenkins安装与部署"></a>2.2 Jenkins安装与部署</h3><p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/4.png" alt=""></p>
+<h3 id="2-2-Jenkins安装与部署"><a href="#2-2-Jenkins安装与部署" class="headerlink" title="2.2 Jenkins安装与部署"></a>2.2 Jenkins安装与部署</h3><p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/deploy-4.png" alt=""></p>
 <blockquote>
 <p>JENKINS_USER = deploy表示jenkins的用户<br>JENKINS_PORT = 8080表示jenkins的端口</p>
 </blockquote>
@@ -681,7 +681,7 @@ systemctl start jenkins
 开机自启动jenkins服务： 
 systemctl enable jenkins<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="2-2-1-登陆jenkins管理平台"><a href="#2-2-1-登陆jenkins管理平台" class="headerlink" title="2.2.1 登陆jenkins管理平台"></a>2.2.1 登陆jenkins管理平台</h4><p>接下来使用可以访问到该服务器jenkins端口的电脑登陆：服务器ip + jenkins端口号<br>例如：http:\192.168.10.132:8080</p>
-<h4 id="2-2-2-复制输入初始密码登陆"><a href="#2-2-2-复制输入初始密码登陆" class="headerlink" title="2.2.2 复制输入初始密码登陆"></a>2.2.2 复制输入初始密码登陆</h4><p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/5.png" alt=""></p>
+<h4 id="2-2-2-复制输入初始密码登陆"><a href="#2-2-2-复制输入初始密码登陆" class="headerlink" title="2.2.2 复制输入初始密码登陆"></a>2.2.2 复制输入初始密码登陆</h4><p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/deploy-5.png" alt=""></p>
 <pre class="line-numbers language-java"><code class="language-java">复制文件中的密码
 vi \var\lib\jenkins\secrets\initialAdminPassword<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <h4 id="2-2-3-安装插件"><a href="#2-2-3-安装插件" class="headerlink" title="2.2.3 安装插件"></a>2.2.3 安装插件</h4><p>选择推荐安装的插件即可</p>
@@ -689,21 +689,21 @@ vi \var\lib\jenkins\secrets\initialAdminPassword<span aria-hidden="true" class="
 <h4 id="2-2-5-角色权限部署"><a href="#2-2-5-角色权限部署" class="headerlink" title="2.2.5 角色权限部署"></a>2.2.5 角色权限部署</h4><p>0.目的：<strong>每个用户只管理属于自己的自动化部署项目</strong><br>路径：<strong>Manage Jenkins - Manage Plugins - 可选插件</strong></p>
 <p>1.安装所需插件：<br><strong>Role-based Authorization Strategy - 直接安装</strong><br><strong>Authorize Project - 直接安装</strong></p>
 <p>2.部署路径：<strong>Manage Jenkins - Configure Global Security</strong><br>按图示开启用户登陆和选择Role-Based Strategy策略</p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/6.png" alt=""></p>
+<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/deploy-6.png" alt=""></p>
 <p>3.路径：<strong>Manage Jenkins - Manage and Assign Roles</strong></p>
 <p>4.配置：</p>
 <p><strong>帐号准备</strong><br>新建三个帐号prod、test、abc分别表示生产环境帐号、测试环境帐号、未知帐号<br>路径：<strong>管理平台页面 - 注销 - 创建一个用户帐号</strong></p>
 <p><strong>配置Manage Roles</strong><br>在Manage Roles中有两种角色<br><strong>Global roles</strong>：分配全局策略<br><strong>Project roles</strong>：根据项目环境来分配项目权限</p>
 <p><strong>Global roles栏</strong><br>可添加guest游客的角色，只赋予read权限（Overrall - Read），可查看全局的面板</p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/7.png" alt=""></p>
+<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/deploy-7.png" alt=""></p>
 <p><strong>Item roles栏</strong><br>可根据环境（例如生产环境、测试环境等）来进行项目分类</p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/8.png" alt=""></p>
+<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/deploy-8.png" alt=""></p>
 <p><strong>Role</strong>：分类名<br><strong>Pattern</strong>：正则表达式匹配</p>
 <blockquote>
 <p>例子：<br><strong>.*test</strong>    ：匹配所有以test结尾的项目，并分配图上的权限。注意使用通配符‘’时，需要在’’前添加’.’,否则无法保存并会报错。例如：.*plat</p>
 </blockquote>
 <p><strong>配置Assign Roles</strong><br>把具体用户（prod、test）与<strong>Manage Roles</strong>中配置的角色权限关联起来</p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/9.png" alt=""></p>
+<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/deploy-9.png" alt=""></p>
 <blockquote>
 <p>注意：<br>Anonymous User不分配权限，只需要给admin分配管理员权限</p>
 </blockquote>
@@ -712,11 +712,11 @@ vi \var\lib\jenkins\secrets\initialAdminPassword<span aria-hidden="true" class="
 <p>因为是测试Item，所以没有继续创建具体Item内容</p>
 </blockquote>
 <p><strong>admin管理用户的管理界面</strong></p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/10.png" alt=""></p>
+<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/deploy-10.png" alt=""></p>
 <p><strong>test用户的管理界面</strong></p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/11.png" alt=""></p>
+<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/deploy-11.png" alt=""></p>
 <p><strong>prod用户的管理界面</strong></p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/12.png" alt=""></p>
+<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/deploy-12.png" alt=""></p>
 <blockquote>
 <p>具体的权限在前面的<strong>Manage Roles - Item roles</strong>里根据需要进行设置</p>
 </blockquote>
@@ -795,40 +795,40 @@ ssh <span class="token operator">-</span>i 密钥文件路径 用户名<span cla
 
 <span class="token number">5</span><span class="token punctuation">.</span>完成ssh免密码\密钥认证
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/13.png" alt=""></p>
+<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/deploy-13.png" alt=""></p>
 <p><strong>Jenkins ansible插件安装</strong></p>
 <p>路径：*<em>Manage Jenkins - Manage Plugins - 可选插件 *</em></p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/14.png" alt=""></p>
+<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/deploy-14.png" alt=""></p>
 <blockquote>
 <p>未找到可能是因为已经安装了，在已安装里寻找</p>
 </blockquote>
 <h3 id="2-4-其他补充部署"><a href="#2-4-其他补充部署" class="headerlink" title="2.4 其他补充部署"></a>2.4 其他补充部署</h3><h4 id="2-4-1-Jenkins关于jdk的部署"><a href="#2-4-1-Jenkins关于jdk的部署" class="headerlink" title="2.4.1 Jenkins关于jdk的部署"></a>2.4.1 Jenkins关于jdk的部署</h4><p>路径：<strong>Manage Jenkins - Global Tool Configuration - JDK</strong></p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/15.png" alt=""></p>
+<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/deploy-15.png" alt=""></p>
 <p>JAVA_HOME填写jre路径（以自己实际路径为准）</p>
 <blockquote>
 <p>红色警告无伤大雅，配置是正确的</p>
 </blockquote>
-<h4 id="2-4-2-Jenkins关于maven的部署"><a href="#2-4-2-Jenkins关于maven的部署" class="headerlink" title="2.4.2 Jenkins关于maven的部署"></a>2.4.2 Jenkins关于maven的部署</h4><p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/16.png" alt=""></p>
+<h4 id="2-4-2-Jenkins关于maven的部署"><a href="#2-4-2-Jenkins关于maven的部署" class="headerlink" title="2.4.2 Jenkins关于maven的部署"></a>2.4.2 Jenkins关于maven的部署</h4><p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/deploy-16.png" alt=""></p>
 <h2 id="3-新建Item完成自动化部署"><a href="#3-新建Item完成自动化部署" class="headerlink" title="3. 新建Item完成自动化部署"></a>3. 新建Item完成自动化部署</h2><h3 id="3-1-新建Item"><a href="#3-1-新建Item" class="headerlink" title="3.1 新建Item"></a>3.1 新建Item</h3><p>1.路径：<strong>Jenkins工作台 - 新建Item - 输入任务名称(例：abc.test) - 选择Freestyle project - 确定</strong></p>
 <blockquote>
 <p>Freestyle在普通集成中一般足够使用，如果现实业务中有复杂的逻辑而Freestyle无法满足时，建议可以使用Jenkins 流水线(pipeline)编写pipeline脚本来实现自定义逻辑。<br>流水线写法可参考：<strong>ip地址:port端口号\job\pipeline.test\pipeline-syntax\</strong>(例：http:\192.168.10.132:8080\job\pipeline.test\pipeline-syntax)<br><strong>流水线example</strong>：https:\jenkins.io\doc\pipeline\examples\</p>
 </blockquote>
 <p>2.<strong>This project is parameterized</strong>（项目参数配置）</p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/17.png" alt=""></p>
+<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/deploy-17.png" alt=""></p>
 <p>(1) <strong>添加git分支选择参数 - Git Parameter</strong></p>
 <blockquote>
 <p>添加该参数的作用是在部署该Item时，部署人员可以动态选择git remote branchs中的任意分支，实现灵活部署</p>
 </blockquote>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/18.png" alt=""></p>
+<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/deploy-18.png" alt=""></p>
 <p>(2) <strong>源码管理 - Git\Multiple SCMs</strong></p>
 <p>预备：<strong>添加Git凭据</strong><br>路径：<strong>工作台 - 凭据 - Stores scoped to Jenkins - Jenkins -     全局凭据 (unrestricted) - 添加一些凭据</strong><br>填写用户名密码保存即可</p>
 <blockquote>
 <p>需要从git\svn拉取多个项目情况需要安装<strong>Multiple SCMs plugin</strong>插件</p>
 </blockquote>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/19.png" alt=""></p>
+<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/deploy-19.png" alt=""></p>
 <p>$ + 前面设置的参数名(例如：$playbookBranch)<br>实现动态选择远程分支的作用</p>
 <p>(3) <strong>构建 - Maven</strong></p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/20.png" alt=""></p>
+<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/deploy-20.png" alt=""></p>
 <p>Maven构建模块可以用来对项目进行install\package等操作</p>
 <p>(4) <strong>构建  - Ansible playbook</strong></p>
 <p>Ansible Playbooks常用模块介绍：</p>
@@ -876,8 +876,8 @@ ssh <span class="token operator">-</span>i 密钥文件路径 用户名<span cla
 <p>这个例子比较简单，只适合在开发\测试环境进行测试时为了便捷而使用</p>
 </blockquote>
 <p><strong>Jenkins Ansible配置</strong></p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/21.png" alt=""></p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/22.png" alt=""></p>
+<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/deploy-21.png" alt=""></p>
+<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/deploy-22.png" alt=""></p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -1480,7 +1480,7 @@ ssh <span class="token operator">-</span>i 密钥文件路径 用户名<span cla
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">30k</span>&nbsp;字
+                            class="white-color">29.7k</span>&nbsp;字
                 
                 
                 <script>
@@ -1668,7 +1668,7 @@ ssh <span class="token operator">-</span>i 密钥文件路径 用户名<span cla
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1601362579534')
+  navigator.serviceWorker.register('/sw.js?t=1601369769913')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }
