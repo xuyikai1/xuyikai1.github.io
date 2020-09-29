@@ -2,30 +2,58 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://xuyk.top/posts/spring-event.html</loc>
+    
+    <lastmod>2020-09-29T06:52:27.173Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xuyk.top/posts/redisson.html</loc>
+    
+    <lastmod>2020-09-29T06:52:24.038Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xuyk.top/posts/rabbitmq.html</loc>
+    
+    <lastmod>2020-09-29T06:52:16.455Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://xuyk.top/posts/mysql-configure.html</loc>
     
-    <lastmod>2020-09-29T06:42:08.024Z</lastmod>
+    <lastmod>2020-09-29T06:52:10.887Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xuyk.top/posts/design-pattern.html</loc>
+    
+    <lastmod>2020-09-29T06:52:00.503Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://xuyk.top/posts/operation.html</loc>
     
-    <lastmod>2020-09-29T06:41:54.730Z</lastmod>
+    <lastmod>2020-09-29T06:51:57.272Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://xuyk.top/posts/bloom-filter.html</loc>
     
-    <lastmod>2020-09-29T06:41:41.927Z</lastmod>
+    <lastmod>2020-09-29T06:51:46.973Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://xuyk.top/posts/xxl-job.html</loc>
     
-    <lastmod>2020-09-29T06:41:39.946Z</lastmod>
+    <lastmod>2020-09-29T06:50:47.414Z</lastmod>
     
   </url>
   
@@ -44,13 +72,6 @@
   </url>
   
   <url>
-    <loc>http://xuyk.top/posts/redisson.html</loc>
-    
-    <lastmod>2020-09-16T06:06:49.046Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://xuyk.top/posts/hashmap.html</loc>
     
     <lastmod>2020-09-14T07:56:26.109Z</lastmod>
@@ -58,30 +79,9 @@
   </url>
   
   <url>
-    <loc>http://xuyk.top/posts/rabbitmq.html</loc>
-    
-    <lastmod>2020-07-24T02:03:23.740Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://xuyk.top/posts/spring-annotation.html</loc>
     
     <lastmod>2020-07-19T04:55:10.191Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xuyk.top/posts/spring-event.html</loc>
-    
-    <lastmod>2020-07-19T04:53:58.962Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xuyk.top/posts/design-pattern.html</loc>
-    
-    <lastmod>2020-06-29T05:51:16.622Z</lastmod>
     
   </url>
   
@@ -114,7 +114,7 @@
   </url>
   
   <url>
-    <loc>http://xuyk.top/tags/index.html</loc>
+    <loc>http://xuyk.top/categories/index.html</loc>
     
     <lastmod>2020-06-14T11:18:47.000Z</lastmod>
     
@@ -128,7 +128,7 @@
   </url>
   
   <url>
-    <loc>http://xuyk.top/categories/index.html</loc>
+    <loc>http://xuyk.top/tags/index.html</loc>
     
     <lastmod>2020-06-14T11:18:47.000Z</lastmod>
     

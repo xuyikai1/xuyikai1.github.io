@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://xuyk.top/posts/spring-event.html</loc>
+    <lastmod>2020-09-29</lastmod>
+  </url>  <url>
+    <loc>http://xuyk.top/posts/redisson.html</loc>
+    <lastmod>2020-09-29</lastmod>
+  </url>  <url>
+    <loc>http://xuyk.top/posts/rabbitmq.html</loc>
+    <lastmod>2020-09-29</lastmod>
+  </url>  <url>
     <loc>http://xuyk.top/posts/mysql-configure.html</loc>
+    <lastmod>2020-09-29</lastmod>
+  </url>  <url>
+    <loc>http://xuyk.top/posts/design-pattern.html</loc>
     <lastmod>2020-09-29</lastmod>
   </url>  <url>
     <loc>http://xuyk.top/posts/operation.html</loc>
@@ -19,22 +31,10 @@
     <loc>http://xuyk.top/posts/strategy-pattern.html</loc>
     <lastmod>2020-09-17</lastmod>
   </url>  <url>
-    <loc>http://xuyk.top/posts/redisson.html</loc>
-    <lastmod>2020-09-16</lastmod>
-  </url>  <url>
     <loc>http://xuyk.top/posts/hashmap.html</loc>
     <lastmod>2020-09-14</lastmod>
   </url>  <url>
-    <loc>http://xuyk.top/posts/rabbitmq.html</loc>
-    <lastmod>2020-07-24</lastmod>
-  </url>  <url>
     <loc>http://xuyk.top/posts/spring-annotation.html</loc>
     <lastmod>2020-07-19</lastmod>
-  </url>  <url>
-    <loc>http://xuyk.top/posts/spring-event.html</loc>
-    <lastmod>2020-07-19</lastmod>
-  </url>  <url>
-    <loc>http://xuyk.top/posts/design-pattern.html</loc>
-    <lastmod>2020-06-29</lastmod>
   </url>
 </urlset>
