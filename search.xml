@@ -38,7 +38,7 @@
       
       <categories>
           
-          <category> configure </category>
+          <category> MySQL </category>
           
       </categories>
       
@@ -88,7 +88,7 @@
       
       <categories>
           
-          <category> 运维 </category>
+          <category> 运维部署 </category>
           
       </categories>
       
@@ -192,7 +192,7 @@
       
       <categories>
           
-          <category> distributed task </category>
+          <category> 分布式任务调度 </category>
           
       </categories>
       

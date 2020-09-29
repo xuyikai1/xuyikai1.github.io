@@ -2,7 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>http://xuyk.top/posts/mysql-configure.html</loc>
-    <lastmod>2020-09-28</lastmod>
+    <lastmod>2020-09-29</lastmod>
+  </url>  <url>
+    <loc>http://xuyk.top/posts/operation.html</loc>
+    <lastmod>2020-09-29</lastmod>
+  </url>  <url>
+    <loc>http://xuyk.top/posts/bloom-filter.html</loc>
+    <lastmod>2020-09-29</lastmod>
+  </url>  <url>
+    <loc>http://xuyk.top/posts/xxl-job.html</loc>
+    <lastmod>2020-09-29</lastmod>
   </url>  <url>
     <loc>http://xuyk.top/posts/redis-cluster.html</loc>
     <lastmod>2020-09-28</lastmod>
@@ -16,9 +25,6 @@
     <loc>http://xuyk.top/posts/hashmap.html</loc>
     <lastmod>2020-09-14</lastmod>
   </url>  <url>
-    <loc>http://xuyk.top/posts/operation.html</loc>
-    <lastmod>2020-08-04</lastmod>
-  </url>  <url>
     <loc>http://xuyk.top/posts/rabbitmq.html</loc>
     <lastmod>2020-07-24</lastmod>
   </url>  <url>
@@ -28,13 +34,7 @@
     <loc>http://xuyk.top/posts/spring-event.html</loc>
     <lastmod>2020-07-19</lastmod>
   </url>  <url>
-    <loc>http://xuyk.top/posts/xxl-job.html</loc>
-    <lastmod>2020-07-16</lastmod>
-  </url>  <url>
     <loc>http://xuyk.top/posts/design-pattern.html</loc>
     <lastmod>2020-06-29</lastmod>
-  </url>  <url>
-    <loc>http://xuyk.top/posts/bloom-filter.html</loc>
-    <lastmod>2020-06-24</lastmod>
   </url>
 </urlset>
