@@ -652,14 +652,14 @@ flush privileges<span class="token punctuation">;</span><span aria-hidden="true"
 flush tables with read lock<span class="token punctuation">;</span>
 # 查看当前主节点存储数据的文件File和存储位置position，并且记录下来
 show master status<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/master%20status.png" alt=""></p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/master%20status.png" alt=""></p>
 <pre class="line-numbers language-java"><code class="language-java"><span class="token number">5</span><span class="token punctuation">.</span>新建一个<span class="token number">155</span>的会话，输入命令将锁之前的数据下载下来
 mysqldump <span class="token operator">--</span>all<span class="token operator">-</span>databases <span class="token operator">--</span>master<span class="token operator">-</span>data <span class="token operator">></span> dbdump<span class="token punctuation">.</span>db <span class="token operator">-</span>uroot <span class="token operator">-</span>p
 
 <span class="token number">6.156</span>节点使用scp命令将<span class="token number">155</span>的文件获取过来（在<span class="token number">156</span>节点输入命令）
 scp root<span class="token annotation punctuation">@192</span><span class="token punctuation">.</span><span class="token number">168.10</span><span class="token punctuation">.</span><span class="token number">155</span><span class="token operator">:</span><span class="token operator">~</span><span class="token operator">/</span>dbdump<span class="token punctuation">.</span>db <span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/dumpdb.png" alt=""></p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/scp%20dumpdb.png" alt=""></p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/dumpdb.png" alt=""></p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/scp%20dumpdb.png" alt=""></p>
 <pre class="line-numbers language-java"><code class="language-java"><span class="token number">7</span><span class="token punctuation">.</span>把dump<span class="token punctuation">.</span>db文件加载入<span class="token number">156</span>从库中（<span class="token number">156</span>从库执行）
 mysql <span class="token operator">&lt;</span> dbdump<span class="token punctuation">.</span>db <span class="token operator">-</span>uroot <span class="token operator">-</span>p
 输入密码
@@ -676,7 +676,7 @@ mysql<span class="token operator">></span> change master to
 
 <span class="token number">10</span><span class="token punctuation">.</span>开启主从
 start slave<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/change%20master%20to.png" alt=""></p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/change%20master%20to.png" alt=""></p>
 <h2 id="3-同步无效思路"><a href="#3-同步无效思路" class="headerlink" title="3.同步无效思路"></a>3.同步无效思路</h2><p>1.从库mysql 命令【show slave status】</p>
 <p>查看Slave_IO_Running和Slave_SQL_Running是否两个都是yes</p>
 <p>2.有No的情况，则根据Last_IO_Errno的错误码和错误报错排查问题谷歌或者百度解决</p>
@@ -1469,7 +1469,7 @@ start slave<span class="token punctuation">;</span><span aria-hidden="true" clas
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1601612810220')
+  navigator.serviceWorker.register('/sw.js?t=1601614004333')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }
@@ -1494,10 +1494,5 @@ start slave<span class="token punctuation">;</span><span aria-hidden="true" clas
             }
           }
         });
-        </script><script>
-            window.imageLazyLoadSetting = {
-                isSPA: false,
-                processImages: null,
-            };
-        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(n){n.imageLazyLoadSetting.processImages=o;var i=n.imageLazyLoadSetting.isSPA,r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function o(){i&&(r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")));for(var t,e,a=0;a<r.length;a++)t=r[a],e=void 0,0<=(e=t.getBoundingClientRect()).bottom&&0<=e.left&&e.top<=(n.innerHeight||document.documentElement.clientHeight)&&function(){var t,e,n,i,o=r[a];t=o,e=function(){r=r.filter(function(t){return o!==t})},n=new Image,i=t.getAttribute("data-original"),n.onload=function(){t.src=i,e&&e()},n.src=i}()}o(),n.addEventListener("scroll",function(){var t,e;t=o,e=n,clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(e)},500)})}(this);</script></body>
+        </script></body>
 </html>

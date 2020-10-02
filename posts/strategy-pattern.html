@@ -602,11 +602,11 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="日常工作中的策略模式轻实践"><a href="#日常工作中的策略模式轻实践" class="headerlink" title="日常工作中的策略模式轻实践"></a>日常工作中的策略模式轻实践</h1><h2 id="0-引言"><a href="#0-引言" class="headerlink" title="0.引言"></a>0.引言</h2><p>在座的各位应该都知道，在日常的面试中，设计模式都是面试官屡试不爽的面试主题，借这个话题，面试官可以从面试者的回答中了解他对设计模式的熟悉程度，是否有自己的理解，更可以挖掘平时是否付诸实践，从而初步判断面试者对代码解耦的理解程度。今天，我们就来谈谈其中之一也是最常见的设计模式-策略模式，在我们的日常工作中如何运用上，达到轻松解耦(zhuangbei)的目的。</p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/strategy-yeah.png" alt="oh yeah"></p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/strategy-yeah.png" alt="oh yeah"></p>
 <h2 id="1-场景简述"><a href="#1-场景简述" class="headerlink" title="1.场景简述"></a>1.场景简述</h2><p>基本在每个设计支付的项目中，我们都会涉及到这个场景：</p>
 <p>用户用手机下单之后，支付请求发送至服务端接口，api接口根据请求参数判断为属于<strong>支付宝支付</strong>还是<strong>微信支付</strong>，又或者是<strong>京东支付</strong>或者<strong>银联支付</strong>，经过校验\计算订单金额等通用流程后，来调用第三方支付接口进行支付和支付回调。这里包括我可能都选择第2点的做法，我们来看：</p>
 <h2 id="2-一般做法"><a href="#2-一般做法" class="headerlink" title="2.一般做法"></a>2.一般做法</h2><p>在controller层的接口进入服务端，再经过分布式锁之后，调用service层来执行相应的业务逻辑，而后通过if else的方式分别进入不同的方法来调用第三方预支付接口，大概通过以下伪代码可以看出：</p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/strategy-%E4%B8%8D%E7%9C%8B%E4%B8%8D%E7%9C%8B.png" alt="不看不看"></p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/strategy-%E4%B8%8D%E7%9C%8B%E4%B8%8D%E7%9C%8B.png" alt="不看不看"></p>
 <pre class="line-numbers language-java"><code class="language-java">\\ 伪代码 <span class="token number">1</span><span class="token punctuation">.</span>支付宝 <span class="token number">2</span><span class="token punctuation">.</span>微信 <span class="token number">3</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
 
 <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">process</span><span class="token punctuation">(</span>PayRequest payRequest<span class="token punctuation">)</span><span class="token punctuation">{</span>
@@ -641,15 +641,15 @@
 <span class="token punctuation">}</span>
 <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>相信大多数人都是都是这样写的，包括笔者自己，因为确实没有一些问题，毕竟只是简单的判断，if else就完事了，还要啥自行车？</p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/strategy-%E5%BF%AB%E4%B9%90%E5%B0%B1%E5%AE%8C%E4%BA%8B%E4%BA%86.png" alt="快落就完事了"></p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/strategy-%E5%BF%AB%E4%B9%90%E5%B0%B1%E5%AE%8C%E4%BA%8B%E4%BA%86.png" alt="快落就完事了"></p>
 <p>但是去年，因为需求我需要做支付宝小程序支付，需要在支付中信拓展支付宝小程序支付时，看了下同事支付端的代码结构，发现自己在集成时非常方便，只需要实现支付接口拓展一个甚至不需要动同事的代码再加上一些业务代码即可，他省事我也省事。顿时觉得自己还是太年轻了。</p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/strategy-zz.jpg" alt="zz"></p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/strategy-zz.jpg" alt="zz"></p>
 <h2 id="3-别样思考"><a href="#3-别样思考" class="headerlink" title="3.别样思考"></a>3.别样思考</h2><h3 id="3-1-缘起"><a href="#3-1-缘起" class="headerlink" title="3.1 缘起"></a>3.1 缘起</h3><p>在做完这个需求后的最近，支付同事离职了，自己暂时接管支付这部分的内容，所以也对这部分代码进行了复盘，受益良多。</p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/strategy-%E7%9C%9F.jpg" alt="真?"></p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/strategy-%E7%9C%9F.jpg" alt="真?"></p>
 <p>大家应该有听过开闭原则：对修改关闭，对扩展开放。这个原则是说，在设计一个软件模块时，应该使这个模块可以在不被修改的前提下被扩展。换句话说，就是应该可以在不修改原有源代码的情况下，改变这个模块的行为。我感觉，这个结构还是听符合开闭原则的，让编码者码着舒服让参与者无压力加入。</p>
-<h3 id="3-2-代码结构图"><a href="#3-2-代码结构图" class="headerlink" title="3.2 代码结构图"></a>3.2 代码结构图</h3><p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/strategy-%E7%BB%93%E6%9E%84%E5%9B%BE.png" alt="结构图"></p>
+<h3 id="3-2-代码结构图"><a href="#3-2-代码结构图" class="headerlink" title="3.2 代码结构图"></a>3.2 代码结构图</h3><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/strategy-%E7%BB%93%E6%9E%84%E5%9B%BE.png" alt="结构图"></p>
 <h3 id="3-3-简单说明"><a href="#3-3-简单说明" class="headerlink" title="3.3 简单说明"></a>3.3 简单说明</h3><p>strategy模块可以从以下图中看出端倪：</p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/strategy-strategy%E6%A8%A1%E5%9D%97.png" alt="strategy模块"></p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/strategy-strategy%E6%A8%A1%E5%9D%97.png" alt="strategy模块"></p>
 <p>首先定义了一个PayStrategy接口类，声明了基本的方法</p>
 <pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">PayStrategy</span> <span class="token punctuation">{</span>
 
@@ -815,10 +815,10 @@
 <p>这两个就是具体的通道实现，在日志备注中可以看出相应的作用了吧！是不是觉得很简单！</p>
 <h3 id="3-4-测试与demo"><a href="#3-4-测试与demo" class="headerlink" title="3.4 测试与demo"></a>3.4 测试与demo</h3><p>当然，代码只有执行了才能印证一切<br><strong><a href="https://github.com/xuyikai1/JavaDemo">源码demo</a></strong></p>
 <p>启动项目，调用 <strong>http:\localhost:8081\pay</strong> 接口</p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/strategy-%E8%AF%B7%E6%B1%82.png" alt="postman调用+请求参数"></p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/strategy-%E6%97%A5%E5%BF%97.png" alt="打印日志"></p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/strategy-%E8%AF%B7%E6%B1%82.png" alt="postman调用+请求参数"></p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/strategy-%E6%97%A5%E5%BF%97.png" alt="打印日志"></p>
 <p>怎么样，是不是觉得代码清新了许多！</p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/strategy-%E7%A8%B3.png" alt="稳"></p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/strategy-%E7%A8%B3.png" alt="稳"></p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -1609,7 +1609,7 @@
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1601612810220')
+  navigator.serviceWorker.register('/sw.js?t=1601614004333')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }
@@ -1634,10 +1634,5 @@
             }
           }
         });
-        </script><script>
-            window.imageLazyLoadSetting = {
-                isSPA: false,
-                processImages: null,
-            };
-        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(n){n.imageLazyLoadSetting.processImages=o;var i=n.imageLazyLoadSetting.isSPA,r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function o(){i&&(r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")));for(var t,e,a=0;a<r.length;a++)t=r[a],e=void 0,0<=(e=t.getBoundingClientRect()).bottom&&0<=e.left&&e.top<=(n.innerHeight||document.documentElement.clientHeight)&&function(){var t,e,n,i,o=r[a];t=o,e=function(){r=r.filter(function(t){return o!==t})},n=new Image,i=t.getAttribute("data-original"),n.onload=function(){t.src=i,e&&e()},n.src=i}()}o(),n.addEventListener("scroll",function(){var t,e;t=o,e=n,clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(e)},500)})}(this);</script></body>
+        </script></body>
 </html>

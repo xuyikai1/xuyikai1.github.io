@@ -716,7 +716,7 @@
                 type: 'pie',
                 radius: '50%',
                 color: ['#6772e5', '#ff9e0f', '#fa755a', '#3ecf8e', '#82d3f4', '#ab47bc', '#525f7f', '#f51c47', '#26A69A'],
-                data: [{"name":"Data Structure","value":2},{"name":"MySQL","value":1},{"name":"Redis","value":2},{"name":"消息队列","value":1},{"name":"Spring","value":2},{"name":"分布式任务调度","value":1},{"name":"design pattern","value":2},{"name":"负载均衡","value":1},{"name":"运维部署","value":1}],
+                data: [{"name":"MySQL","value":1},{"name":"Data Structure","value":2},{"name":"消息队列","value":1},{"name":"分布式任务调度","value":1},{"name":"Redis","value":2},{"name":"Spring","value":2},{"name":"运维部署","value":1},{"name":"负载均衡","value":1},{"name":"design pattern","value":2}],
                 itemStyle: {
                     emphasis: {
                         shadowBlur: 10,
@@ -740,7 +740,7 @@
         xAxis: [
             {
                 type: 'category',
-                data: ["Spring","design pattern","Data Structure","configure","redis cluster","消息队列","RabbitMQ","Redis","事件监听","distributed task"]
+                data: ["Spring","design pattern","configure","Data Structure","消息队列","RabbitMQ","distributed task","redis cluster","注解","bloom filter"]
             }
         ],
         yAxis: [
@@ -873,20 +873,14 @@
             <div class="tag-chips center-align">
                 
                     
-                        <a href="/tags/Data-Structure/">
-                            <span class="chip center-align waves-effect waves-light chip-default">Data Structure</span>
-                        </a>
-                    
-                
-                    
                         <a href="/tags/configure/">
                             <span class="chip center-align waves-effect waves-light chip-default">configure</span>
                         </a>
                     
                 
                     
-                        <a href="/tags/redis-cluster/">
-                            <span class="chip center-align waves-effect waves-light chip-default">redis cluster</span>
+                        <a href="/tags/Data-Structure/">
+                            <span class="chip center-align waves-effect waves-light chip-default">Data Structure</span>
                         </a>
                     
                 
@@ -903,28 +897,20 @@
                     
                 
                     
-                
-                    
-                        <a href="/tags/Spring/">
-                            <span class="chip center-align waves-effect waves-light chip-default">Spring</span>
-                        </a>
-                    
-                
-                    
-                        <a href="/tags/%E4%BA%8B%E4%BB%B6%E7%9B%91%E5%90%AC/">
-                            <span class="chip center-align waves-effect waves-light chip-default">事件监听</span>
-                        </a>
-                    
-                
-                    
                         <a href="/tags/distributed-task/">
                             <span class="chip center-align waves-effect waves-light chip-default">distributed task</span>
                         </a>
                     
                 
                     
-                        <a href="/tags/bloom-filter/">
-                            <span class="chip center-align waves-effect waves-light chip-default">bloom filter</span>
+                        <a href="/tags/redis-cluster/">
+                            <span class="chip center-align waves-effect waves-light chip-default">redis cluster</span>
+                        </a>
+                    
+                
+                    
+                        <a href="/tags/Spring/">
+                            <span class="chip center-align waves-effect waves-light chip-default">Spring</span>
                         </a>
                     
                 
@@ -935,8 +921,14 @@
                     
                 
                     
-                        <a href="/tags/design-pattern/">
-                            <span class="chip center-align waves-effect waves-light chip-default">design pattern</span>
+                        <a href="/tags/bloom-filter/">
+                            <span class="chip center-align waves-effect waves-light chip-default">bloom filter</span>
+                        </a>
+                    
+                
+                    
+                        <a href="/tags/operation/">
+                            <span class="chip center-align waves-effect waves-light chip-default">operation</span>
                         </a>
                     
                 
@@ -947,9 +939,17 @@
                     
                 
                     
-                        <a href="/tags/operation/">
-                            <span class="chip center-align waves-effect waves-light chip-default">operation</span>
+                        <a href="/tags/%E4%BA%8B%E4%BB%B6%E7%9B%91%E5%90%AC/">
+                            <span class="chip center-align waves-effect waves-light chip-default">事件监听</span>
                         </a>
+                    
+                
+                    
+                        <a href="/tags/design-pattern/">
+                            <span class="chip center-align waves-effect waves-light chip-default">design pattern</span>
+                        </a>
+                    
+                
                     
                 
             </div>
@@ -1181,7 +1181,7 @@
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1601612810220')
+  navigator.serviceWorker.register('/sw.js?t=1601614004333')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }
@@ -1206,10 +1206,5 @@
             }
           }
         });
-        </script><script>
-            window.imageLazyLoadSetting = {
-                isSPA: false,
-                processImages: null,
-            };
-        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(n){n.imageLazyLoadSetting.processImages=o;var i=n.imageLazyLoadSetting.isSPA,r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function o(){i&&(r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")));for(var t,e,a=0;a<r.length;a++)t=r[a],e=void 0,0<=(e=t.getBoundingClientRect()).bottom&&0<=e.left&&e.top<=(n.innerHeight||document.documentElement.clientHeight)&&function(){var t,e,n,i,o=r[a];t=o,e=function(){r=r.filter(function(t){return o!==t})},n=new Image,i=t.getAttribute("data-original"),n.onload=function(){t.src=i,e&&e()},n.src=i}()}o(),n.addEventListener("scroll",function(){var t,e;t=o,e=n,clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(e)},500)})}(this);</script></body>
+        </script></body>
 </html>

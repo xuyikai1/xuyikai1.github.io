@@ -667,8 +667,8 @@ masterauth password
 </blockquote>
 <h3 id="2-查看集群"><a href="#2-查看集群" class="headerlink" title="(2) 查看集群"></a>(2) 查看集群</h3><pre class="line-numbers language-java"><code class="language-java">cluster info：集群信息
 cluster nodes：集群节点信息<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/cluster%20info.png" alt="cluster-info"></p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/cluster%20nodes.png" alt="cluster-nodes"></p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/cluster%20info.png" alt="cluster-info"></p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/cluster%20nodes.png" alt="cluster-nodes"></p>
 <h3 id="3-故障转移"><a href="#3-故障转移" class="headerlink" title="(3) 故障转移"></a>(3) 故障转移</h3><p>使用kill命令强制关闭一个redis master节点进程,此时集群状态<br>依旧为ok，在经过n秒(conf配置参数cluster-node-timeout)，<br>此宕机master节点的从节点会升级为master节点。之后原master节点恢复会自动降为slave节点</p>
 <h2 id="4-redis-manager搭建"><a href="#4-redis-manager搭建" class="headerlink" title="4. redis-manager搭建"></a>4. redis-manager搭建</h2><p><a href="https://github.com/ngbdf/redis-manager/wiki/2.x-%E5%BF%AB%E9%80%9F%E5%90%AF%E5%8A%A8">redis-manager搭建</a></p>
 <h3 id="搭建说明"><a href="#搭建说明" class="headerlink" title="搭建说明"></a>搭建说明</h3><h4 id="1-创建项目所需目录"><a href="#1-创建项目所需目录" class="headerlink" title="(1) 创建项目所需目录"></a>(1) 创建项目所需目录</h4><pre class="line-numbers language-java"><code class="language-java">mkdir <span class="token operator">-</span>p <span class="token operator">/</span>opt<span class="token operator">/</span>tool<span class="token operator">/</span>redis<span class="token operator">-</span>manager<span class="token operator">/</span>data<span class="token operator">/</span>avatar
@@ -686,8 +686,8 @@ chmod u<span class="token operator">+</span>x <span class="token operator">/</sp
 # <span class="token number">4</span><span class="token punctuation">.</span>重启服务器查看效果
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="3-redis-manager添加集群"><a href="#3-redis-manager添加集群" class="headerlink" title="(3) redis-manager添加集群"></a>(3) redis-manager添加集群</h4><p>1.通过<a href="http://192.168.10.139:8182"></a><a href="http://192.168.10.139:8182">http://192.168.10.139:8182</a>访问redis-manager管理端(ip为部署该项目的ip，默认端口为8182)，用户名密码默认皆为admin</p>
-<p>2.Import Cluster导入已部署的集群<br><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/import%20cluster.png" alt="import cluster"></p>
-<p>3.查看集群状态信息<br><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/rediss-manager%20cluster%20info.png" alt="rediss-manager cluster info"></p>
+<p>2.Import Cluster导入已部署的集群<br><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/import%20cluster.png" alt="import cluster"></p>
+<p>3.查看集群状态信息<br><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/rediss-manager%20cluster%20info.png" alt="rediss-manager cluster info"></p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -1474,7 +1474,7 @@ chmod u<span class="token operator">+</span>x <span class="token operator">/</sp
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1601612810220')
+  navigator.serviceWorker.register('/sw.js?t=1601614004333')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }
@@ -1499,10 +1499,5 @@ chmod u<span class="token operator">+</span>x <span class="token operator">/</sp
             }
           }
         });
-        </script><script>
-            window.imageLazyLoadSetting = {
-                isSPA: false,
-                processImages: null,
-            };
-        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(n){n.imageLazyLoadSetting.processImages=o;var i=n.imageLazyLoadSetting.isSPA,r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function o(){i&&(r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")));for(var t,e,a=0;a<r.length;a++)t=r[a],e=void 0,0<=(e=t.getBoundingClientRect()).bottom&&0<=e.left&&e.top<=(n.innerHeight||document.documentElement.clientHeight)&&function(){var t,e,n,i,o=r[a];t=o,e=function(){r=r.filter(function(t){return o!==t})},n=new Image,i=t.getAttribute("data-original"),n.onload=function(){t.src=i,e&&e()},n.src=i}()}o(),n.addEventListener("scroll",function(){var t,e;t=o,e=n,clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(e)},500)})}(this);</script></body>
+        </script></body>
 </html>

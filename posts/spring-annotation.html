@@ -614,12 +614,12 @@
 <blockquote>
 <p>其中<code>@EnableAutoConfiguration</code>的自动装配机制：该注解的Import注解导入了名为自动配置导入选择器的配置类(AutoConfigurationImportSelector)，自动装配导入选择器的selectImports方法中获取配置实例方法getAutoConfigurationEntry里，会有一个获取候选配置方法(getCandidateConfigurations)，有一个断言，表明选择器会从spring-boot-autoconfigure-2.1.5.RELEASE.jar包的META-INF目录下的spring,factories配置文件里获取到所有的候选配置，包括springboot内置的tomcat，事务等批量的自动装配，简化了很多繁琐的配置。</p>
 </blockquote>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/SpringbootApplication.png" alt="SpringbootApplication"></p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/EnableAutoConfiguration.png" alt="EnableAutoConfiguration"></p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/AutoConfigurationImportSelector.png" alt="AutoConfigurationImportSelector"></p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/getAutoConfigurationEntry%E6%96%B9%E6%B3%95.png" alt="getAutoConfigurationEntry方法"></p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/getCandidateConfigurations%E6%96%B9%E6%B3%95.png" alt="getCandidateConfigurations方法"></p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/spring.factories.png" alt="spring.factories"></p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/SpringbootApplication.png" alt="SpringbootApplication"></p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/EnableAutoConfiguration.png" alt="EnableAutoConfiguration"></p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/AutoConfigurationImportSelector.png" alt="AutoConfigurationImportSelector"></p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/getAutoConfigurationEntry%E6%96%B9%E6%B3%95.png" alt="getAutoConfigurationEntry方法"></p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/getCandidateConfigurations%E6%96%B9%E6%B3%95.png" alt="getCandidateConfigurations方法"></p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/spring.factories.png" alt="spring.factories"></p>
 <h2 id="2-Spring-Bean相关注解"><a href="#2-Spring-Bean相关注解" class="headerlink" title="2 Spring Bean相关注解"></a>2 Spring Bean相关注解</h2><h3 id="2-1-Autowired注解"><a href="#2-1-Autowired注解" class="headerlink" title="2.1 @Autowired注解"></a>2.1 <code>@Autowired</code>注解</h3><p>自动导入对象到类，被Spring容器管理</p>
 <pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Service</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserService</span> <span class="token punctuation">{</span>
@@ -743,7 +743,7 @@ String wuhan2020<span class="token punctuation">;</span><span aria-hidden="true"
 
   <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="5-4-题外话：配置文件读取优先级"><a href="#5-4-题外话：配置文件读取优先级" class="headerlink" title="5.4 题外话：配置文件读取优先级"></a>5.4 题外话：配置文件读取优先级</h3><p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BC%98%E5%85%88%E7%BA%A7.png" alt="配置文件优先级"></p>
+<h3 id="5-4-题外话：配置文件读取优先级"><a href="#5-4-题外话：配置文件读取优先级" class="headerlink" title="5.4 题外话：配置文件读取优先级"></a>5.4 题外话：配置文件读取优先级</h3><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BC%98%E5%85%88%E7%BA%A7.png" alt="配置文件优先级"></p>
 <blockquote>
 <p>其中如果有集成spring-cloud-config配置中心的话,则优先级最高的是配置中心的配置文件</p>
 </blockquote>
@@ -1846,7 +1846,7 @@ String wuhan2020<span class="token punctuation">;</span><span aria-hidden="true"
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1601612810220')
+  navigator.serviceWorker.register('/sw.js?t=1601614004333')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }
@@ -1871,10 +1871,5 @@ String wuhan2020<span class="token punctuation">;</span><span aria-hidden="true"
             }
           }
         });
-        </script><script>
-            window.imageLazyLoadSetting = {
-                isSPA: false,
-                processImages: null,
-            };
-        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(n){n.imageLazyLoadSetting.processImages=o;var i=n.imageLazyLoadSetting.isSPA,r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function o(){i&&(r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")));for(var t,e,a=0;a<r.length;a++)t=r[a],e=void 0,0<=(e=t.getBoundingClientRect()).bottom&&0<=e.left&&e.top<=(n.innerHeight||document.documentElement.clientHeight)&&function(){var t,e,n,i,o=r[a];t=o,e=function(){r=r.filter(function(t){return o!==t})},n=new Image,i=t.getAttribute("data-original"),n.onload=function(){t.src=i,e&&e()},n.src=i}()}o(),n.addEventListener("scroll",function(){var t,e;t=o,e=n,clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(e)},500)})}(this);</script></body>
+        </script></body>
 </html>

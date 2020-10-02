@@ -621,7 +621,7 @@
 <blockquote>
 <p>防御型编程：基本可以确定list中的server不会为null，但是也会判空并且为空时进行线程出让，到下一个循环<br>yield：Thread.yield方法，表示当前线程发生退让，其他线程可以优先获得当前资源</p>
 </blockquote>
-<h2 id="2-RoundRobinRule-轮询（Ribbon默认负载均衡策略）"><a href="#2-RoundRobinRule-轮询（Ribbon默认负载均衡策略）" class="headerlink" title="2. RoundRobinRule - 轮询（Ribbon默认负载均衡策略）"></a>2. RoundRobinRule - 轮询（Ribbon默认负载均衡策略）</h2><p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/RoundRobinRule.png" alt="轮询"></p>
+<h2 id="2-RoundRobinRule-轮询（Ribbon默认负载均衡策略）"><a href="#2-RoundRobinRule-轮询（Ribbon默认负载均衡策略）" class="headerlink" title="2. RoundRobinRule - 轮询（Ribbon默认负载均衡策略）"></a>2. RoundRobinRule - 轮询（Ribbon默认负载均衡策略）</h2><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/RoundRobinRule.png" alt="轮询"></p>
 <p>很实在，就是采用轮询的机制把列表中的节点一个个的分发过去</p>
 <blockquote>
 <p>Q：那么如何保证多线程安全（多个请求到来如何保证顺序）？<br>A：根据CAS + 自旋锁的方式来进行同步操作，防止多线程请求的情况下按照顺序下发到节点</p>
@@ -634,13 +634,13 @@
 <blockquote>
 <p>当然，在初期采样不足时，聪明的Ribbon也想到了，他们决定先采用轮询才收集样本，积累足够后会自动切换成权重机制</p>
 </blockquote>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/WeightedResponseTimeRule.png" alt="权重"></p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/WeightedResponseTimeRule.png" alt="权重"></p>
 <h2 id="5-BestAvailableRule-最少连接数-并发"><a href="#5-BestAvailableRule-最少连接数-并发" class="headerlink" title="5. BestAvailableRule - 最少连接数/并发"></a>5. BestAvailableRule - 最少连接数/并发</h2><p>Ribbon在<strong>过滤掉故障服务</strong>后，对基于<strong>过去30分钟</strong>的统计结果来选取当前并发量最小的服务节点，也就是最闲的节点来下发请求。相同的，采样不足时先使用备胎..不，轮询来负责。</p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/BestAvailableRule.png" alt="最少连接数"></p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/BestAvailableRule.png" alt="最少连接数"></p>
 <h2 id="6-AvailabilityFilteringRule-条件-要求"><a href="#6-AvailabilityFilteringRule-条件-要求" class="headerlink" title="6. AvailabilityFilteringRule - 条件/要求"></a>6. AvailabilityFilteringRule - 条件/要求</h2><p>顾名思义，节点列表中需要满足一定条件的节点才可能被初步选中，并且这个节点不能处于<strong>熔断状态</strong>，还有请求数也不能超过特定阈值，才可被选中下发（选中后不幸宕机，则会发起重试，失败则再选择下一个节点）</p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/AvailabilityFilteringRule.png" alt="条件"></p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/AvailabilityFilteringRule.png" alt="条件"></p>
 <h2 id="7-ZoneAvoidanceRule-组合过滤"><a href="#7-ZoneAvoidanceRule-组合过滤" class="headerlink" title="7. ZoneAvoidanceRule - 组合过滤"></a>7. ZoneAvoidanceRule - 组合过滤</h2><p>1.每个在Eureka注册的节点都有三个身份信息：Zone、Region和URL，Zone可以理解为机房大区，这个策略会对每个节点的Zone做健康检查，筛选返回健康的节点列表<br>2.对筛选出来的列表做可用性过滤（如AvailabilityFilteringRule一样排除处于熔断状态的节点以及并发压力大（超过阈值）的结点）</p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/ZoneAvoidanceRule.png" alt="组合过滤"></p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/ZoneAvoidanceRule.png" alt="组合过滤"></p>
 <h2 id="8-加餐：LVS的负载均衡"><a href="#8-加餐：LVS的负载均衡" class="headerlink" title="8.  加餐：LVS的负载均衡"></a>8.  加餐：LVS的负载均衡</h2><p>LVS，全称为Linux Virtual Server，本质上就是一个负载均衡器，是linux上的虚拟服务，属于四层负载均衡（IP+端口），<strong>只负责转发请求</strong>。业界一般使用 <strong>keepalived+Lvs+Nginx</strong> 来搭建高可用集群负载均衡</p>
 <blockquote>
 <p>【四层负载均衡】：基于IP+端口的负载均衡，只负责转发并且记录当前链接由哪个服务器处理，后续这个链接的请求也会由这一台服务器去处理（相当于浏览器的长连接（keep-alive）），一般使用LVS，F5（F5成本很高）<br>【七层负载均衡】：不仅可以转发，也可以处理JS，CSS或者压缩等，一般使用Nginx，Apache（apache远不如nginx，百万级别性能降低）</p>
@@ -649,7 +649,7 @@
 <blockquote>
 <p>LVS的负载均衡算法有很多，这里来简单介绍以下源地址散列，具体其他的可参考笔者之前的笔记：<a href="http://note.youdao.com/s/M3DftIYr">LVS的负载均衡算法-有道云笔记</a></p>
 </blockquote>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/hash.png" alt="hash算法"></p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/hash.png" alt="hash算法"></p>
 <blockquote>
 <p>【%】表示求模<br>【node_counts】表示服务器的数量<br>【7 % 3 = 1】表示 7除以3余1 所以等于1<br>ip-hash负载均衡算法其实也有比较明显的缺点，例如对于ip动态变化的用户不太友好，新增/减少服务器都会与原来计算结果背道而驰，这时候可以考虑一致性hash算法（<a href="http://note.youdao.com/s/B3obmiGK">一致性hash算法-有道云笔记</a>）</p>
 </blockquote>
@@ -1442,7 +1442,7 @@
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1601612810220')
+  navigator.serviceWorker.register('/sw.js?t=1601614004333')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }
@@ -1467,10 +1467,5 @@
             }
           }
         });
-        </script><script>
-            window.imageLazyLoadSetting = {
-                isSPA: false,
-                processImages: null,
-            };
-        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(n){n.imageLazyLoadSetting.processImages=o;var i=n.imageLazyLoadSetting.isSPA,r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function o(){i&&(r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")));for(var t,e,a=0;a<r.length;a++)t=r[a],e=void 0,0<=(e=t.getBoundingClientRect()).bottom&&0<=e.left&&e.top<=(n.innerHeight||document.documentElement.clientHeight)&&function(){var t,e,n,i,o=r[a];t=o,e=function(){r=r.filter(function(t){return o!==t})},n=new Image,i=t.getAttribute("data-original"),n.onload=function(){t.src=i,e&&e()},n.src=i}()}o(),n.addEventListener("scroll",function(){var t,e;t=o,e=n,clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(e)},500)})}(this);</script></body>
+        </script></body>
 </html>

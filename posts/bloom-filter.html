@@ -601,7 +601,7 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="布隆过滤器-Bloom-Filter"><a href="#布隆过滤器-Bloom-Filter" class="headerlink" title="布隆过滤器 - Bloom Filter"></a>布隆过滤器 - Bloom Filter</h1><h2 id="0-引言"><a href="#0-引言" class="headerlink" title="0.引言"></a>0.引言</h2><p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/bloomfilter-douyin.png" alt=""></p>
+                <h1 id="布隆过滤器-Bloom-Filter"><a href="#布隆过滤器-Bloom-Filter" class="headerlink" title="布隆过滤器 - Bloom Filter"></a>布隆过滤器 - Bloom Filter</h1><h2 id="0-引言"><a href="#0-引言" class="headerlink" title="0.引言"></a>0.引言</h2><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/bloomfilter-douyin.png" alt=""></p>
 <p>P：我们平时在刷抖音时，开发人员如何保证 <strong>不会刷到同样的内容</strong> ？</p>
 <ul>
 <li>1：<strong>把算法推荐中的内容根据历史记录做一遍筛选</strong>？在用户量大，用户查看内容多的场景，<strong>性能低</strong></li>
@@ -615,19 +615,19 @@
 <li>4：<strong>缓存穿透</strong>（非法用户会使用一般数据库里没有的key来进行访问导致请求一直打到数据库，导致数据库崩溃）。布隆过滤器删除key困难（会影响其他key），更建议直接使用redis set（设置过期时间）</li>
 </ul>
 <h2 id="2-什么是布隆过滤器"><a href="#2-什么是布隆过滤器" class="headerlink" title="2.什么是布隆过滤器"></a>2.什么是布隆过滤器</h2><h3 id="2-1数据结构"><a href="#2-1数据结构" class="headerlink" title="2.1数据结构"></a>2.1数据结构</h3><p>布隆过滤器（Bloom Filter）1970年由Bloom的老哥提出</p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/bloomFilter-init.png" alt="init"></p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/bloomFilter-init.png" alt="init"></p>
 <p>它由一个二进制数组来记录数据的相关性,数组中只有1或0</p>
 <blockquote>
 <p>二进制数组的优势：申请一个 100w 个元素的位数组只占用 1000000Bit \ 8 = 125000 Byte = 125000\1024 kb ≈ 122kb 的空间。</p>
 </blockquote>
 <p>因为数组为固定长度，在数据量越多而空间越少的情况，判断误差率会变大</p>
-<h3 id="2-2-原理"><a href="#2-2-原理" class="headerlink" title="2.2 原理"></a>2.2 原理</h3><p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/bloomFilter-add.png" alt="add"></p>
+<h3 id="2-2-原理"><a href="#2-2-原理" class="headerlink" title="2.2 原理"></a>2.2 原理</h3><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/bloomFilter-add.png" alt="add"></p>
 <p><strong>当一个元素加入布隆过滤器时：</strong></p>
 <ol>
 <li>布隆过滤器中的多个哈希函数对元素值进行计算，得到索引值，之后数组长度对该索引值取模算的数组位置</li>
 <li>多个哈希函数有多个计算后的数组位置，置为1，完成add操作</li>
 </ol>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/bloomFilter-exist.png" alt="exist"></p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/bloomFilter-exist.png" alt="exist"></p>
 <p><strong>当判断一个元素是否存在时：</strong></p>
 <ol>
 <li>多个哈希函数对元素值计算出位置后，如果有一个位置值为0，则肯定不存在</li>
@@ -1474,7 +1474,7 @@ filter<span class="token punctuation">.</span><span class="token function">tryIn
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1601612810220')
+  navigator.serviceWorker.register('/sw.js?t=1601614004333')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }
@@ -1499,10 +1499,5 @@ filter<span class="token punctuation">.</span><span class="token function">tryIn
             }
           }
         });
-        </script><script>
-            window.imageLazyLoadSetting = {
-                isSPA: false,
-                processImages: null,
-            };
-        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(n){n.imageLazyLoadSetting.processImages=o;var i=n.imageLazyLoadSetting.isSPA,r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function o(){i&&(r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")));for(var t,e,a=0;a<r.length;a++)t=r[a],e=void 0,0<=(e=t.getBoundingClientRect()).bottom&&0<=e.left&&e.top<=(n.innerHeight||document.documentElement.clientHeight)&&function(){var t,e,n,i,o=r[a];t=o,e=function(){r=r.filter(function(t){return o!==t})},n=new Image,i=t.getAttribute("data-original"),n.onload=function(){t.src=i,e&&e()},n.src=i}()}o(),n.addEventListener("scroll",function(){var t,e;t=o,e=n,clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(e)},500)})}(this);</script></body>
+        </script></body>
 </html>

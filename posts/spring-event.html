@@ -609,7 +609,7 @@
 <p>假设一个下单场景，订单创建成功后可能有一些后续逻辑要处理，但是和创建订单本身没有关系，此时就可以在创建订单完成后，发送一个消息，有相应部分的代码进行监听处理，避免代码耦合到一起</p>
 </blockquote>
 <p>这样的解决思路类似于MQ，但是小项目有时候又不需要MQ这样的第三方队列来实现，那么就可以使用Spring Context包的<strong>事件发布监听的机制来进行处理</strong></p>
-<h2 id="2-Spring事件发布监听机制"><a href="#2-Spring事件发布监听机制" class="headerlink" title="2.Spring事件发布监听机制"></a>2.Spring事件发布监听机制</h2><p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/spring%20event.png" alt="spring-event"></p>
+<h2 id="2-Spring事件发布监听机制"><a href="#2-Spring事件发布监听机制" class="headerlink" title="2.Spring事件发布监听机制"></a>2.Spring事件发布监听机制</h2><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/spring%20event.png" alt="spring-event"></p>
 <p><strong>流程：</strong> 当事件源（发布者）发布事件时，相应监听此事件的监听者接收到事件对象并且进行处理</p>
 <p>Spring的事件发布监听机制本质上就是<strong>发布-订阅</strong>，即<strong>生产者-消费者</strong>，也体现了设计模式中的<strong>观察者模式</strong></p>
 <h2 id="3-三要素"><a href="#3-三要素" class="headerlink" title="3.三要素"></a>3.三要素</h2><ul>
@@ -651,7 +651,7 @@
 <p>事件类，继承了ApplicationEvent，并且包含了传递实体类Message</p>
 </blockquote>
 <p><strong>MessageEvent的关系类图（Diagram）：</strong></p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/spring%20event%20diagram.png" alt="spring even diagram"></p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/spring%20event%20diagram.png" alt="spring even diagram"></p>
 <p><strong>其中ApplicationEvent的源码：</strong></p>
 <pre class="line-numbers language-java"><code class="language-java">\<span class="token operator">*</span><span class="token operator">*</span>
  <span class="token operator">*</span> Class <span class="token class-name">to</span> be extended by all application events<span class="token punctuation">.</span> Abstract as it
@@ -865,7 +865,7 @@ List<span class="token operator">&lt;</span>EventListenerFactory<span class="tok
 <p>可以看出如果设置了Executor（线程池）的话，则异步执行监听方法，否则执行同步方法<br>所以后续可以用设置Executor的方法实现异步</p>
 </blockquote>
 <h2 id="4-测试"><a href="#4-测试" class="headerlink" title="4.测试"></a>4.测试</h2><p>Postman调用sendMessage接口，成功实现功能</p>
-<p><img src="/medias/loading/orange.square-circle-preloader.svg" data-original="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/spring%20event%20log.png" alt="spring event log"></p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/spring%20event%20log.png" alt="spring event log"></p>
 <h2 id="5-支持异步"><a href="#5-支持异步" class="headerlink" title="5.支持异步"></a>5.支持异步</h2><h3 id="5-1-设置Executor的方法实现异步（推荐）"><a href="#5-1-设置Executor的方法实现异步（推荐）" class="headerlink" title="5.1 设置Executor的方法实现异步（推荐）"></a>5.1 设置Executor的方法实现异步（推荐）</h3><pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Slf4j</span>
 <span class="token annotation punctuation">@Configuration</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">EventConfig</span> <span class="token punctuation">{</span>
@@ -1702,7 +1702,7 @@ List<span class="token operator">&lt;</span>EventListenerFactory<span class="tok
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1601612810220')
+  navigator.serviceWorker.register('/sw.js?t=1601614004333')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }
@@ -1727,10 +1727,5 @@ List<span class="token operator">&lt;</span>EventListenerFactory<span class="tok
             }
           }
         });
-        </script><script>
-            window.imageLazyLoadSetting = {
-                isSPA: false,
-                processImages: null,
-            };
-        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(n){n.imageLazyLoadSetting.processImages=o;var i=n.imageLazyLoadSetting.isSPA,r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function o(){i&&(r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")));for(var t,e,a=0;a<r.length;a++)t=r[a],e=void 0,0<=(e=t.getBoundingClientRect()).bottom&&0<=e.left&&e.top<=(n.innerHeight||document.documentElement.clientHeight)&&function(){var t,e,n,i,o=r[a];t=o,e=function(){r=r.filter(function(t){return o!==t})},n=new Image,i=t.getAttribute("data-original"),n.onload=function(){t.src=i,e&&e()},n.src=i}()}o(),n.addEventListener("scroll",function(){var t,e;t=o,e=n,clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(e)},500)})}(this);</script></body>
+        </script></body>
 </html>
