@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://xuyk.top/posts/load-balance.html</loc>
+    
+    <lastmod>2020-10-02T04:24:42.462Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://xuyk.top/posts/operation.html</loc>
     
     <lastmod>2020-09-29T08:53:28.400Z</lastmod>
@@ -100,14 +107,14 @@
   </url>
   
   <url>
-    <loc>http://xuyk.top/archives/index.html</loc>
+    <loc>http://xuyk.top/about/index.html</loc>
     
     <lastmod>2020-06-14T11:18:47.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://xuyk.top/about/index.html</loc>
+    <loc>http://xuyk.top/contact/index.html</loc>
     
     <lastmod>2020-06-14T11:18:47.000Z</lastmod>
     
@@ -121,7 +128,7 @@
   </url>
   
   <url>
-    <loc>http://xuyk.top/contact/index.html</loc>
+    <loc>http://xuyk.top/archives/index.html</loc>
     
     <lastmod>2020-06-14T11:18:47.000Z</lastmod>
     
