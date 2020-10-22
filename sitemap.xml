@@ -2,16 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://xuyk.top/posts/redisson.html</loc>
+    <loc>http://xuyk.top/posts/aop.html</loc>
     
-    <lastmod>2020-10-22T11:58:33.094Z</lastmod>
+    <lastmod>2020-10-22T12:52:32.155Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://xuyk.top/posts/load-balance.html</loc>
+    <loc>http://xuyk.top/posts/spring-event.html</loc>
     
-    <lastmod>2020-10-20T11:38:15.553Z</lastmod>
+    <lastmod>2020-10-22T12:47:38.485Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xuyk.top/posts/redisson.html</loc>
+    
+    <lastmod>2020-10-22T11:58:33.094Z</lastmod>
     
   </url>
   
@@ -65,13 +72,6 @@
   </url>
   
   <url>
-    <loc>http://xuyk.top/posts/spring-event.html</loc>
-    
-    <lastmod>2020-09-29T07:32:57.028Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://xuyk.top/posts/mysql-configure.html</loc>
     
     <lastmod>2020-09-29T06:52:10.887Z</lastmod>
@@ -114,7 +114,21 @@
   </url>
   
   <url>
+    <loc>http://xuyk.top/categories/index.html</loc>
+    
+    <lastmod>2020-06-14T11:18:47.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://xuyk.top/about/index.html</loc>
+    
+    <lastmod>2020-06-14T11:18:47.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xuyk.top/tags/index.html</loc>
     
     <lastmod>2020-06-14T11:18:47.000Z</lastmod>
     
@@ -129,20 +143,6 @@
   
   <url>
     <loc>http://xuyk.top/archives/index.html</loc>
-    
-    <lastmod>2020-06-14T11:18:47.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xuyk.top/tags/index.html</loc>
-    
-    <lastmod>2020-06-14T11:18:47.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xuyk.top/categories/index.html</loc>
     
     <lastmod>2020-06-14T11:18:47.000Z</lastmod>
     

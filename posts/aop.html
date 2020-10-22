@@ -1,0 +1,1733 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head><link rel=manifest href=/manifest.json>
+    <meta charset="utf-8">
+    <meta name="keywords" content="AOP 切面">
+    <meta name="description" content="助力面试突破与工作减压">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="white"/>
+    <title>Aop切面与Java自定义注解的应用 | 寒暄</title>
+    <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/apple-touch-icon.png">
+    <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/css/my.css">
+
+    <style type="text/css">
+        
+        code[class*="language-"], pre[class*="language-"] {
+            white-space: pre !important;
+        }
+
+        
+    </style>
+    <script src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/jquery/jquery.min.js"></script>
+<meta name="generator" content="Hexo 4.1.1"><link rel="alternate" href="/atom.xml" title="寒暄" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+
+<body>
+
+<header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                        <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/apple-touch-icon.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">寒暄</span>
+                </a>
+            </div>
+            
+
+
+<!-- <a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/contact" class="waves-effect waves-light">
+            
+            <i class="fa fa-envelope"></i>
+            
+            <span>留言</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <i class="fa fa-address-book"></i>
+            
+            <span>友链</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul> -->
+
+<!-- 支持二级菜单特性 -->
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right nav-menu">
+    
+        <li class="hide-on-med-and-down nav-item">
+
+            
+                <a href="/" class="waves-effect waves-light">
+                    
+                        <i class="fa fa-home"></i>
+                    
+                    <span>首页</span>
+                </a>
+
+            
+        </li>
+    
+        <li class="hide-on-med-and-down nav-item">
+
+            
+                <a href="/tags" class="waves-effect waves-light">
+                    
+                        <i class="fa fa-tags"></i>
+                    
+                    <span>标签</span>
+                </a>
+
+            
+        </li>
+    
+        <li class="hide-on-med-and-down nav-item">
+
+            
+                <a href="/categories" class="waves-effect waves-light">
+                    
+                        <i class="fa fa-bookmark"></i>
+                    
+                    <span>分类</span>
+                </a>
+
+            
+        </li>
+    
+        <li class="hide-on-med-and-down nav-item">
+
+            
+                <a href="/archives" class="waves-effect waves-light">
+                    
+                        <i class="fa fa-archive"></i>
+                    
+                    <span>归档</span>
+                </a>
+
+            
+        </li>
+    
+        <li class="hide-on-med-and-down nav-item">
+
+            
+                <a href="/about" class="waves-effect waves-light">
+                    
+                        <i class="fa fa-user-circle-o"></i>
+                    
+                    <span>关于</span>
+                </a>
+
+            
+        </li>
+    
+        <li class="hide-on-med-and-down nav-item">
+
+            
+                <a href="/contact" class="waves-effect waves-light">
+                    
+                        <i class="fa fa-envelope"></i>
+                    
+                    <span>留言</span>
+                </a>
+
+            
+        </li>
+    
+        <li class="hide-on-med-and-down nav-item">
+
+            
+                <a href="/friends" class="waves-effect waves-light">
+                    
+                        <i class="fa fa-address-book"></i>
+                    
+                    <span>友链</span>
+                </a>
+
+            
+        </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+            <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/avatars/avatar.jpg"
+                 class="logo-img circle responsive-img">
+        
+        <div class="logo-name">寒暄</div>
+        <div class="logo-desc">
+            
+                Java的日常
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+            <li class="m-nav-item">
+                
+                    <a href="/" class="waves-effect waves-light">
+                        
+                            <i class="fa fa-fw fa-home"></i>
+                        
+                        首页
+                    </a>
+                
+            </li>
+        
+            <li class="m-nav-item">
+                
+                    <a href="/tags" class="waves-effect waves-light">
+                        
+                            <i class="fa fa-fw fa-tags"></i>
+                        
+                        标签
+                    </a>
+                
+            </li>
+        
+            <li class="m-nav-item">
+                
+                    <a href="/categories" class="waves-effect waves-light">
+                        
+                            <i class="fa fa-fw fa-bookmark"></i>
+                        
+                        分类
+                    </a>
+                
+            </li>
+        
+            <li class="m-nav-item">
+                
+                    <a href="/archives" class="waves-effect waves-light">
+                        
+                            <i class="fa fa-fw fa-archive"></i>
+                        
+                        归档
+                    </a>
+                
+            </li>
+        
+            <li class="m-nav-item">
+                
+                    <a href="/about" class="waves-effect waves-light">
+                        
+                            <i class="fa fa-fw fa-user-circle-o"></i>
+                        
+                        关于
+                    </a>
+                
+            </li>
+        
+            <li class="m-nav-item">
+                
+                    <a href="/contact" class="waves-effect waves-light">
+                        
+                            <i class="fa fa-fw fa-envelope"></i>
+                        
+                        留言
+                    </a>
+                
+            </li>
+        
+            <li class="m-nav-item">
+                
+                    <a href="/friends" class="waves-effect waves-light">
+                        
+                            <i class="fa fa-fw fa-address-book"></i>
+                        
+                        友链
+                    </a>
+                
+            </li>
+        
+        
+            <li>
+                <div class="divider"></div>
+            </li>
+            <li>
+                <a href="https://github.com/xuyikai1/xuyikai1.github.io" class="waves-effect waves-light" target="_blank">
+                    <i class="fa fa-github-square fa-fw"></i>Fork Me
+                </a>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #000000;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/xuyikai1/xuyikai1.github.io" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    <script src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/cryptojs/crypto-js.min.js"></script>
+    <script>
+        (function () {
+            let pwd = '';
+            if (pwd && pwd.length > 0) {
+                if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                    alert('密码错误，将返回主页！');
+                    location.href = '/';
+                }
+            }
+        })();
+    </script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/1.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Aop切面与Java自定义注解的应用</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/aop/">
+                                    <span class="chip bg-color">aop</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                        <div class="post-cate">
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                                <a href="/categories/AOP/" class="post-category">
+                                    AOP
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                    <div class="post-date info-break-policy">
+                        <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                        2020-10-22
+                    </div>
+                
+
+                
+                    <div class="post-date info-break-policy">
+                        <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
+                        2020-10-22
+                    </div>
+                
+
+                
+                    <div class="info-break-policy">
+                        <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                        2.3k
+                    </div>
+                
+
+                
+                    <div class="info-break-policy">
+                        <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                        9 分
+                    </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="Aop切面与Java自定义注解的应用"><a href="#Aop切面与Java自定义注解的应用" class="headerlink" title="Aop切面与Java自定义注解的应用"></a>Aop切面与Java自定义注解的应用</h1><h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1.引言"></a>1.引言</h2><p>众所周知，AOP真的是面试里老生常谈的技术点..想当年毕业找工作时，10场面试7.8场都问AOP。大学毕业前，你肯定怎么都想不到，这辈子会被三个字母搞的晕头转向，脑瓜子嗡嗡的。而如今混了几年的我，决定手撕了他..的表皮，拿来做灵活的日常开发小助手。</p>
+<h2 id="2-AOP"><a href="#2-AOP" class="headerlink" title="2.AOP"></a>2.AOP</h2><p>我们先来聊聊AOP这个知识点。AOP，面向切面编程，我们可以把例如<strong>日志管理、事务处理、权限控制</strong>等这样的公用模块封装起来，通过切面的方式嵌入到业务代码中，降<strong>低系统耦合度，也提升了系统的可扩展性和可维护性</strong>。</p>
+<blockquote>
+<p>日常使用中，大家可以想到<code>@Transaction</code>事务注解。<br>框架源码里，也有很多例子。例如<strong>Alibaba Sentinel</strong>有代码形式的限流和注解形式的限流，其中注解形式的限流就是用到AOP切面的思想，Around环绕来实现<strong>限流</strong></p>
+</blockquote>
+<p>AOP是基于<strong>动态代理</strong>的：</p>
+<p><strong>JDK Proxy</strong>：如果要代理的对象，实现了某个接口，那么Spring AOP会使用 <strong>JDK Proxy</strong>，去创建代理对象;</p>
+<p><strong>Cglib</strong>：对于没有实现接口的对象，就无法使用JDK Proxy 去进行代理了，这时候Spring AOP会使用 <strong>Cglib</strong>，Spring AOP会使用 Cglib 生成一个被代理对象的子类来作为代理，如下图所示：</p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/AOP-proxy.jpg" alt=""></p>
+<p>使用AOP的选择有两种：<strong>Spring AOP</strong> 和 <strong>AspectJ AOP</strong>，Spring AOP 属于运行时增强，而 AspectJ 是编译时增强。 Spring AOP 基于代理(Proxying)，而 AspectJ 基于字节码操作(Bytecode Manipulation)。<br>一般情况下，<strong>我们选择AspectJ AOP即可，他在切面多的情况下性能更高</strong>。</p>
+<h2 id="3-自定义注解"><a href="#3-自定义注解" class="headerlink" title="3.自定义注解"></a>3.自定义注解</h2><p>我们从业务角度想想，既然不是每个接口都打上log，而是通过AOP切面的方式来记录，那么肯定有一个<strong>通用模版或者说通用标识</strong>对吧？比如前面提到的<code>@Transaction</code>事务注解，我们要实现自己的业务，当然也搞个自己喜欢的注解，这里就用<code>@RequestLog</code>表示<strong>系统需要对请求打Log</strong>。</p>
+<p>命名完了，我们是不是需要打Log这个动作做一些限制呢？比如我只让他在方法级别上打Log，这里就用到了元注解（注解的注解）<code>@Target(ElementType.METHOD)</code>。</p>
+<p>限制完了，我们是不是可以打Log这个动作做一些备注或者记录呢？比如打Log的方法作用描述，让日志更友好，这里就用到了<strong>我们平时写实体类中的属性一样的东西</strong>（只不过换了种表现形式，这里用的是方法）</p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 描述 默认空字符串</span>
+String <span class="token function">desc</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token string">""</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>备注记录完了，那么如何把日志打上呢？我们就需要在这个方法执行的前后做点手脚，比如获取到被我们注解标注的方法啦，请求的参数、花费的时间啥的，拿到这些信息后打印记录下来。这里应运而生的就是切面类 <strong>RequestLogAop</strong> 了。</p>
+<blockquote>
+<p>自定义注解的小（冷）知识挺多也挺细节的，我这里就简单介绍一下我们即将用到的。实战搞定后，大家可以查看底部的参考链接来了解自定义注解</p>
+</blockquote>
+<h2 id="4-实战"><a href="#4-实战" class="headerlink" title="4.实战"></a>4.实战</h2><h3 id="4-1-依赖"><a href="#4-1-依赖" class="headerlink" title="4.1 依赖"></a>4.1 依赖</h3><pre class="line-numbers language-java"><code class="language-java"><span class="token operator">&lt;</span>dependency<span class="token operator">></span>
+    <span class="token operator">&lt;</span>groupId<span class="token operator">></span>org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>boot<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
+    <span class="token operator">&lt;</span>artifactId<span class="token operator">></span>spring<span class="token operator">-</span>boot<span class="token operator">-</span>starter<span class="token operator">-</span>aop<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
+    <span class="token operator">&lt;</span>version<span class="token operator">></span><span class="token number">2.3</span><span class="token punctuation">.</span><span class="token number">4</span><span class="token punctuation">.</span>RELEASE<span class="token operator">&lt;</span><span class="token operator">/</span>version<span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>dependency<span class="token operator">></span>
+
+<span class="token operator">&lt;</span>dependency<span class="token operator">></span>
+    <span class="token operator">&lt;</span>groupId<span class="token operator">></span>org<span class="token punctuation">.</span>projectlombok<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
+    <span class="token operator">&lt;</span>artifactId<span class="token operator">></span>lombok<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
+    <span class="token operator">&lt;</span>version<span class="token operator">></span><span class="token number">1.18</span><span class="token punctuation">.</span><span class="token number">12</span><span class="token operator">&lt;</span><span class="token operator">/</span>version<span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>dependency<span class="token operator">></span>
+
+<span class="token operator">&lt;</span>dependency<span class="token operator">></span>
+    <span class="token operator">&lt;</span>groupId<span class="token operator">></span>cn<span class="token punctuation">.</span>hutool<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
+    <span class="token operator">&lt;</span>artifactId<span class="token operator">></span>hutool<span class="token operator">-</span>all<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
+    <span class="token operator">&lt;</span>version<span class="token operator">></span><span class="token number">5.4</span><span class="token punctuation">.</span><span class="token number">3</span><span class="token operator">&lt;</span><span class="token operator">/</span>version<span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>dependency<span class="token operator">></span>
+
+<span class="token operator">&lt;</span>dependency<span class="token operator">></span>
+    <span class="token operator">&lt;</span>groupId<span class="token operator">></span>org<span class="token punctuation">.</span>redisson<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
+    <span class="token operator">&lt;</span>artifactId<span class="token operator">></span>redisson<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
+    <span class="token operator">&lt;</span>version<span class="token operator">></span><span class="token number">3.13</span><span class="token punctuation">.</span><span class="token number">4</span><span class="token operator">&lt;</span><span class="token operator">/</span>version<span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>dependency<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="4-2-入参日志Log"><a href="#4-2-入参日志Log" class="headerlink" title="4.2 入参日志Log"></a>4.2 入参日志Log</h3><h4 id="1-自定义注解-RequestLog"><a href="#1-自定义注解-RequestLog" class="headerlink" title="1.自定义注解@RequestLog"></a>1.自定义注解<code>@RequestLog</code></h4><pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Retention</span><span class="token punctuation">(</span>RetentionPolicy<span class="token punctuation">.</span>RUNTIME<span class="token punctuation">)</span>
+<span class="token annotation punctuation">@Target</span><span class="token punctuation">(</span>ElementType<span class="token punctuation">.</span>METHOD<span class="token punctuation">)</span>
+<span class="token annotation punctuation">@Documented</span>
+<span class="token keyword">public</span> @<span class="token keyword">interface</span> <span class="token class-name">RequestLog</span> <span class="token punctuation">{</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 描述
+     * @return
+     */</span>
+    String <span class="token function">desc</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token string">""</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p>1：<code>@Retention(RetentionPolicy.RUNTIME)</code>：运行时可以使用该注解标识目标（这里具体指方法）<br>2：<code>@Target(ElementType.METHOD)</code>：此注解标识在方法上<br>3：<code>@Documented</code>：用于制作文档<br>4：<code>@interface</code>：用来定义注解，类似于interface用于定义接口<br>5：<strong>desc()</strong>：可以理解为该注解的属性</p>
+</blockquote>
+<h4 id="2-日志封装类-RequestLogInfo"><a href="#2-日志封装类-RequestLogInfo" class="headerlink" title="2.日志封装类 RequestLogInfo"></a>2.日志封装类 RequestLogInfo</h4><pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Data</span>
+<span class="token annotation punctuation">@Builder</span>
+<span class="token annotation punctuation">@NoArgsConstructor</span>
+<span class="token annotation punctuation">@AllArgsConstructor</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">RequestLogInfo</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">/**
+     * 请求链接
+     */</span>
+    <span class="token keyword">private</span> String requestUri<span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">/**
+     * 接口描述
+     */</span>
+    <span class="token keyword">private</span> String apiDesc<span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">/**
+     * 请求类型
+     */</span>
+    <span class="token keyword">private</span> String requestType<span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">/**
+     * HTTP请求方法
+     */</span>
+    <span class="token keyword">private</span> String httpMethod<span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">/**
+     * Class路径方法
+     */</span>
+    <span class="token keyword">private</span> String classMethod<span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">/**
+     * 请求IP
+     */</span>
+    <span class="token keyword">private</span> String requestIp<span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">/**
+     * 请求参数
+     */</span>
+    <span class="token keyword">private</span> String requestParams<span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">/**
+     * 花费时间 单位毫秒(ms)
+     */</span>
+    <span class="token keyword">private</span> Long costTimeMillis<span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">/**
+     * 接口返回结果
+     */</span>
+    <span class="token keyword">private</span> String result<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p>用于记录信息用的封装类</p>
+</blockquote>
+<h4 id="3-日志切面类-RequestLogAop"><a href="#3-日志切面类-RequestLogAop" class="headerlink" title="3.日志切面类 RequestLogAop"></a>3.日志切面类 RequestLogAop</h4><pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Component</span>
+<span class="token annotation punctuation">@Aspect</span> <span class="token comment" spellcheck="true">// 标识这是一个切面</span>
+<span class="token annotation punctuation">@Slf4j</span> 
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">RequestLogAop</span> <span class="token punctuation">{</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 被 @requestLog 所注解的切点
+     * @param requestLog
+     */</span>
+    <span class="token annotation punctuation">@Pointcut</span><span class="token punctuation">(</span><span class="token string">"@annotation(requestLog)"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">requestLogPointcut</span><span class="token punctuation">(</span>RequestLog requestLog<span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 环绕增强
+     * @param pjp
+     * @param requestLog
+     */</span>
+    <span class="token annotation punctuation">@Around</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"requestLogPointcut(requestLog)"</span><span class="token punctuation">,</span> argNames <span class="token operator">=</span> <span class="token string">"pjp,requestLog"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> Object <span class="token function">around</span><span class="token punctuation">(</span>ProceedingJoinPoint pjp<span class="token punctuation">,</span> RequestLog requestLog<span class="token punctuation">)</span> <span class="token keyword">throws</span> Throwable <span class="token punctuation">{</span>
+
+        <span class="token comment" spellcheck="true">// 请求信息</span>
+        ServletRequestAttributes requestAttributes <span class="token operator">=</span> <span class="token punctuation">(</span>ServletRequestAttributes<span class="token punctuation">)</span> RequestContextHolder<span class="token punctuation">.</span><span class="token function">currentRequestAttributes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        HttpServletRequest request <span class="token operator">=</span> requestAttributes<span class="token punctuation">.</span><span class="token function">getRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true">// 使用包装类目的为了减少多请求情况下 日志串行的问题</span>
+        RequestLogInfo info <span class="token operator">=</span> RequestLogInfo<span class="token punctuation">.</span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">requestUri</span><span class="token punctuation">(</span>request<span class="token punctuation">.</span><span class="token function">getRequestURI</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">apiDesc</span><span class="token punctuation">(</span>requestLog<span class="token punctuation">.</span><span class="token function">desc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">httpMethod</span><span class="token punctuation">(</span>request<span class="token punctuation">.</span><span class="token function">getMethod</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">classMethod</span><span class="token punctuation">(</span>pjp<span class="token punctuation">.</span><span class="token function">getSignature</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getDeclaringTypeName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"."</span> <span class="token operator">+</span>pjp<span class="token punctuation">.</span><span class="token function">getSignature</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">requestIp</span><span class="token punctuation">(</span>request<span class="token punctuation">.</span><span class="token function">getRemoteHost</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">requestParams</span><span class="token punctuation">(</span>JSONUtil<span class="token punctuation">.</span><span class="token function">toJsonStr</span><span class="token punctuation">(</span>pjp<span class="token punctuation">.</span><span class="token function">getArgs</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        StopWatch stopWatch <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">StopWatch</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        stopWatch<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//        log.info("【请求链接】:{}",request.getRequestURI());</span>
+<span class="token comment" spellcheck="true">//        log.info("【接口描述】:{}",requestLog.desc());</span>
+<span class="token comment" spellcheck="true">//        log.info("【请求类型】:{}",request.getMethod());</span>
+<span class="token comment" spellcheck="true">//        log.info("【请求方法】:{}.{}",pjp.getSignature().getDeclaringTypeName(),pjp.getSignature().getName());</span>
+<span class="token comment" spellcheck="true">//        log.info("【请求IP】:{},{}:{}",request.getRemoteAddr(),request.getRemoteHost(),request.getRemotePort());</span>
+<span class="token comment" spellcheck="true">//        log.info("【请求参数】:{}", JSONUtil.toJsonStr(pjp.getArgs()));</span>
+
+        <span class="token comment" spellcheck="true">// 执行原方法逻辑</span>
+        Object result <span class="token operator">=</span> pjp<span class="token punctuation">.</span><span class="token function">proceed</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        stopWatch<span class="token punctuation">.</span><span class="token function">stop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        info<span class="token punctuation">.</span><span class="token function">setCostTimeMillis</span><span class="token punctuation">(</span>stopWatch<span class="token punctuation">.</span><span class="token function">getTotalTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        info<span class="token punctuation">.</span><span class="token function">setResult</span><span class="token punctuation">(</span>JSONUtil<span class="token punctuation">.</span><span class="token function">toJsonStr</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        log<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"【requestLog】:{}"</span><span class="token punctuation">,</span>JSONUtil<span class="token punctuation">.</span><span class="token function">toJsonStr</span><span class="token punctuation">(</span>info<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">//        log.info("【接口花费时间统计】:{} 秒",stopWatch.getTotalTimeSeconds());</span>
+<span class="token comment" spellcheck="true">//        log.info("【接口花费时间调度】:{}",stopWatch.prettyPrint());</span>
+<span class="token comment" spellcheck="true">//        log.info("【请求返回结果】:{}",JSONUtil.toJsonStr(result));</span>
+        <span class="token keyword">return</span> result<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p><code>@Aspect</code>：声明该类为一个注解类<br><code>@Pointcut</code>：定义一个切点，后面跟随一个表达式，表达式可以定义为切某个注解，也可以切某个 package 下的方法<br><code>@Before</code>: 在切点之前，织入相关代码<br><code>@After</code>: 在切点之后，织入相关代码<br><code>@AfterReturning</code>: 在切点返回内容后，织入相关代码，一般用于<strong>对返回值做些加工处理的场景</strong><br><code>@AfterThrowing</code>: 用来处理当织入的代码抛出异常后的逻辑处理<br><code>@Around</code>: 环绕，可以在切入点前后织入代码，并且可以自由的控制何时执行切点</p>
+</blockquote>
+<h4 id="4-测试"><a href="#4-测试" class="headerlink" title="4.测试"></a>4.测试</h4><pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@RestController</span>
+<span class="token annotation punctuation">@Slf4j</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TestController</span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@RequestLog</span>
+    <span class="token annotation punctuation">@PostMapping</span><span class="token punctuation">(</span><span class="token string">"/requestLog/test"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> String <span class="token function">requestLog</span><span class="token punctuation">(</span><span class="token annotation punctuation">@RequestParam</span> String param<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token string">"success"</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/AOP-request-log-post.png" alt="Postman请求示例"></p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/AOP-request-log-log.png" alt="打印Log"></p>
+<h3 id="4-3-分布式锁（本文基于Redisson）"><a href="#4-3-分布式锁（本文基于Redisson）" class="headerlink" title="4.3 分布式锁（本文基于Redisson）"></a>4.3 分布式锁（本文基于Redisson）</h3><blockquote>
+<p>关于Redisson分布式锁相关，可以查看笔者的另一篇文章<br><a href="http://xuyk.top/posts/redisson.html">浅谈Redis客户端Redisson | 寒暄</a></p>
+</blockquote>
+<h4 id="1-相关配置类"><a href="#1-相关配置类" class="headerlink" title="1.相关配置类"></a>1.相关配置类</h4><pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 1.application.yml配置</span>
+# 应用端口号
+server<span class="token operator">:</span>
+  port<span class="token operator">:</span> <span class="token number">10086</span>
+
+# redis配置
+redisson<span class="token operator">:</span>
+  address<span class="token operator">:</span> redis<span class="token operator">:</span><span class="token operator">/</span><span class="token operator">/</span><span class="token number">127.0</span><span class="token punctuation">.</span><span class="token number">0.1</span><span class="token operator">:</span><span class="token number">6379</span>
+  database<span class="token operator">:</span> <span class="token number">0</span>
+# password<span class="token operator">:</span> foobared
+
+<span class="token comment" spellcheck="true">// 2.redisson配置参数(yml)</span>
+<span class="token annotation punctuation">@Data</span>
+<span class="token annotation punctuation">@ConfigurationProperties</span><span class="token punctuation">(</span>prefix <span class="token operator">=</span> <span class="token string">"redisson"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">RedissonProperties</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">private</span> String address<span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> Integer database<span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> String password<span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">// 3.redisson配置类</span>
+<span class="token annotation punctuation">@Configuration</span>
+<span class="token annotation punctuation">@EnableConfigurationProperties</span><span class="token punctuation">(</span><span class="token punctuation">{</span>RedissonProperties<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">RedissonConfig</span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@Primary</span>
+    <span class="token annotation punctuation">@Bean</span><span class="token punctuation">(</span>name<span class="token operator">=</span><span class="token string">"defaultRedisClient"</span><span class="token punctuation">,</span>destroyMethod <span class="token operator">=</span> <span class="token string">"shutdown"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> RedissonClient <span class="token function">redissonClient</span><span class="token punctuation">(</span>RedissonProperties redissonProperties<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        Config config <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Config</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        config<span class="token punctuation">.</span><span class="token function">useSingleServer</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">setAddress</span><span class="token punctuation">(</span>redissonProperties<span class="token punctuation">.</span><span class="token function">getAddress</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">setDatabase</span><span class="token punctuation">(</span>redissonProperties<span class="token punctuation">.</span><span class="token function">getDatabase</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token comment" spellcheck="true">// 连接最小初始化的个数</span>
+                <span class="token punctuation">.</span><span class="token function">setConnectionMinimumIdleSize</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">setPassword</span><span class="token punctuation">(</span>redissonProperties<span class="token punctuation">.</span><span class="token function">getPassword</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> Redisson<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span>config<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="2-自定义注解-DistributedLock"><a href="#2-自定义注解-DistributedLock" class="headerlink" title="2.自定义注解@DistributedLock"></a>2.自定义注解<code>@DistributedLock</code></h4><pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Retention</span><span class="token punctuation">(</span>RetentionPolicy<span class="token punctuation">.</span>RUNTIME<span class="token punctuation">)</span>
+<span class="token annotation punctuation">@Target</span><span class="token punctuation">(</span>ElementType<span class="token punctuation">.</span>METHOD<span class="token punctuation">)</span>
+<span class="token annotation punctuation">@Documented</span>
+<span class="token keyword">public</span> @<span class="token keyword">interface</span> <span class="token class-name">DistributedLock</span> <span class="token punctuation">{</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 锁时间 默认2000毫秒
+     * @return
+     */</span>
+    <span class="token keyword">long</span> <span class="token function">lockTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> 2000L<span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="3-日志切面类-DistributedLockAop"><a href="#3-日志切面类-DistributedLockAop" class="headerlink" title="3.日志切面类 DistributedLockAop"></a>3.日志切面类 DistributedLockAop</h4><pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Component</span>
+<span class="token annotation punctuation">@Aspect</span>
+<span class="token annotation punctuation">@Slf4j</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DistributedLockAop</span> <span class="token punctuation">{</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * redisson客户端
+     */</span>
+    <span class="token annotation punctuation">@Autowired</span>
+    <span class="token keyword">private</span> RedissonClient redissonClient<span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@Pointcut</span><span class="token punctuation">(</span><span class="token string">"@annotation(distributedLock)"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">distributeLockPointcut</span><span class="token punctuation">(</span>DistributedLock distributedLock<span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 环绕增强
+     * @param pjp
+     * @param distributedLock
+     */</span>
+    <span class="token annotation punctuation">@Around</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"distributeLockPointcut(distributedLock)"</span><span class="token punctuation">,</span> argNames <span class="token operator">=</span> <span class="token string">"pjp,distributedLock"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> Object <span class="token function">around</span><span class="token punctuation">(</span>ProceedingJoinPoint pjp<span class="token punctuation">,</span> DistributedLock distributedLock<span class="token punctuation">)</span> <span class="token keyword">throws</span> Throwable <span class="token punctuation">{</span>
+        ServletRequestAttributes requestAttributes <span class="token operator">=</span> <span class="token punctuation">(</span>ServletRequestAttributes<span class="token punctuation">)</span> RequestContextHolder<span class="token punctuation">.</span><span class="token function">currentRequestAttributes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        HttpServletRequest request <span class="token operator">=</span> requestAttributes<span class="token punctuation">.</span><span class="token function">getRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 请求路径</span>
+        String servletPath <span class="token operator">=</span> request<span class="token punctuation">.</span><span class="token function">getServletPath</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 用户ID 应该从token或者threadLocal中获取</span>
+        String userId <span class="token operator">=</span> request<span class="token punctuation">.</span><span class="token function">getParameter</span><span class="token punctuation">(</span><span class="token string">"userId"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 锁命名的密度可以根据具体业务再次细分 这里只根据用户和请求路径进行加锁处理</span>
+        String lockKey <span class="token operator">=</span> userId <span class="token operator">+</span> <span class="token string">" | "</span> <span class="token operator">+</span> servletPath<span class="token punctuation">;</span>
+
+        RLock lock <span class="token operator">=</span> redissonClient<span class="token punctuation">.</span><span class="token function">getLock</span><span class="token punctuation">(</span>lockKey<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">long</span> waitTime <span class="token operator">=</span> distributedLock<span class="token punctuation">.</span><span class="token function">waitTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">long</span> leaseTime <span class="token operator">=</span> distributedLock<span class="token punctuation">.</span><span class="token function">leaseTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">try</span><span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">// 尝试加锁，最多等待lockTime毫秒，上锁以后leaseTime毫秒自动解锁</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>lock<span class="token punctuation">.</span><span class="token function">tryLock</span><span class="token punctuation">(</span>waitTime<span class="token punctuation">,</span>leaseTime<span class="token punctuation">,</span> TimeUnit<span class="token punctuation">.</span>MILLISECONDS<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                log<span class="token punctuation">.</span><span class="token function">warn</span><span class="token punctuation">(</span><span class="token string">"lockKey = {}，重复提交！"</span><span class="token punctuation">,</span>lockKey<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ServiceException</span><span class="token punctuation">(</span><span class="token number">201</span><span class="token punctuation">,</span><span class="token string">"请勿重复提交！"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token comment" spellcheck="true">// 真正执行的方法</span>
+            <span class="token keyword">return</span> pjp<span class="token punctuation">.</span><span class="token function">proceed</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            log<span class="token punctuation">.</span><span class="token function">warn</span><span class="token punctuation">(</span><span class="token string">"lockKey = {} ,  重复提交！"</span><span class="token punctuation">,</span>lockKey<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ServiceException</span><span class="token punctuation">(</span><span class="token number">201</span><span class="token punctuation">,</span> <span class="token string">"请勿重复提交！"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token keyword">finally</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">// 解锁(当前线程持有该锁才可进行解锁操作)</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>lock<span class="token punctuation">.</span><span class="token function">isLocked</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> lock<span class="token punctuation">.</span><span class="token function">isHeldByCurrentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                log<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"【分布式锁-解锁】lockKey:{}"</span><span class="token punctuation">,</span>lockKey<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                lock<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p><strong>解锁时的注意事项</strong>：<br>如果少了lock.isHeldByCurrentThread()这一判断，会出现下面这样的异常，提示当前线程并不持有我们需要解的锁，无法尝试去解锁</p>
+</blockquote>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/AOP-lock-exception.png" alt="异常堆栈"></p>
+<h4 id="4-测试-1"><a href="#4-测试-1" class="headerlink" title="4.测试"></a>4.测试</h4><pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@RestController</span>
+<span class="token annotation punctuation">@Slf4j</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TestController</span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@DistributedLock</span>
+    <span class="token annotation punctuation">@PostMapping</span><span class="token punctuation">(</span><span class="token string">"/distributedLock/test"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> String <span class="token function">distributedLock</span><span class="token punctuation">(</span><span class="token annotation punctuation">@RequestParam</span><span class="token punctuation">(</span><span class="token string">"sleepTime"</span><span class="token punctuation">)</span> Integer sleepTime<span class="token punctuation">,</span>
+                                  <span class="token annotation punctuation">@RequestParam</span><span class="token punctuation">(</span><span class="token string">"isError"</span><span class="token punctuation">)</span> Boolean isError<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>isError<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ServiceException</span><span class="token punctuation">(</span><span class="token number">500</span><span class="token punctuation">,</span><span class="token string">"出现异常"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        ThreadUtil<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span>sleepTime<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token string">"success"</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/AOP-request-log-postman-lock.png" alt="Postman请求示例"></p>
+<h3 id="4-4-demo代码"><a href="#4-4-demo代码" class="headerlink" title="4.4 demo代码"></a>4.4 demo代码</h3><p><a href="https://github.com/xuyikai1/JavaDemo">JavaDemo：aop-demo</a></p>
+<blockquote>
+<p>参考链接：<br>1：<a href="https:\zhuanlan.zhihu.com\p\60730622">自定义注解（Annontation）</a><br>2：<a href="https:\zhuanlan.zhihu.com\p\143434806">厉害了！老大利用AOP实现自定义注解，半小时完成我三天工作量</a><br>3：<a href="https:\zhuanlan.zhihu.com\p\82539232">如何优雅地在 Spring Boot 中使用自定义注解，AOP 切面统一打印出入参日志</a><br>4：<a href="https:\zhuanlan.zhihu.com\p\81420343">Spring 自定义注解从入门到精通</a><br>5：<a href="https:\zhuanlan.zhihu.com\p\202586806">9000字，通俗易懂的讲解下Java注解</a><br>6：<a href="https://github.com/Snailclimb/JavaGuide/blob/master/docs/system-design/framework/spring/Spring%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93.md">JavaGuide/Spring常见问题总结</a><br>7：<a href="https://mp.weixin.qq.com/s/1ol0ewxckG06V-NqMFib4g">写了个牛逼的日志切面，甩锅更方便了</a></p>
+</blockquote>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+            </div>
+            <hr/>
+
+            
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/aop/">
+                                    <span class="chip bg-color">aop</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share"
+                     style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/share/css/share.min.css">
+<div id="article-share">
+    
+        <div class="social-share" data-sites="wechat,qq,weibo,twitter,facebook,linkedin"
+             data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+        <script src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    /* 修复评论第一行位置错位 */
+    .v .vlist .vcard {
+        padding-top: 2.5em !important;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling"
+         style="font-size: 20px; font-weight: 700; position: relative; left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fa fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/valine/av-min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: '8o8Vzams5eGxSxPPpCKbk5n5-gzGzoHsz',
+        appKey: '5UE0BcNtnNvu786cXhVLqt8W',
+        notify: 'true' === 'true',
+        verify: 'true' === 'true',
+        visitor: 'true' === 'true',
+        avatar: 'mm',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: 'just go go'
+    });
+</script>
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+            <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+                <div class="article-badge left-badge text-color">
+                    <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+                </div>
+                <div class="card">
+                    <a href="/posts/aop.html">
+                        <div class="card-image">
+                            
+                                
+                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/1.jpg" class="responsive-img" alt="Aop切面与Java自定义注解的应用">
+                            
+                            <span class="card-title">Aop切面与Java自定义注解的应用</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                助力面试突破与工作减压
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-10-22
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/categories/AOP/" class="post-category">
+                                    AOP
+                                </a>
+                                    
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                        <div class="card-action article-tags">
+                            
+                                <a href="/tags/aop/">
+                                    <span class="chip bg-color">aop</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+            </div>
+        
+        
+            <div class="article col s12 m6" data-aos="fade-up">
+                <div class="article-badge right-badge text-color">
+                    下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+                </div>
+                <div class="card">
+                    <a href="/posts/load-balance.html">
+                        <div class="card-image">
+                            
+                                
+                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/11.jpg" class="responsive-img" alt="由Ribbon负载均衡策略引起的思考与延伸">
+                            
+                            <span class="card-title">由Ribbon负载均衡策略引起的思考与延伸</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                硬核技术点
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-10-02
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/categories/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/" class="post-category">
+                                    负载均衡
+                                </a>
+                                    
+                                
+                            </span>
+                        </div>
+                    </div>
+                    
+                        <div class="card-action article-tags">
+                            
+                                <a href="/tags/load-balance/">
+                                    <span class="chip bg-color">load balance</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+            </div>
+        
+    </div>
+</article>
+</div>
+
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+
+<!-- 代码块折行 -->
+
+    <style type="text/css">
+        code[class*="language-"], pre[class*="language-"] {
+            white-space: pre !important;
+        }
+    </style>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+    <div id="floating-toc-btn" class="hide-on-med-and-down">
+        <a class="btn-floating btn-large bg-color">
+            <i class="fa fa-list"></i>
+        </a>
+    </div>
+
+
+<script src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4, h5'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4, h5').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换 TOC 目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+<footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2020</span>
+            <a href="/about" rel="external nofollow noreferrer">xuyk</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            <span id="sitetime">载入运行时间...</span>
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="fa fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                                                                       class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fa fa-user"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                                                                         class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            
+                
+                    &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
+                            class="white-color">33.4k</span>&nbsp;字
+                
+                
+                <script>
+                    function siteTime() {
+                        var seconds = 1000;
+                        var minutes = seconds * 60;
+                        var hours = minutes * 60;
+                        var days = hours * 24;
+                        var years = days * 365;
+                        var today = new Date();
+                        var startYear = "2020";
+                        var startMonth = "6";
+                        var startDate = "22";
+                        var startHour = "0";
+                        var startMinute = "0";
+                        var startSecond = "0";
+                        var todayYear = today.getFullYear();
+                        var todayMonth = today.getMonth() + 1;
+                        var todayDate = today.getDate();
+                        var todayHour = today.getHours();
+                        var todayMinute = today.getMinutes();
+                        var todaySecond = today.getSeconds();
+                        var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                        var diff = t2 - t1;
+                        var diffYears = Math.floor(diff / years);
+                        var diffDays = Math.floor((diff / days) - diffYears * 365);
+                        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                            minutes);
+                        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                            diffMinutes * minutes) / seconds);
+                        if (startYear == todayYear) {
+                            document.getElementById("year").innerHTML = todayYear;
+                            document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                                " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                        } else {
+                            document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                            document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                                " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                        }
+                    }
+
+                    setInterval(siteTime, 1000);
+                </script>
+            
+
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/xuyikai1" class="tooltipped" target="_blank"
+       data-tooltip="访问我的GitHub"
+       data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+    <a href="/wechat.jpg"
+       target="_blank" data-tooltip="添加我的微信: [object Object]" data-position="top"
+       data-delay="50">
+        <i class="fa fa-weixin"></i>
+    </a>
+
+
+
+    <a href="http://wpa.qq.com/msgrd?v=3&uin=523376732&site=qq&menu=yes" class="tooltipped"
+       target="_blank" data-tooltip="添加我的 QQ" data-position="top" data-delay="50">
+        <i class="fa fa-qq"></i>
+    </a>
+
+
+
+    <a href="https://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=xuyikai123@qq.com" class="tooltipped"
+       target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top"
+       data-delay="50">
+        <i class="fa fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+
+<!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/js/search.js"></script>
+<script type="text/javascript">
+    $(function () {
+        searchFunc("https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/search.xml", 'searchInput', 'searchResult');
+    });
+</script>
+<!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/materialize/materialize.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/masonry/masonry.pkgd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/aos/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/scrollprogress/scrollProgress.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/lightGallery/js/lightgallery-all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/js/matery.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+<!-- Baidu Analytics -->
+
+
+<!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+
+    <script src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/others/clicklove.js" async="async"></script>
+
+
+
+    <script async src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/others/busuanzi.pure.mini.js"></script>
+
+
+<script type="text/javascript">
+    var OriginTitile = document.title,
+        st;
+    document.addEventListener("visibilitychange", function () {
+        document.hidden ? (document.title = "(oﾟvﾟ)ノ Hi", clearTimeout(st)) : (document.title =
+            "(*´∇｀*) 欢迎回来！", st = setTimeout(function () {
+            document.title = OriginTitile
+        }, 3e3))
+    })
+</script>
+
+<!-- 在线聊天工具  -->
+
+
+
+<!-- 背景 canvas-nest -->
+
+
+
+    <script src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/instantpage/instantpage.js" type="module"></script>
+
+
+<script>if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js?t=1603371170304')
+    .then(function () {console.log('ServiceWorker Register Successfully.')})
+    .catch(function (e) {console.error(e)});
+}
+</script>
+        <script src="//cdn.jsdelivr.net/npm/js-base64/base64.min.js"></script>
+        <script>
+        const hasAttr = (e,a) => a.some(_=> e.attr(_)!==undefined);
+        $('a').each(function() {
+          const $this = $(this);
+          if(hasAttr($this,["data-fancybox","ignore-external-link"])) return;
+          const href = $this.attr('href');
+          if (href && href.match('^((http|https|thunder|qqdl|ed2k|Flashget|qbrowser|ftp|rtsp|mms)://)')) {
+            const strs = href.split('/');
+            if (strs.length >= 3) {
+                const host = strs[2];
+                if (host !== '' || window.location.host) {
+                    $this.attr('href', '/go.html?u='+Base64.encode(href)+'').attr('rel', 'external nofollow noopener noreferrer');
+                    if (true) {
+                        $this.attr('target', '_blank');
+                    }
+                }
+            }
+          }
+        });
+        </script></body>
+</html>
