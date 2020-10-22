@@ -4,7 +4,7 @@
   <url>
     <loc>http://xuyk.top/posts/aop.html</loc>
     
-    <lastmod>2020-10-22T13:19:35.499Z</lastmod>
+    <lastmod>2020-10-22T13:21:26.619Z</lastmod>
     
   </url>
   
@@ -114,13 +114,6 @@
   </url>
   
   <url>
-    <loc>http://xuyk.top/about/index.html</loc>
-    
-    <lastmod>2020-06-14T11:18:47.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://xuyk.top/archives/index.html</loc>
     
     <lastmod>2020-06-14T11:18:47.000Z</lastmod>
@@ -128,14 +121,21 @@
   </url>
   
   <url>
-    <loc>http://xuyk.top/categories/index.html</loc>
+    <loc>http://xuyk.top/contact/index.html</loc>
     
     <lastmod>2020-06-14T11:18:47.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://xuyk.top/contact/index.html</loc>
+    <loc>http://xuyk.top/about/index.html</loc>
+    
+    <lastmod>2020-06-14T11:18:47.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xuyk.top/categories/index.html</loc>
     
     <lastmod>2020-06-14T11:18:47.000Z</lastmod>
     
