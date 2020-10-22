@@ -572,7 +572,7 @@
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
-                        2020-09-29
+                        2020-10-22
                     </div>
                 
 
@@ -627,13 +627,13 @@ end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
 </blockquote>
 <h4 id="redis部署方式弊端"><a href="#redis部署方式弊端" class="headerlink" title="redis部署方式弊端"></a>redis部署方式弊端</h4><ul>
 <li><strong>单机模式</strong>：当这台redis宕机之后就无法提供加锁导致业务血崩</li>
-<li><strong>主从/集群模式</strong>：当master节点宕机，哨兵sentinel选举后发生主从切换时，原先的从节点可能丢失锁</li>
+<li><strong>主从\集群模式</strong>：当master节点宕机，哨兵sentinel选举后发生主从切换时，原先的从节点可能丢失锁</li>
 </ul>
 <h4 id="红锁RedLock"><a href="#红锁RedLock" class="headerlink" title="红锁RedLock"></a>红锁RedLock</h4><blockquote>
 <p>无法保证加锁的过程一定正确 </p>
 </blockquote>
 <h3 id="Redisson分布式锁"><a href="#Redisson分布式锁" class="headerlink" title="Redisson分布式锁"></a>Redisson分布式锁</h3><h4 id="传统redis分布式锁的弊端"><a href="#传统redis分布式锁的弊端" class="headerlink" title="传统redis分布式锁的弊端"></a>传统redis分布式锁的弊端</h4><blockquote>
-<p>  使用setnx命令设置超时时间为30s，但是当30s过后业务A未执行完但是另外一个线程/请求B已进来也获取到该锁，而后业务A执行结束释放锁，就会出现超卖等线程安全问题；<br>PS：所以需要人为根据业务来维护这个超时时间</p>
+<p>  使用setnx命令设置超时时间为30s，但是当30s过后业务A未执行完但是另外一个线程\请求B已进来也获取到该锁，而后业务A执行结束释放锁，就会出现超卖等线程安全问题；<br>PS：所以需要人为根据业务来维护这个超时时间</p>
 </blockquote>
 <h4 id="redisson优点"><a href="#redisson优点" class="headerlink" title="redisson优点"></a>redisson优点</h4><h5 id="1-传统分布式锁弊端解决-watchDog看门狗"><a href="#1-传统分布式锁弊端解决-watchDog看门狗" class="headerlink" title="1.传统分布式锁弊端解决 - watchDog看门狗"></a>1.传统分布式锁弊端解决 - watchDog看门狗</h5><p>  看门狗作用：监控锁</p>
 <blockquote>
@@ -641,7 +641,7 @@ end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
 </blockquote>
 <h5 id="2-使用简单"><a href="#2-使用简单" class="headerlink" title="2.使用简单"></a>2.使用简单</h5><pre class="line-numbers language-java"><code class="language-java">Config config <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Config</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
 config<span class="token punctuation">.</span><span class="token function">useSingleServer</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">.</span><span class="token function">addNodeAddress</span><span class="token punctuation">(</span><span class="token string">"redis://192.168.31.101:7001"</span><span class="token punctuation">)</span>
+<span class="token punctuation">.</span><span class="token function">addNodeAddress</span><span class="token punctuation">(</span><span class="token string">"redis:\\192.168.31.101:7001"</span><span class="token punctuation">)</span>
 <span class="token punctuation">.</span><span class="token function">setPassword</span><span class="token punctuation">(</span>password<span class="token punctuation">)</span>
 <span class="token punctuation">.</span><span class="token function">setDatabase</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
 
@@ -649,7 +649,13 @@ RedissonClient redissonClient <span class="token operator">=</span> Redisson<spa
 
 RLock lock <span class="token operator">=</span> redissonClient<span class="token punctuation">.</span><span class="token function">getLock</span><span class="token punctuation">(</span><span class="token string">"anyLock"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
 lock<span class="token punctuation">.</span><span class="token function">lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
-lock<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+lock<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+
+<span class="token comment" spellcheck="true">// 尝试加锁，最多等待lockTime毫秒，上锁以后leaseTime毫秒自动解锁</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>lock<span class="token punctuation">.</span><span class="token function">tryLock</span><span class="token punctuation">(</span>waitTime<span class="token punctuation">,</span>leaseTime<span class="token punctuation">,</span> TimeUnit<span class="token punctuation">.</span>MILLISECONDS<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    log<span class="token punctuation">.</span><span class="token function">warn</span><span class="token punctuation">(</span><span class="token string">"lockKey = {}，重复提交！"</span><span class="token punctuation">,</span>lockKey<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ServiceException</span><span class="token punctuation">(</span><span class="token number">201</span><span class="token punctuation">,</span><span class="token string">"请勿重复提交！"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
 <p>1：Redisson 所有指令都通过 Lua 脚本执行，Redis 支持 Lua 脚本原子性执行。</p>
 </blockquote>
@@ -683,7 +689,7 @@ redis 客户端命令例子：
 <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> publish KEY <span class="token string">"{\"action\":\"ALL\"}"</span>
 <span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span> publish KEY <span class="token string">"{\"action"</span><span class="token operator">:</span>\<span class="token string">"DEL\", \"Id\":\"1\"}"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="3-布隆过滤器-bloomfilter"><a href="#3-布隆过滤器-bloomfilter" class="headerlink" title="3.布隆过滤器 - bloomfilter"></a>3.布隆过滤器 - bloomfilter</h2><blockquote>
-<p>PS：创建布隆过滤器需要根据业务场关注 <strong>期望插入值</strong> 和 <strong>判断失误的概率</strong><br>详细了解布隆过滤器可参考笔者写的<a href="http://xuyk.top/posts/bloom-filter.html">5分钟搞懂布隆过滤器 | 寒暄</a></p>
+<p>PS：创建布隆过滤器需要根据业务场关注 <strong>期望插入值</strong> 和 <strong>判断失误的概率</strong><br>详细了解布隆过滤器可参考笔者写的<a href="http:\xuyk.top\posts\bloom-filter.html">5分钟搞懂布隆过滤器 | 寒暄</a></p>
 </blockquote>
 <pre class="line-numbers language-java"><code class="language-java"># <span class="token number">1</span><span class="token punctuation">.</span>从redis获取布隆过滤器
 RBloomFilter<span class="token operator">&lt;</span>String<span class="token operator">></span> filter <span class="token operator">=</span> redissonClient<span class="token punctuation">.</span><span class="token function">getBloomFilter</span><span class="token punctuation">(</span><span class="token string">"testBloomFilter"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -700,12 +706,12 @@ filter<span class="token punctuation">.</span><span class="token function">tryIn
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="4-redis集群配置-redis-cluster"><a href="#4-redis集群配置-redis-cluster" class="headerlink" title="4.redis集群配置 - redis cluster"></a>4.redis集群配置 - redis cluster</h2><p>集群初始化配置</p>
 <pre class="line-numbers language-java"><code class="language-java">List<span class="token operator">&lt;</span>String<span class="token operator">></span> nodes <span class="token operator">=</span> Lists<span class="token punctuation">.</span><span class="token function">newArrayList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-nodes<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">"redis://192.168.10.139:6379"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-nodes<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">"redis://192.168.10.140:6379"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-nodes<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">"redis://192.168.10.141:6379"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-nodes<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">"redis://192.168.10.142:6379"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-nodes<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">"redis://192.168.10.143:6379"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-nodes<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">"redis://192.168.10.144:6379"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+nodes<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">"redis:\\192.168.10.139:6379"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+nodes<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">"redis:\\192.168.10.140:6379"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+nodes<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">"redis:\\192.168.10.141:6379"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+nodes<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">"redis:\\192.168.10.142:6379"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+nodes<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">"redis:\\192.168.10.143:6379"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+nodes<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">"redis:\\192.168.10.144:6379"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 String<span class="token punctuation">[</span><span class="token punctuation">]</span> array <span class="token operator">=</span> Convert<span class="token punctuation">.</span><span class="token function">toStrArray</span><span class="token punctuation">(</span>nodes<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
 Config config <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Config</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -716,7 +722,7 @@ clusterServersConfig
 
 redissonClient <span class="token operator">=</span> Redisson<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span>config<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
-<p>【参考链接】<br>1：<a href="https://zhuanlan.zhihu.com/p/73807097">分布式锁</a><br>2：<a href="https://zhuanlan.zhihu.com/p/78300382">Redis解析：SET复合命令和简易的分布式锁优化</a><br>3：<a href="http://www.redis.cn/commands/set.html">redis官方文档 – set 命令</a><br>4：<a href="https://github.com/redisson/redisson/wiki/%E7%9B%AE%E5%BD%95">redisson官方文档</a><br>5：<a href="https://github.com/Snailclimb/JavaGuide/blob/master/docs/dataStructures-algorithms/data-structure/bloom-filter.md">布隆过滤器</a><br>6：<a href="https://zhuanlan.zhihu.com/p/111354065">细说Redis分布式锁</a></p>
+<p>【参考链接】<br>1：<a href="https:\zhuanlan.zhihu.com\p\73807097">分布式锁</a><br>2：<a href="https:\zhuanlan.zhihu.com\p\78300382">Redis解析：SET复合命令和简易的分布式锁优化</a><br>3：<a href="http:\www.redis.cn\commands\set.html">redis官方文档 – set 命令</a><br>4：<a href="https:\github.com\redisson\redisson\wiki%E7%9B%AE%E5%BD%95">redisson官方文档</a><br>5：<a href="https:\github.com\Snailclimb\JavaGuide\blob\master\docs\dataStructures-algorithms\data-structure\bloom-filter.md">布隆过滤器</a><br>6：<a href="https:\zhuanlan.zhihu.com\p\111354065">细说Redis分布式锁</a></p>
 </blockquote>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -1320,7 +1326,7 @@ redissonClient <span class="token operator">=</span> Redisson<span class="token 
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">31k</span>&nbsp;字
+                            class="white-color">32.4k</span>&nbsp;字
                 
                 
                 <script>
@@ -1508,7 +1514,7 @@ redissonClient <span class="token operator">=</span> Redisson<span class="token 
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1601614004333')
+  navigator.serviceWorker.register('/sw.js?t=1603368465440')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }
