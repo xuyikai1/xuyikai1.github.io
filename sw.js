@@ -28,25 +28,25 @@ var precacheUrls = [];
 
   precacheUrls.push('/posts/aop.html');
 
-  precacheUrls.push('/posts/rabbitmq.html');
-
   precacheUrls.push('/posts/hashmap.html');
 
-  precacheUrls.push('/posts/redis-cluster.html');
+  precacheUrls.push('/posts/redisson.html');
+
+  precacheUrls.push('/posts/rabbitmq.html');
 
   precacheUrls.push('/posts/spring-event.html');
 
-  precacheUrls.push('/posts/xxl-job.html');
+  precacheUrls.push('/posts/operation.html');
 
   precacheUrls.push('/posts/spring-annotation.html');
 
-  precacheUrls.push('/posts/bloom-filter.html');
-
-  precacheUrls.push('/posts/operation.html');
+  precacheUrls.push('/posts/xxl-job.html');
 
   precacheUrls.push('/posts/load-balance.html');
 
-  precacheUrls.push('/posts/strategy-pattern.html');
+  precacheUrls.push('/posts/bloom-filter.html');
+
+  precacheUrls.push('/posts/redis-cluster.html');
 
 toolbox.precache(precacheUrls);
 toolbox.options = {"networkTimeoutSeconds":30};
