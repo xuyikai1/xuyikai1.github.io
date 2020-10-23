@@ -572,7 +572,7 @@
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
-                        2020-09-29
+                        2020-10-23
                     </div>
                 
 
@@ -614,6 +614,8 @@
 <li>3：<strong>去重</strong>。例如爬虫时，对已经爬取过的内容去重</li>
 <li>4：<strong>缓存穿透</strong>（非法用户会使用一般数据库里没有的key来进行访问导致请求一直打到数据库，导致数据库崩溃）。布隆过滤器删除key困难（会影响其他key），更建议直接使用redis set（设置过期时间）</li>
 </ul>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/bloomFilter%20blackList.png" alt="黑名单解决缓存穿透"></p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/bloomFilter%20whiteList.png" alt="白名单解决缓存穿透"></p>
 <h2 id="2-什么是布隆过滤器"><a href="#2-什么是布隆过滤器" class="headerlink" title="2.什么是布隆过滤器"></a>2.什么是布隆过滤器</h2><h3 id="2-1数据结构"><a href="#2-1数据结构" class="headerlink" title="2.1数据结构"></a>2.1数据结构</h3><p>布隆过滤器（Bloom Filter）1970年由Bloom的老哥提出</p>
 <p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/bloomFilter-init.png" alt="init"></p>
 <p>它由一个二进制数组来记录数据的相关性,数组中只有1或0</p>
@@ -681,7 +683,7 @@ filter<span class="token punctuation">.</span><span class="token function">tryIn
     log<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"key:{},是否存在：{}"</span><span class="token punctuation">,</span>i<span class="token punctuation">,</span>filter<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>StrUtil<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
-<p>参考链接：<br>1：<a href="https:\github.com\Snailclimb\JavaGuide\blob\master\docs\dataStructures-algorithms\data-structure\bloom-filter.md">JavaGuide - 布隆过滤器</a><br>2：<a href="https:\mp.weixin.qq.com\s\wNtpO7TtxnhoiDHuv1grXg">亿级数据过滤和布隆过滤器</a></p>
+<p>参考链接：<br>1：<a href="https:\github.com\Snailclimb\JavaGuide\blob\master\docs\dataStructures-algorithms\data-structure\bloom-filter.md">JavaGuide - 布隆过滤器</a><br>2：<a href="https:\mp.weixin.qq.com\s\wNtpO7TtxnhoiDHuv1grXg">亿级数据过滤和布隆过滤器</a><br>3：<a href="https://mp.weixin.qq.com/s/NfFt_OMAcDrhnJ6lD2VlOA">学会布隆过滤器，能当CEO？</a></p>
 </blockquote>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -1474,7 +1476,7 @@ filter<span class="token punctuation">.</span><span class="token function">tryIn
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1603418732729')
+  navigator.serviceWorker.register('/sw.js?t=1603424456310')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }
