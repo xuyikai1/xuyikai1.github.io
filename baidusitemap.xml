@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://xuyk.top/posts/load-balance.html</loc>
+    <lastmod>2020-10-26</lastmod>
+  </url>  <url>
+    <loc>http://xuyk.top/posts/mysql-configure.html</loc>
+    <lastmod>2020-10-26</lastmod>
+  </url>  <url>
+    <loc>http://xuyk.top/posts/strategy-pattern.html</loc>
+    <lastmod>2020-10-26</lastmod>
+  </url>  <url>
     <loc>http://xuyk.top/posts/bloom-filter.html</loc>
     <lastmod>2020-10-23</lastmod>
   </url>  <url>
@@ -13,9 +22,6 @@
     <loc>http://xuyk.top/posts/redisson.html</loc>
     <lastmod>2020-10-22</lastmod>
   </url>  <url>
-    <loc>http://xuyk.top/posts/load-balance.html</loc>
-    <lastmod>2020-10-02</lastmod>
-  </url>  <url>
     <loc>http://xuyk.top/posts/operation.html</loc>
     <lastmod>2020-09-29</lastmod>
   </url>  <url>
@@ -25,13 +31,7 @@
     <loc>http://xuyk.top/posts/spring-annotation.html</loc>
     <lastmod>2020-09-29</lastmod>
   </url>  <url>
-    <loc>http://xuyk.top/posts/strategy-pattern.html</loc>
-    <lastmod>2020-09-29</lastmod>
-  </url>  <url>
     <loc>http://xuyk.top/posts/xxl-job.html</loc>
-    <lastmod>2020-09-29</lastmod>
-  </url>  <url>
-    <loc>http://xuyk.top/posts/mysql-configure.html</loc>
     <lastmod>2020-09-29</lastmod>
   </url>  <url>
     <loc>http://xuyk.top/posts/design-pattern.html</loc>

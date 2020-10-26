@@ -14,7 +14,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="white"/>
-    <title>由Ribbon负载均衡策略引起的思考与延伸 | 寒暄</title>
+    <title>Ribbon负载均衡策略总结 | 寒暄</title>
     <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/apple-touch-icon.png">
     <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/favicon.ico">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/awesome/css/font-awesome.min.css">
@@ -419,12 +419,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/11.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/13.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">由Ribbon负载均衡策略引起的思考与延伸</h1>
+                    <h1 class="description center-align post-title">Ribbon负载均衡策略总结</h1>
                 </div>
             </div>
         </div>
@@ -572,7 +572,7 @@
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
-                        2020-10-02
+                        2020-10-26
                     </div>
                 
 
@@ -601,7 +601,7 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="由Ribbon负载均衡策略引起的思考与延伸"><a href="#由Ribbon负载均衡策略引起的思考与延伸" class="headerlink" title="由Ribbon负载均衡策略引起的思考与延伸"></a>由Ribbon负载均衡策略引起的思考与延伸</h1><h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>  学过Spring Cloud/Spring Boot的可能都或多或少的听过用过Ribbon，而正是这个短小而又精悍的组件，因为本身可插拔的独特与便捷性，与Eureka、feign、gateway、zuul、hystrix甚至自定义SpringBoot都能完美融合使用。而今天，我们将抛砖引玉，从Ribbon中总结出他的核心：<strong>负载均衡策略</strong>。</p>
+                <h1 id="Ribbon负载均衡策略总结"><a href="#Ribbon负载均衡策略总结" class="headerlink" title="Ribbon负载均衡策略总结"></a>Ribbon负载均衡策略总结</h1><h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>  学过Spring Cloud/Spring Boot的可能都或多或少的听过用过Ribbon，而正是这个短小而又精悍的组件，因为本身可插拔的独特与便捷性，与Eureka、feign、gateway、zuul、hystrix甚至自定义SpringBoot都能完美融合使用。而今天，我们将抛砖引玉，从Ribbon中总结出他的核心：<strong>负载均衡策略</strong>。</p>
 <h2 id="1-RandomRule-随机"><a href="#1-RandomRule-随机" class="headerlink" title="1. RandomRule - 随机"></a>1. RandomRule - 随机</h2><p>从可用服务节点中，随机挑选一个节点进行访问。</p>
 <blockquote>
 <p>yield+自旋的方式做重试，采用了严格的防御型编程</p>
@@ -1439,7 +1439,7 @@
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1603424456310')
+  navigator.serviceWorker.register('/sw.js?t=1603695257577')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }
