@@ -605,7 +605,7 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="RabbitMQ消息投递组件封装"><a href="#RabbitMQ消息投递组件封装" class="headerlink" title="RabbitMQ消息投递组件封装"></a>RabbitMQ消息投递组件封装</h1><h2 id="0-引言"><a href="#0-引言" class="headerlink" title="0.引言"></a>0.引言</h2><p>  在如今越来越内卷的IT行业，高并发，基本会出现在每一场面试中。而面试者关于此的回答中，我们也始终能听到一个熟悉的名词：消息队列，以及他所存在的一些特性和问题。例如：<strong>削峰填谷</strong>，<strong>异步化缓冲</strong>等，借着学习课程的契机以及自身的理解，也对消息队列中的RabbitMQ进行封装，做到开箱即用。</p>
+                <h1 id="RabbitMQ消息投递组件封装"><a href="#RabbitMQ消息投递组件封装" class="headerlink" title="RabbitMQ消息投递组件封装"></a>RabbitMQ消息投递组件封装</h1><h2 id="0-引言"><a href="#0-引言" class="headerlink" title="0.引言"></a>0.引言</h2><p>&emsp;&emsp;在如今越来越内卷的IT行业，高并发，基本会出现在每一场面试中。而面试者关于此的回答中，我们也始终能听到一个熟悉的名词：消息队列，以及他所存在的一些特性和问题。例如：<strong>削峰填谷</strong>，<strong>异步化缓冲</strong>等，借着学习课程的契机以及自身的理解，也对消息队列中的RabbitMQ进行封装，做到开箱即用。</p>
 <h2 id="1-架构图解"><a href="#1-架构图解" class="headerlink" title="1.架构图解"></a>1.架构图解</h2><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/rabbitmq-%E6%9E%B6%E6%9E%84%E5%9B%BE%E8%A7%A3.png" alt="架构图解"></p>
 <table>
 <thead>
@@ -684,25 +684,7 @@
 <p>2.消费端处理完消息之后，再发一条处理成功的消息并且入库msg db，callback service来专门监听消费端的处理成功的消息队列，也同时监听生产端发出的延迟消息队列，callback收到延迟消息时查询db</p>
 <p>3.如果消费端返回处理失败或者没有响应时，callback service要做消息补偿（即收到延迟消息查询之后发现没有处理成功，则主动发起rpc通信，给上游服务发送reSend命令，生产端再根据biz的业务相关id来查询biz db再次发送两条消息）</p>
 <h2 id="4-封装组件源码"><a href="#4-封装组件源码" class="headerlink" title="4.封装组件源码"></a>4.封装组件源码</h2><p><strong><a href="https:\github.com\xuyikai1\rabbit-parent">源码link下载</a></strong></p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+
             </div>
             <hr/>
 
@@ -1290,7 +1272,7 @@
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">33.4k</span>&nbsp;字
+                            class="white-color">35.6k</span>&nbsp;字
                 
                 
                 <script>
@@ -1478,7 +1460,7 @@
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1603893385933')
+  navigator.serviceWorker.register('/sw.js?t=1604919980255')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }
