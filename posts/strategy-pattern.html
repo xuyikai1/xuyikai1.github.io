@@ -819,7 +819,25 @@
 <p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/strategy-%E6%97%A5%E5%BF%97.png" alt="打印日志"></p>
 <p>怎么样，是不是觉得代码清新了许多！</p>
 <p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/strategy-%E7%A8%B3.png" alt="稳"></p>
-
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
             </div>
             <hr/>
 
@@ -1403,7 +1421,7 @@
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">35.6k</span>&nbsp;字
+                            class="white-color">36.9k</span>&nbsp;字
                 
                 
                 <script>
@@ -1591,7 +1609,7 @@
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1604919980255')
+  navigator.serviceWorker.register('/sw.js?t=1604977316013')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }

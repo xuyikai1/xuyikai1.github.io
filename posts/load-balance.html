@@ -579,7 +579,7 @@
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        1.3k
+                        1.4k
                     </div>
                 
 
@@ -601,7 +601,7 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="Ribbon负载均衡策略总结"><a href="#Ribbon负载均衡策略总结" class="headerlink" title="Ribbon负载均衡策略总结"></a>Ribbon负载均衡策略总结</h1><h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>&emsp;&emsp;学过Spring Cloud/Spring Boot的可能都或多或少的听过用过Ribbon，而正是这个短小而又精悍的组件，因为本身可插拔的独特与便捷性，与Eureka、feign、gateway、zuul、hystrix甚至自定义SpringBoot都能完美融合使用。而今天，我们将抛砖引玉，从Ribbon中总结出他的核心：<strong>负载均衡策略</strong>。</p>
+                <h1 id="Ribbon负载均衡策略总结"><a href="#Ribbon负载均衡策略总结" class="headerlink" title="Ribbon负载均衡策略总结"></a>Ribbon负载均衡策略总结</h1><h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>  学过Spring Cloud/Spring Boot的可能都或多或少的听过用过Ribbon，而正是这个短小而又精悍的组件，因为本身可插拔的独特与便捷性，与Eureka、feign、gateway、zuul、hystrix甚至自定义SpringBoot都能完美融合使用。而今天，我们将抛砖引玉，从Ribbon中总结出他的核心：<strong>负载均衡策略</strong>。</p>
 <h2 id="1-RandomRule-随机"><a href="#1-RandomRule-随机" class="headerlink" title="1. RandomRule - 随机"></a>1. RandomRule - 随机</h2><p>从可用服务节点中，随机挑选一个节点进行访问。</p>
 <blockquote>
 <p>yield+自旋的方式做重试，采用了严格的防御型编程</p>
@@ -654,7 +654,25 @@
 <p>【%】表示求模<br>【node_counts】表示服务器的数量<br>【7 % 3 = 1】表示 7除以3余1 所以等于1<br>ip-hash负载均衡算法其实也有比较明显的缺点，例如对于ip动态变化的用户不太友好，新增/减少服务器都会与原来计算结果背道而驰，这时候可以考虑一致性hash算法（<a href="http://note.youdao.com/s/B3obmiGK">一致性hash算法-有道云笔记</a>）</p>
 </blockquote>
 <h2 id="9-总结"><a href="#9-总结" class="headerlink" title="9. 总结"></a>9. 总结</h2><p>当然，除了以上的负载均衡策略，其实还有很多没列举出来的，例如Nginx中的最少连接策略、加权轮询等各种加权组合策略等，我们主要还是从中学习理解思想。</p>
-
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
             </div>
             <hr/>
 
@@ -1233,7 +1251,7 @@
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">35.6k</span>&nbsp;字
+                            class="white-color">36.9k</span>&nbsp;字
                 
                 
                 <script>
@@ -1421,7 +1439,7 @@
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1604919980255')
+  navigator.serviceWorker.register('/sw.js?t=1604977316013')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }

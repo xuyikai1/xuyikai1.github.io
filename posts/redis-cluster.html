@@ -579,7 +579,7 @@
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        574
+                        626
                     </div>
                 
 
@@ -685,10 +685,28 @@ chmod u<span class="token operator">+</span>x <span class="token operator">/</sp
 
 # <span class="token number">4</span><span class="token punctuation">.</span>重启服务器查看效果
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="3-redis-manager添加集群"><a href="#3-redis-manager添加集群" class="headerlink" title="(3) redis-manager添加集群"></a>(3) redis-manager添加集群</h4><p>1.通过<a href="http://192.168.10.139:8182"><a href="http://192.168.10.139:8182">http://192.168.10.139:8182</a></a>访问redis-manager管理端(ip为部署该项目的ip，默认端口为8182)，用户名密码默认皆为admin</p>
+<h4 id="3-redis-manager添加集群"><a href="#3-redis-manager添加集群" class="headerlink" title="(3) redis-manager添加集群"></a>(3) redis-manager添加集群</h4><p>1.通过<a href="http://192.168.10.139:8182"></a><a href="http://192.168.10.139:8182">http://192.168.10.139:8182</a>访问redis-manager管理端(ip为部署该项目的ip，默认端口为8182)，用户名密码默认皆为admin</p>
 <p>2.Import Cluster导入已部署的集群<br><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/import%20cluster.png" alt="import cluster"></p>
 <p>3.查看集群状态信息<br><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/rediss-manager%20cluster%20info.png" alt="rediss-manager cluster info"></p>
-
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
             </div>
             <hr/>
 
@@ -1268,7 +1286,7 @@ chmod u<span class="token operator">+</span>x <span class="token operator">/</sp
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">35.6k</span>&nbsp;字
+                            class="white-color">36.9k</span>&nbsp;字
                 
                 
                 <script>
@@ -1456,7 +1474,7 @@ chmod u<span class="token operator">+</span>x <span class="token operator">/</sp
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1604919980255')
+  navigator.serviceWorker.register('/sw.js?t=1604977316013')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }

@@ -601,8 +601,8 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="HashMap-链表散列"><a href="#HashMap-链表散列" class="headerlink" title="HashMap-链表散列"></a>HashMap-链表散列</h1><h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1.引言"></a>1.引言</h2><p>&emsp;&emsp;大家在码代码或者面试的过程中，或多或少都肯定用过HashMap或者被问到过。事实上，大部分人包括笔者自己都会把他当作临时内存存储一些对象使用，方便快捷。那么，在这个简单易用的HashMap背后又是什么牛鬼蛇神呢？让我们一探究竟。</p>
-<p>&emsp;&emsp;我们来一个问题抛砖引玉：在刚接触Java的时候，不管是刚学习还是面试题中，都会有这个问题：数组和单链表的特点和不同点有哪些？在这里笔者才疏学浅地脱口而出：</p>
+                <h1 id="HashMap-链表散列"><a href="#HashMap-链表散列" class="headerlink" title="HashMap-链表散列"></a>HashMap-链表散列</h1><h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1.引言"></a>1.引言</h2><p>  大家在码代码或者面试的过程中，或多或少都肯定用过HashMap或者被问到过。事实上，大部分人包括笔者自己都会把他当作临时内存存储一些对象使用，方便快捷。那么，在这个简单易用的HashMap背后又是什么牛鬼蛇神呢？让我们一探究竟。</p>
+<p>  我们来一个问题抛砖引玉：在刚接触Java的时候，不管是刚学习还是面试题中，都会有这个问题：数组和单链表的特点和不同点有哪些？在这里笔者才疏学浅地脱口而出：</p>
 <ul>
 <li><strong>数组</strong>：连续的内存。根据游标（index）查询快，时间复杂度O(1)；增删慢，时间复杂度O(n)</li>
 <li><strong>单链表</strong>：查询慢，时间复杂度O(n)；增删快，时间复杂度O(1)</li>
@@ -619,7 +619,7 @@
 <blockquote>
 <p>备注：当<strong>链表长度大于8</strong> 并且 <strong>数组长度大于64时</strong> 链表才转换为红黑树</p>
 </blockquote>
-<p>&emsp;&emsp;HashMap 主要用来存放键值对，它基于哈希表的Map接口实现，是常用的Java集合之一。<br>&emsp;&emsp;<strong>HashMap融合了数组与单链表，数组用来定位键（key）存储的位置</strong>（单链表，jdk1.8后优化增加红黑树），<strong>如果有其他键值对存储在这个位置上，则从单链表/红黑树中遍历插入进去</strong>（jdk1.7采用头插法，1.8优化为尾插法）</p>
+<p>  HashMap 主要用来存放键值对，它基于哈希表的Map接口实现，是常用的Java集合之一。<br>  <strong>HashMap融合了数组与单链表，数组用来定位键（key）存储的位置</strong>（单链表，jdk1.8后优化增加红黑树），<strong>如果有其他键值对存储在这个位置上，则从单链表/红黑树中遍历插入进去</strong>（jdk1.7采用头插法，1.8优化为尾插法）</p>
 <h2 id="3-属性说明"><a href="#3-属性说明" class="headerlink" title="3. 属性说明"></a>3. 属性说明</h2><h3 id="3-1-默认初始容量"><a href="#3-1-默认初始容量" class="headerlink" title="3.1 默认初始容量"></a>3.1 默认初始容量</h3><p>HashMap的数组初始容量（DEFAULT_INITIAL_CAPACITY）为16，当我们使用Map map = new HashMap();时，如果指定了初始容量A，则HashMap内部会初始化为该容量<strong>最近的2的幂方的值（大于等于A）</strong>，例如我们初始化容量为10，则HashMap会为我们新建一个容量为16的数组</p>
 <h3 id="3-2-最大容量"><a href="#3-2-最大容量" class="headerlink" title="3.2 最大容量"></a>3.2 最大容量</h3><p>HashMap的数组最大容量（MAXIMUM_CAPACITY）为 1&lt;&lt; 30，也就是1073741824，当我们创建时指定容量比此值大时，HashMap则会使用此值为容量</p>
 <h3 id="3-3-负载因子"><a href="#3-3-负载因子" class="headerlink" title="3.3 负载因子"></a>3.3 负载因子</h3><p>HashMap的负载因子（DEFAULT_LOAD_FACTOR）默认值为0.75，标识数组存放数据的疏密程度。loadFactor越趋近于1，那么 数组中存放的数据(entry)也就越多，也就越密，也就是会让链表的长度增加，反之就越稀疏</p>
@@ -680,9 +680,9 @@
    <span class="token keyword">this</span><span class="token punctuation">.</span>loadFactor <span class="token operator">=</span> loadFactor<span class="token punctuation">;</span>
    <span class="token keyword">this</span><span class="token punctuation">.</span>threshold <span class="token operator">=</span> <span class="token function">tableSizeFor</span><span class="token punctuation">(</span>initialCapacity<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="4-2-扩容机制"><a href="#4-2-扩容机制" class="headerlink" title="4.2 扩容机制"></a>4.2 扩容机制</h3><p>&emsp;&emsp;HashMap在使用过程中不断的往里面存放数据，当数量达到了 16 * 0.75 = 12 就需要将当前 16 的容量进行扩容。</p>
-<p>&emsp;&emsp;扩容(resize)就是重新计算容量，向HashMap对象里不停的添加元素，而HashMap对象内部的数组无法装载更多的元素时，对象就需要扩大数组的长度，以便能装入更多的元素。当然Java里的数组是无法自动扩容的，<strong>方法是使用一个新的数组代替已有的容量小的数组</strong>，就像我们用一个小桶装水，如果想装更多的水，就得换大水桶。</p>
-<p>&emsp;&emsp;进行扩容，会伴随着一次<strong>重新hash分配（rehash）</strong>，并且会遍历hash表中所有的元素，是非常耗时的。<strong>我们在编写程序中，要尽量避免resize</strong>。</p>
+<h3 id="4-2-扩容机制"><a href="#4-2-扩容机制" class="headerlink" title="4.2 扩容机制"></a>4.2 扩容机制</h3><p>  HashMap在使用过程中不断的往里面存放数据，当数量达到了 16 * 0.75 = 12 就需要将当前 16 的容量进行扩容。</p>
+<p>  扩容(resize)就是重新计算容量，向HashMap对象里不停的添加元素，而HashMap对象内部的数组无法装载更多的元素时，对象就需要扩大数组的长度，以便能装入更多的元素。当然Java里的数组是无法自动扩容的，<strong>方法是使用一个新的数组代替已有的容量小的数组</strong>，就像我们用一个小桶装水，如果想装更多的水，就得换大水桶。</p>
+<p>  进行扩容，会伴随着一次<strong>重新hash分配（rehash）</strong>，并且会遍历hash表中所有的元素，是非常耗时的。<strong>我们在编写程序中，要尽量避免resize</strong>。</p>
 <h3 id="4-3-扰动函数（hash方法）"><a href="#4-3-扰动函数（hash方法）" class="headerlink" title="4.3 扰动函数（hash方法）"></a>4.3 扰动函数（hash方法）</h3><pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> <span class="token function">hash</span><span class="token punctuation">(</span>Object key<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">int</span> h<span class="token punctuation">;</span>
     <span class="token keyword">return</span> <span class="token punctuation">(</span>key <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token number">0</span> <span class="token operator">:</span> <span class="token punctuation">(</span>h <span class="token operator">=</span> key<span class="token punctuation">.</span><span class="token function">hashCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">^</span> <span class="token punctuation">(</span>h <span class="token operator">>>></span> <span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -708,8 +708,8 @@
 <p>【问】：为什么jdk 1.7插入链表采用头插法，而jdk 1.8采用尾插法？<br>【答】：<br>jdk 1.7：作者认为最新插入的往往是查询中最希望被找到的<br>jdk 1.8：在1.7版本中，多线程环境下，A、B线程同时插入，A线程插入后，B线程扩容后重新hash，导致形成环</p>
 </blockquote>
 <p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/HashMap%E5%A4%B4%E6%8F%92%E6%B3%95%E5%BC%8A%E7%AB%AF.jpg" alt="环"></p>
-<h2 id="5-线程安全性"><a href="#5-线程安全性" class="headerlink" title="5. 线程安全性"></a>5. 线程安全性</h2><p>&emsp;&emsp;HashMap是<strong>线程不安全</strong>的，举个数据覆盖的例子：当A线程判断index位置为空后正好挂起，B线程开始往index位置的写入节点数据，这时A线程恢复现场，执行赋值操作，就把A线程的数据给覆盖了；还有++size这个地方也会造成多线程同时扩容等问题。</p>
-<p>&emsp;&emsp;可以使用<strong>ConcurrentHashMap</strong>保证线程安全性（分段锁）</p>
+<h2 id="5-线程安全性"><a href="#5-线程安全性" class="headerlink" title="5. 线程安全性"></a>5. 线程安全性</h2><p>  HashMap是<strong>线程不安全</strong>的，举个数据覆盖的例子：当A线程判断index位置为空后正好挂起，B线程开始往index位置的写入节点数据，这时A线程恢复现场，执行赋值操作，就把A线程的数据给覆盖了；还有++size这个地方也会造成多线程同时扩容等问题。</p>
+<p>  可以使用<strong>ConcurrentHashMap</strong>保证线程安全性（分段锁）</p>
 <blockquote>
 <p>ConcurrentHashMap成员变量使用volatile 修饰，免除了指令重排序，同时保证内存可见性，另外使用CAS操作和synchronized结合实现赋值操作，多线程操作只会锁住当前操作索引的节点。</p>
 </blockquote>
@@ -726,7 +726,25 @@
 <blockquote>
 <p>【参考链接】<br>1：<a href="https://github.com/Snailclimb/JavaGuide/blob/master/docs/java/collection/HashMap.md">JavaGuide HashMap</a><br>2：<a href="https://zhuanlan.zhihu.com/p/125628540">一个HashMap跟面试官扯了半个小时</a><br>3：<a href="https://zhuanlan.zhihu.com/p/21673805">Java 8系列之重新认识HashMap</a></p>
 </blockquote>
-
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
             </div>
             <hr/>
 
@@ -1306,7 +1324,7 @@
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">35.6k</span>&nbsp;字
+                            class="white-color">36.9k</span>&nbsp;字
                 
                 
                 <script>
@@ -1494,7 +1512,7 @@
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1604919980255')
+  navigator.serviceWorker.register('/sw.js?t=1604977316013')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }

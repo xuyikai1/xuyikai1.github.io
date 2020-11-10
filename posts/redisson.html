@@ -633,9 +633,9 @@ end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
 <p>无法保证加锁的过程一定正确 </p>
 </blockquote>
 <h3 id="Redisson分布式锁"><a href="#Redisson分布式锁" class="headerlink" title="Redisson分布式锁"></a>Redisson分布式锁</h3><h4 id="传统redis分布式锁的弊端"><a href="#传统redis分布式锁的弊端" class="headerlink" title="传统redis分布式锁的弊端"></a>传统redis分布式锁的弊端</h4><blockquote>
-<p>&emsp;&emsp;使用setnx命令设置超时时间为30s，但是当30s过后业务A未执行完但是另外一个线程\请求B已进来也获取到该锁，而后业务A执行结束释放锁，就会出现超卖等线程安全问题；<br>PS：所以需要人为根据业务来维护这个超时时间</p>
+<p>  使用setnx命令设置超时时间为30s，但是当30s过后业务A未执行完但是另外一个线程\请求B已进来也获取到该锁，而后业务A执行结束释放锁，就会出现超卖等线程安全问题；<br>PS：所以需要人为根据业务来维护这个超时时间</p>
 </blockquote>
-<h4 id="redisson优点"><a href="#redisson优点" class="headerlink" title="redisson优点"></a>redisson优点</h4><h5 id="1-传统分布式锁弊端解决-watchDog看门狗"><a href="#1-传统分布式锁弊端解决-watchDog看门狗" class="headerlink" title="1.传统分布式锁弊端解决 - watchDog看门狗"></a>1.传统分布式锁弊端解决 - watchDog看门狗</h5><p>&emsp;&emsp;看门狗作用：监控锁</p>
+<h4 id="redisson优点"><a href="#redisson优点" class="headerlink" title="redisson优点"></a>redisson优点</h4><h5 id="1-传统分布式锁弊端解决-watchDog看门狗"><a href="#1-传统分布式锁弊端解决-watchDog看门狗" class="headerlink" title="1.传统分布式锁弊端解决 - watchDog看门狗"></a>1.传统分布式锁弊端解决 - watchDog看门狗</h5><p>  看门狗作用：监控锁</p>
 <blockquote>
 <p>1：当获取锁没有设置key超时时间时，会设置默认超时时间为30s，之后看门狗会每隔10s把key的超时时间延长至30s，保证锁一直被当前线程占用直至业务结束释放锁<br>2：Redisson 的“看门狗”逻辑保证了没有死锁发生。(如果机器宕机了，看门狗也就没了。此时就不会延长 Key 的过期时间，到了 30s 之后就会自动过期了，其他线程可以获取到锁)<br>3：当设置了key超时时间时，则超时key会自动释放<br>4：个人思考：加锁是加在了当前redis实例中，当实例redis宕机时，看门狗消失就不会延长时间而自动过期（当为redis主从集群例如三主三从时，每个key根据算法（相关：只分配给master的槽节点）分配到对应redis中）</p>
 </blockquote>
@@ -724,7 +724,25 @@ redissonClient <span class="token operator">=</span> Redisson<span class="token 
 <blockquote>
 <p>【参考链接】<br>1：<a href="https:\zhuanlan.zhihu.com\p\73807097">分布式锁</a><br>2：<a href="https:\zhuanlan.zhihu.com\p\78300382">Redis解析：SET复合命令和简易的分布式锁优化</a><br>3：<a href="http:\www.redis.cn\commands\set.html">redis官方文档 – set 命令</a><br>4：<a href="https:\github.com\redisson\redisson\wiki%E7%9B%AE%E5%BD%95">redisson官方文档</a><br>5：<a href="https:\github.com\Snailclimb\JavaGuide\blob\master\docs\dataStructures-algorithms\data-structure\bloom-filter.md">布隆过滤器</a><br>6：<a href="https:\zhuanlan.zhihu.com\p\111354065">细说Redis分布式锁</a></p>
 </blockquote>
-
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
             </div>
             <hr/>
 
@@ -1308,7 +1326,7 @@ redissonClient <span class="token operator">=</span> Redisson<span class="token 
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">35.6k</span>&nbsp;字
+                            class="white-color">36.9k</span>&nbsp;字
                 
                 
                 <script>
@@ -1496,7 +1514,7 @@ redissonClient <span class="token operator">=</span> Redisson<span class="token 
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1604919980255')
+  navigator.serviceWorker.register('/sw.js?t=1604977316013')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }

@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://xuyk.top/posts/aop.html</loc>
+    
+    <lastmod>2020-11-10T02:49:56.639Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://xuyk.top/posts/async.html</loc>
     
     <lastmod>2020-11-09T11:03:17.998Z</lastmod>
@@ -33,13 +40,6 @@
     <loc>http://xuyk.top/posts/bloom-filter.html</loc>
     
     <lastmod>2020-10-23T03:40:37.109Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xuyk.top/posts/aop.html</loc>
-    
-    <lastmod>2020-10-23T02:03:58.776Z</lastmod>
     
   </url>
   
@@ -121,14 +121,14 @@
   </url>
   
   <url>
-    <loc>http://xuyk.top/archives/index.html</loc>
+    <loc>http://xuyk.top/about/index.html</loc>
     
     <lastmod>2020-06-14T11:18:47.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://xuyk.top/about/index.html</loc>
+    <loc>http://xuyk.top/contact/index.html</loc>
     
     <lastmod>2020-06-14T11:18:47.000Z</lastmod>
     
@@ -142,7 +142,7 @@
   </url>
   
   <url>
-    <loc>http://xuyk.top/contact/index.html</loc>
+    <loc>http://xuyk.top/archives/index.html</loc>
     
     <lastmod>2020-06-14T11:18:47.000Z</lastmod>
     

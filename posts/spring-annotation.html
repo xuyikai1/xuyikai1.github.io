@@ -590,7 +590,7 @@
                 
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        13 分
+                        14 分
                     </div>
                 
 
@@ -645,7 +645,7 @@
 <li><strong>@Controller</strong>：返回一个页面，可以使用Thymeleaf 模板引擎进行渲染</li>
 </ul>
 <blockquote>
-<p>参考链接：<a href="https:\mp.weixin.qq.com\s?__biz=Mzg2OTA0Njk0OA==&mid=2247485544&idx=1&sn=3cc95b88979e28fe3bfe539eb421c6d8&chksm=cea247a3f9d5ceb5e324ff4b8697adc3e828ecf71a3468445e70221cce768d1e722085359907&token=1725092312&lang=zh_CN#rd">@RestController和Controller注解</a></p>
+<p>参考链接：<a href="https:\mp.weixin.qq.com\s?__biz=Mzg2OTA0Njk0OA==&amp;mid=2247485544&amp;idx=1&amp;sn=3cc95b88979e28fe3bfe539eb421c6d8&amp;chksm=cea247a3f9d5ceb5e324ff4b8697adc3e828ecf71a3468445e70221cce768d1e722085359907&amp;token=1725092312&amp;lang=zh_CN#rd">@RestController和Controller注解</a></p>
 </blockquote>
 <h3 id="2-4-Scope注解"><a href="#2-4-Scope注解" class="headerlink" title="2.4 @Scope注解"></a>2.4 <code>@Scope</code>注解</h3><p>声明 Spring Bean 的作用域，使用方法:</p>
 <pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Bean</span>
@@ -668,7 +668,7 @@
 <li><strong>@PatchMapping</strong> ：更新服务器上的资源（客户端提供更改的属性，可以看做作是部分更新），使用的比较少，这里就不举例子了。</li>
 </ul>
 <blockquote>
-<p>相当于<code>@RequestMapping(value=&quot;\users\{userId}&quot;,method=RequestMethod.*)</code></p>
+<p>相当于<code>@RequestMapping(value="\users\{userId}",method=RequestMethod.*)</code></p>
 </blockquote>
 <h2 id="4-前后端传值"><a href="#4-前后端传值" class="headerlink" title="4 前后端传值"></a>4 前后端传值</h2><h3 id="4-1-PathVariable-和-RequestParam注解"><a href="#4-1-PathVariable-和-RequestParam注解" class="headerlink" title="4.1 @PathVariable 和 @RequestParam注解"></a>4.1 <code>@PathVariable</code> 和 <code>@RequestParam</code>注解</h3><p><code>@PathVariable</code>用于获取路径参数，<code>@RequestParam</code>用于获取查询参数。</p>
 <pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@GetMapping</span><span class="token punctuation">(</span><span class="token string">"\klasses\{klassId}\teachers"</span><span class="token punctuation">)</span>
@@ -768,7 +768,7 @@ String wuhan2020<span class="token punctuation">;</span><span aria-hidden="true"
 <li><code>@Future</code> 被注释的元素必须是一个将来的日期</li>
 </ul>
 <blockquote>
-<p>例子：<br>@Pattern(regexp=”^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,10}$&quot;, message=”密码必须是6~10位数字和字母的组合<br>private String password;</p>
+<p>例子：<br>@Pattern(regexp=”^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,10}$", message=”密码必须是6~10位数字和字母的组合<br>private String password;</p>
 </blockquote>
 <p><strong>Hibernate Validator提供的校验注解：</strong></p>
 <ul>
@@ -791,7 +791,7 @@ String wuhan2020<span class="token punctuation">;</span><span aria-hidden="true"
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
-<p>拓展：<a href="https:\mp.weixin.qq.com\s?__biz=Mzg2OTA0Njk0OA==&mid=2247485783&idx=1&sn=a407f3b75efa17c643407daa7fb2acd6&chksm=cea2469cf9d5cf8afbcd0a8a1c9cc4294d6805b8e01bee6f76bb2884c5bc15478e91459def49&token=292197051&lang=zh_CN#rd">如何在 Spring\Spring Boot 中做参数校验</a></p>
+<p>拓展：<a href="https:\mp.weixin.qq.com\s?__biz=Mzg2OTA0Njk0OA==&amp;mid=2247485783&amp;idx=1&amp;sn=a407f3b75efa17c643407daa7fb2acd6&amp;chksm=cea2469cf9d5cf8afbcd0a8a1c9cc4294d6805b8e01bee6f76bb2884c5bc15478e91459def49&amp;token=292197051&amp;lang=zh_CN#rd">如何在 Spring\Spring Boot 中做参数校验</a></p>
 </blockquote>
 <h2 id="7-全局异常处理"><a href="#7-全局异常处理" class="headerlink" title="7 全局异常处理"></a>7 全局异常处理</h2><ul>
 <li>1：<code>@ControllerAdvice</code> :注解定义全局异常处理类</li>
@@ -811,11 +811,11 @@ String wuhan2020<span class="token punctuation">;</span><span aria-hidden="true"
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
-<p>拓展：<br><a href="https:\mp.weixin.qq.com\s?__biz=Mzg2OTA0Njk0OA==&mid=2247485568&idx=2&sn=c5ba880fd0c5d82e39531fa42cb036ac&chksm=cea2474bf9d5ce5dcbc6a5f6580198fdce4bc92ef577579183a729cb5d1430e4994720d59b34&token=2133161636&lang=zh_CN#rd">SpringBoot 处理异常的几种常见姿势</a><br><a href="https:\mp.weixin.qq.com\s?__biz=Mzg2OTA0Njk0OA==&mid=2247486379&idx=2&sn=48c29ae65b3ed874749f0803f0e4d90e&chksm=cea24460f9d5cd769ed53ad7e17c97a7963a89f5350e370be633db0ae8d783c3a3dbd58c70f8&token=1054498516&lang=zh_CN#rd">使用枚举简单封装一个优雅的 Spring Boot 全局异常处理！</a></p>
+<p>拓展：<br><a href="https:\mp.weixin.qq.com\s?__biz=Mzg2OTA0Njk0OA==&amp;mid=2247485568&amp;idx=2&amp;sn=c5ba880fd0c5d82e39531fa42cb036ac&amp;chksm=cea2474bf9d5ce5dcbc6a5f6580198fdce4bc92ef577579183a729cb5d1430e4994720d59b34&amp;token=2133161636&amp;lang=zh_CN#rd">SpringBoot 处理异常的几种常见姿势</a><br><a href="https:\mp.weixin.qq.com\s?__biz=Mzg2OTA0Njk0OA==&amp;mid=2247486379&amp;idx=2&amp;sn=48c29ae65b3ed874749f0803f0e4d90e&amp;chksm=cea24460f9d5cd769ed53ad7e17c97a7963a89f5350e370be633db0ae8d783c3a3dbd58c70f8&amp;token=1054498516&amp;lang=zh_CN#rd">使用枚举简单封装一个优雅的 Spring Boot 全局异常处理！</a></p>
 </blockquote>
 <h2 id="8-JPA相关-数据持久层"><a href="#8-JPA相关-数据持久层" class="headerlink" title="8 JPA相关(数据持久层)"></a>8 JPA相关(数据持久层)</h2><h3 id="8-1-创建表"><a href="#8-1-创建表" class="headerlink" title="8.1 创建表"></a>8.1 创建表</h3><ul>
 <li><code>@Entity</code> 声明一个类对应一个数据库实体(实体类)</li>
-<li><code>@Table(name = &quot;table_name&quot;)</code> 声明表的名称</li>
+<li><code>@Table(name = "table_name")</code> 声明表的名称</li>
 </ul>
 <pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Entity</span>
 <span class="token annotation punctuation">@Table</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"role"</span><span class="token punctuation">)</span>
@@ -969,7 +969,7 @@ String wuhan2020<span class="token punctuation">;</span><span aria-hidden="true"
 <p>默认使用<code>@Transactional</code>注解的话，事务传播为<code>Propagation.REQUIRED</code>，rollback为<code>RuntimeException.class</code></p>
 <p>一般POST请求（新增修改删除）则事务传播使用<code>Propagation.REQUIRED</code>，GET请求事务传播使用<code>Propagation.SUPPORTS</code></p>
 <blockquote>
-<p>拓展：<a href="https:\mp.weixin.qq.com\s?__biz=Mzg2OTA0Njk0OA==&mid=2247486483&idx=2&sn=77be488e206186803531ea5d7164ec53&chksm=cea243d8f9d5cacecaa5c5daae4cde4c697b9b5b21f96dfc6cce428cfcb62b88b3970c26b9c2&token=816772476&lang=zh_CN#rd">Spring 事务管理详解</a></p>
+<p>拓展：<a href="https:\mp.weixin.qq.com\s?__biz=Mzg2OTA0Njk0OA==&amp;mid=2247486483&amp;idx=2&amp;sn=77be488e206186803531ea5d7164ec53&amp;chksm=cea243d8f9d5cacecaa5c5daae4cde4c697b9b5b21f96dfc6cce428cfcb62b88b3970c26b9c2&amp;token=816772476&amp;lang=zh_CN#rd">Spring 事务管理详解</a></p>
 </blockquote>
 <h2 id="10-Json解析"><a href="#10-Json解析" class="headerlink" title="10 Json解析"></a>10 Json解析</h2><h3 id="10-1-过滤-json-数据"><a href="#10-1-过滤-json-数据" class="headerlink" title="10.1. 过滤 json 数据"></a>10.1. 过滤 json 数据</h3><p>@JsonIgnoreProperties 作用在类上用于过滤掉特定字段不返回或者不解析。</p>
 <pre class="line-numbers language-java"><code class="language-java">\\生成json时将userRoles属性过滤
@@ -1050,9 +1050,27 @@ String wuhan2020<span class="token punctuation">;</span><span aria-hidden="true"
   <span class="token string">"fullName"</span><span class="token operator">:</span> <span class="token string">"shaungkou"</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
-<p>参考链接：<br>1：<a href="https:\github.com\Snailclimb\JavaGuide\blob\master\docs\system-design\framework\spring\spring-annotations.md">Spring\Spring常用注解总结！- JavaGuide</a><br>2：<a href="https:\mp.weixin.qq.com\s?__biz=Mzg2OTA0Njk0OA==&mid=2247485544&idx=1&sn=3cc95b88979e28fe3bfe539eb421c6d8&chksm=cea247a3f9d5ceb5e324ff4b8697adc3e828ecf71a3468445e70221cce768d1e722085359907&token=1725092312&lang=zh_CN#rd">@RestController vs @Controller</a><br>3：<a href="https:\mp.weixin.qq.com\s?__biz=Mzg2OTA0Njk0OA==&mid=2247486181&idx=2&sn=10db0ae64ef501f96a5b0dbc4bd78786&chksm=cea2452ef9d5cc384678e456427328600971180a77e40c13936b19369672ca3e342c26e92b50&token=816772476&lang=zh_CN#rd">SpringBoot 如何优雅读取配置文件</a><br>4：<a href="https:\mp.weixin.qq.com\s?__biz=Mzg2OTA0Njk0OA==&mid=2247485783&idx=1&sn=a407f3b75efa17c643407daa7fb2acd6&chksm=cea2469cf9d5cf8afbcd0a8a1c9cc4294d6805b8e01bee6f76bb2884c5bc15478e91459def49&token=292197051&lang=zh_CN#rd">如何在 Spring\Spring Boot 中做参数校验</a><br>5：<a href="https:\mp.weixin.qq.com\s?__biz=Mzg2OTA0Njk0OA==&mid=2247486483&idx=2&sn=77be488e206186803531ea5d7164ec53&chksm=cea243d8f9d5cacecaa5c5daae4cde4c697b9b5b21f96dfc6cce428cfcb62b88b3970c26b9c2&token=816772476&lang=zh_CN#rd">Spring 事务管理详解</a></p>
+<p>参考链接：<br>1：<a href="https:\github.com\Snailclimb\JavaGuide\blob\master\docs\system-design\framework\spring\spring-annotations.md">Spring\Spring常用注解总结！- JavaGuide</a><br>2：<a href="https:\mp.weixin.qq.com\s?__biz=Mzg2OTA0Njk0OA==&amp;mid=2247485544&amp;idx=1&amp;sn=3cc95b88979e28fe3bfe539eb421c6d8&amp;chksm=cea247a3f9d5ceb5e324ff4b8697adc3e828ecf71a3468445e70221cce768d1e722085359907&amp;token=1725092312&amp;lang=zh_CN#rd">@RestController vs @Controller</a><br>3：<a href="https:\mp.weixin.qq.com\s?__biz=Mzg2OTA0Njk0OA==&amp;mid=2247486181&amp;idx=2&amp;sn=10db0ae64ef501f96a5b0dbc4bd78786&amp;chksm=cea2452ef9d5cc384678e456427328600971180a77e40c13936b19369672ca3e342c26e92b50&amp;token=816772476&amp;lang=zh_CN#rd">SpringBoot 如何优雅读取配置文件</a><br>4：<a href="https:\mp.weixin.qq.com\s?__biz=Mzg2OTA0Njk0OA==&amp;mid=2247485783&amp;idx=1&amp;sn=a407f3b75efa17c643407daa7fb2acd6&amp;chksm=cea2469cf9d5cf8afbcd0a8a1c9cc4294d6805b8e01bee6f76bb2884c5bc15478e91459def49&amp;token=292197051&amp;lang=zh_CN#rd">如何在 Spring\Spring Boot 中做参数校验</a><br>5：<a href="https:\mp.weixin.qq.com\s?__biz=Mzg2OTA0Njk0OA==&amp;mid=2247486483&amp;idx=2&amp;sn=77be488e206186803531ea5d7164ec53&amp;chksm=cea243d8f9d5cacecaa5c5daae4cde4c697b9b5b21f96dfc6cce428cfcb62b88b3970c26b9c2&amp;token=816772476&amp;lang=zh_CN#rd">Spring 事务管理详解</a></p>
 </blockquote>
-
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
             </div>
             <hr/>
 
@@ -1640,7 +1658,7 @@ String wuhan2020<span class="token punctuation">;</span><span aria-hidden="true"
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">35.6k</span>&nbsp;字
+                            class="white-color">36.9k</span>&nbsp;字
                 
                 
                 <script>
@@ -1828,7 +1846,7 @@ String wuhan2020<span class="token punctuation">;</span><span aria-hidden="true"
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1604919980255')
+  navigator.serviceWorker.register('/sw.js?t=1604977316013')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }
