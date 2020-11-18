@@ -443,7 +443,7 @@
 
     <script>
         // 每天切换 banner 图.  Switch banner image every day.
-        $('.bg-cover').css('background-image', 'url(https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/banner/2.jpg)');
+        $('.bg-cover').css('background-image', 'url(https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/banner/3.jpg)');
     </script>
 
     </div>
@@ -716,7 +716,7 @@
                 type: 'pie',
                 radius: '50%',
                 color: ['#6772e5', '#ff9e0f', '#fa755a', '#3ecf8e', '#82d3f4', '#ab47bc', '#525f7f', '#f51c47', '#26A69A'],
-                data: [{"name":"AOP","value":1},{"name":"MySQL","value":1},{"name":"消息队列","value":1},{"name":"Redis","value":2},{"name":"负载均衡","value":1},{"name":"Data Structure","value":2},{"name":"Spring","value":2},{"name":"分布式任务调度","value":1},{"name":"运维部署","value":1},{"name":"async","value":1},{"name":"design pattern","value":2}],
+                data: [{"name":"MySQL","value":1},{"name":"Data Structure","value":2},{"name":"AOP","value":1},{"name":"消息队列","value":1},{"name":"Redis","value":2},{"name":"async","value":1},{"name":"负载均衡","value":1},{"name":"分布式任务调度","value":1},{"name":"Spring","value":2},{"name":"design pattern","value":2},{"name":"运维部署","value":1}],
                 itemStyle: {
                     emphasis: {
                         shadowBlur: 10,
@@ -740,7 +740,7 @@
         xAxis: [
             {
                 type: 'category',
-                data: ["Spring","design pattern","aop","configure","消息队列","RabbitMQ","Redis","load balance","Data Structure","redis cluster"]
+                data: ["Spring","design pattern","configure","Data Structure","aop","消息队列","RabbitMQ","redis cluster","Redis","async"]
             }
         ],
         yAxis: [
@@ -873,14 +873,20 @@
             <div class="tag-chips center-align">
                 
                     
-                        <a href="/tags/aop/">
-                            <span class="chip center-align waves-effect waves-light chip-default">aop</span>
+                        <a href="/tags/configure/">
+                            <span class="chip center-align waves-effect waves-light chip-default">configure</span>
                         </a>
                     
                 
                     
-                        <a href="/tags/configure/">
-                            <span class="chip center-align waves-effect waves-light chip-default">configure</span>
+                        <a href="/tags/Data-Structure/">
+                            <span class="chip center-align waves-effect waves-light chip-default">Data Structure</span>
+                        </a>
+                    
+                
+                    
+                        <a href="/tags/aop/">
+                            <span class="chip center-align waves-effect waves-light chip-default">aop</span>
                         </a>
                     
                 
@@ -897,6 +903,18 @@
                     
                 
                     
+                        <a href="/tags/redis-cluster/">
+                            <span class="chip center-align waves-effect waves-light chip-default">redis cluster</span>
+                        </a>
+                    
+                
+                    
+                
+                    
+                        <a href="/tags/async/">
+                            <span class="chip center-align waves-effect waves-light chip-default">async</span>
+                        </a>
+                    
                 
                     
                         <a href="/tags/load-balance/">
@@ -905,14 +923,8 @@
                     
                 
                     
-                        <a href="/tags/Data-Structure/">
-                            <span class="chip center-align waves-effect waves-light chip-default">Data Structure</span>
-                        </a>
-                    
-                
-                    
-                        <a href="/tags/redis-cluster/">
-                            <span class="chip center-align waves-effect waves-light chip-default">redis cluster</span>
+                        <a href="/tags/distributed-task/">
+                            <span class="chip center-align waves-effect waves-light chip-default">distributed task</span>
                         </a>
                     
                 
@@ -929,38 +941,26 @@
                     
                 
                     
-                        <a href="/tags/%E6%B3%A8%E8%A7%A3/">
-                            <span class="chip center-align waves-effect waves-light chip-default">注解</span>
-                        </a>
-                    
-                
-                    
-                        <a href="/tags/distributed-task/">
-                            <span class="chip center-align waves-effect waves-light chip-default">distributed task</span>
-                        </a>
-                    
-                
-                    
-                        <a href="/tags/operation/">
-                            <span class="chip center-align waves-effect waves-light chip-default">operation</span>
-                        </a>
-                    
-                
-                    
-                        <a href="/tags/async/">
-                            <span class="chip center-align waves-effect waves-light chip-default">async</span>
-                        </a>
-                    
-                
-                    
                         <a href="/tags/bloom-filter/">
                             <span class="chip center-align waves-effect waves-light chip-default">bloom filter</span>
                         </a>
                     
                 
                     
+                        <a href="/tags/%E6%B3%A8%E8%A7%A3/">
+                            <span class="chip center-align waves-effect waves-light chip-default">注解</span>
+                        </a>
+                    
+                
+                    
                         <a href="/tags/design-pattern/">
                             <span class="chip center-align waves-effect waves-light chip-default">design pattern</span>
+                        </a>
+                    
+                
+                    
+                        <a href="/tags/operation/">
+                            <span class="chip center-align waves-effect waves-light chip-default">operation</span>
                         </a>
                     
                 
@@ -1193,7 +1193,7 @@
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1604977316013')
+  navigator.serviceWorker.register('/sw.js?t=1605691867342')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }

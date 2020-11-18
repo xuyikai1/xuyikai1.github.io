@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://xuyk.top/posts/aop.html</loc>
+    <loc>http://xuyk.top/posts/async.html</loc>
     <lastmod>2020-11-10</lastmod>
   </url>  <url>
-    <loc>http://xuyk.top/posts/async.html</loc>
-    <lastmod>2020-11-09</lastmod>
+    <loc>http://xuyk.top/posts/aop.html</loc>
+    <lastmod>2020-11-10</lastmod>
   </url>  <url>
     <loc>http://xuyk.top/posts/mysql-configure.html</loc>
     <lastmod>2020-10-26</lastmod>
