@@ -572,14 +572,14 @@
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
-                        2020-11-27
+                        2020-11-30
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        3.6k
+                        3.7k
                     </div>
                 
 
@@ -819,7 +819,7 @@
 <li>3：<strong>【Timer与ScheduledThreadPoolExecutor的区别】</strong>：timer是单线程的，如果一个线程执行时间很长，会影响下一个执行线程，<strong>实际项目中尽可能用ScheduledThreadPoolExecutor，慎用Timer</strong></li>
 <li>4：<strong>【当线程池里的线程执行异常会发生什么】</strong>：a：调用方法为<strong>execute()</strong>，<strong>会打印出堆栈异常日志</strong>；b：调用方法为<strong>submit()</strong>，堆栈异常没有输出。但是如果业务需要获取线程返回值，调用了<strong>Future.get()方法</strong>时，<strong>可以捕获打印出堆栈异常信息</strong></li>
 <li>5：<strong>【线程池自定义命名小技巧】</strong>：（1）：<strong>new ThreadFactoryBuilder().setNameFormat(“my-thread-pool-%d”).build() -&gt; guava</strong> （2）：<strong>new NamedThreadFactory(“demo-threadPool-“, false) -&gt; hutool工具类</strong></li>
-<li></li>
+<li>6：<strong>ScheduledThreadPoolExecutor</strong>继承了ThreadPoolExecutor，一般被用来当做延迟队列线程池使用，但是仔细查看他的构造函数可以发现，<strong>最大线程数maximumPoolSize都被设置成默认的Integer.MAX_VALUE</strong>，生产环境上容易造成OOM或者导致服务器性能下降，建议使用消息队列中的延迟队列代替</li>
 </ul>
 <h3 id="8-3-线程池参数动态化"><a href="#8-3-线程池参数动态化" class="headerlink" title="8.3 线程池参数动态化"></a>8.3 线程池参数动态化</h3><p>业务与流量不会总是一成不变的，当初合理的配置可能也会在突发的巨大流量面前兵败如山倒，固定的线程池配置亦是如此，满足当时，却顶不住未来。为此，美团团队在博客中提到了<strong>线程池参数动态化</strong>的思路，非常值得精读！</p>
 <p><a href="https://mp.weixin.qq.com/s/baYuX8aCwQ9PP6k7TDl2Ww">Java线程池实现原理及其在美团业务中的实践</a></p>
@@ -1426,7 +1426,7 @@
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">40.5k</span>&nbsp;字
+                            class="white-color">40.6k</span>&nbsp;字
                 
                 
                 <script>
@@ -1614,7 +1614,7 @@
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1606469973013')
+  navigator.serviceWorker.register('/sw.js?t=1606724057045')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }
