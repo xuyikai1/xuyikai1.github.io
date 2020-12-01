@@ -716,7 +716,7 @@
                 type: 'pie',
                 radius: '50%',
                 color: ['#6772e5', '#ff9e0f', '#fa755a', '#3ecf8e', '#82d3f4', '#ab47bc', '#525f7f', '#f51c47', '#26A69A'],
-                data: [{"name":"MySQL","value":1},{"name":"Redis","value":2},{"name":"消息队列","value":1},{"name":"AOP","value":1},{"name":"Data Structure","value":2},{"name":"Spring","value":2},{"name":"线程池","value":1},{"name":"负载均衡","value":1},{"name":"async","value":1},{"name":"分布式任务调度","value":1},{"name":"运维部署","value":1},{"name":"design pattern","value":2}],
+                data: [{"name":"MySQL","value":1},{"name":"AOP","value":1},{"name":"Data Structure","value":2},{"name":"Redis","value":2},{"name":"线程池","value":1},{"name":"消息队列","value":1},{"name":"负载均衡","value":1},{"name":"Spring","value":2},{"name":"分布式任务调度","value":1},{"name":"运维部署","value":1},{"name":"async","value":1},{"name":"design pattern","value":2}],
                 itemStyle: {
                     emphasis: {
                         shadowBlur: 10,
@@ -740,7 +740,7 @@
         xAxis: [
             {
                 type: 'category',
-                data: ["Spring","design pattern","configure","redis cluster","消息队列","RabbitMQ","aop","Data Structure","事件监听","threadPool"]
+                data: ["Spring","design pattern","configure","aop","Data Structure","Redis","threadPool","消息队列","RabbitMQ","load balance"]
             }
         ],
         yAxis: [
@@ -879,8 +879,22 @@
                     
                 
                     
-                        <a href="/tags/redis-cluster/">
-                            <span class="chip center-align waves-effect waves-light chip-default">redis cluster</span>
+                        <a href="/tags/aop/">
+                            <span class="chip center-align waves-effect waves-light chip-default">aop</span>
+                        </a>
+                    
+                
+                    
+                        <a href="/tags/Data-Structure/">
+                            <span class="chip center-align waves-effect waves-light chip-default">Data Structure</span>
+                        </a>
+                    
+                
+                    
+                
+                    
+                        <a href="/tags/threadPool/">
+                            <span class="chip center-align waves-effect waves-light chip-default">threadPool</span>
                         </a>
                     
                 
@@ -897,14 +911,14 @@
                     
                 
                     
-                        <a href="/tags/aop/">
-                            <span class="chip center-align waves-effect waves-light chip-default">aop</span>
+                        <a href="/tags/load-balance/">
+                            <span class="chip center-align waves-effect waves-light chip-default">load balance</span>
                         </a>
                     
                 
                     
-                        <a href="/tags/Data-Structure/">
-                            <span class="chip center-align waves-effect waves-light chip-default">Data Structure</span>
+                        <a href="/tags/redis-cluster/">
+                            <span class="chip center-align waves-effect waves-light chip-default">redis cluster</span>
                         </a>
                     
                 
@@ -921,34 +935,8 @@
                     
                 
                     
-                        <a href="/tags/threadPool/">
-                            <span class="chip center-align waves-effect waves-light chip-default">threadPool</span>
-                        </a>
-                    
-                
-                    
-                
-                    
-                        <a href="/tags/load-balance/">
-                            <span class="chip center-align waves-effect waves-light chip-default">load balance</span>
-                        </a>
-                    
-                
-                    
-                        <a href="/tags/async/">
-                            <span class="chip center-align waves-effect waves-light chip-default">async</span>
-                        </a>
-                    
-                
-                    
                         <a href="/tags/%E6%B3%A8%E8%A7%A3/">
                             <span class="chip center-align waves-effect waves-light chip-default">注解</span>
-                        </a>
-                    
-                
-                    
-                        <a href="/tags/bloom-filter/">
-                            <span class="chip center-align waves-effect waves-light chip-default">bloom filter</span>
                         </a>
                     
                 
@@ -961,6 +949,18 @@
                     
                         <a href="/tags/operation/">
                             <span class="chip center-align waves-effect waves-light chip-default">operation</span>
+                        </a>
+                    
+                
+                    
+                        <a href="/tags/async/">
+                            <span class="chip center-align waves-effect waves-light chip-default">async</span>
+                        </a>
+                    
+                
+                    
+                        <a href="/tags/bloom-filter/">
+                            <span class="chip center-align waves-effect waves-light chip-default">bloom filter</span>
                         </a>
                     
                 
@@ -1011,7 +1011,7 @@
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">40.6k</span>&nbsp;字
+                            class="white-color">40.8k</span>&nbsp;字
                 
                 
                 <script>
@@ -1199,7 +1199,7 @@
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1606791169482')
+  navigator.serviceWorker.register('/sw.js?t=1606813305827')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }
