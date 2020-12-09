@@ -4,7 +4,7 @@
 
 <head><link rel=manifest href=/manifest.json>
     <meta charset="utf-8">
-    <meta name="keywords" content="spring自动配置">
+    <meta name="keywords" content="SpringBoot自动配置">
     <meta name="description" content="为什么SpringBoot能做到开箱即用">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -540,8 +540,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/spring/">
-                                    <span class="chip bg-color">spring</span>
+                                <a href="/tags/SpringBoot/">
+                                    <span class="chip bg-color">SpringBoot</span>
                                 </a>
                             
                         </div>
@@ -552,8 +552,8 @@
                         <div class="post-cate">
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                                <a href="/categories/spring/" class="post-category">
-                                    spring
+                                <a href="/categories/SpringBoot/" class="post-category">
+                                    SpringBoot
                                 </a>
                             
                         </div>
@@ -572,7 +572,7 @@
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
-                        2020-12-08
+                        2020-12-09
                     </div>
                 
 
@@ -623,7 +623,7 @@
 <p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/getAutoConfigurationEntry.png" alt="getAutoConfigurationEntry"></p>
 <p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/getCandidateConfigurations.png" alt="getCandidateConfigurations"></p>
 <p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/loadFactoryNames.png" alt="SpringFactoriesLoader.loadFactoryNames"></p>
-<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/spring.factories.png" alt="spring.factories"></p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/spring.factories.path.png" alt="/spring.factories.path"></p>
 <p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/spring.factories.content.png" alt="spring.factories.content"></p>
 <p>从上图和备注我们大致就可以理清自动配置的思路了，通过<strong>自动装配导入选择器</strong><code>AutoConfigurationImportSelector.class</code>来获取候选的一些自动配置项列表，这些自动配置项（127项）都以key为EnableAutoConfiguration统一存储在<strong>spring-boot-autoconfigure-x.x.x.x.jar的META-INF/spring.fatocies中</strong>。</p>
 <h3 id="2-3-配置自动装配加载"><a href="#2-3-配置自动装配加载" class="headerlink" title="2.3 配置自动装配加载"></a>2.3 配置自动装配加载</h3><p>当然这些配置并不是全部127项都加载进去，而是按需分配，开发人员可以通过<code>@SpringBootApplication</code>的<strong>exclude属性</strong>来排除指定的配置项，再根据默认配置的<code>getConfigurationClassFilter()</code>方法获取到的过滤器过滤掉了，最后剩下23个默认配置项</p>
@@ -669,8 +669,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/spring/">
-                                    <span class="chip bg-color">spring</span>
+                                <a href="/tags/SpringBoot/">
+                                    <span class="chip bg-color">SpringBoot</span>
                                 </a>
                             
                         </div>
@@ -985,7 +985,7 @@
                     <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
                 </div>
                 <div class="card">
-                    <a href="/posts/spring-autoConfiguration.html">
+                    <a href="/posts/SpringBoot-autoConfiguration.html">
                         <div class="card-image">
                             
                                 
@@ -1008,8 +1008,8 @@
                                 
                                     <i class="fa fa-bookmark fa-fw icon-category"></i>
                                     
-                                        <a href="/categories/spring/" class="post-category">
-                                    spring
+                                        <a href="/categories/SpringBoot/" class="post-category">
+                                    SpringBoot
                                 </a>
                                     
                                 
@@ -1020,8 +1020,8 @@
                     
                         <div class="card-action article-tags">
                             
-                                <a href="/tags/spring/">
-                                    <span class="chip bg-color">spring</span>
+                                <a href="/tags/SpringBoot/">
+                                    <span class="chip bg-color">SpringBoot</span>
                                 </a>
                             
                         </div>
@@ -1426,7 +1426,7 @@
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1607420031897')
+  navigator.serviceWorker.register('/sw.js?t=1607475301111')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }
