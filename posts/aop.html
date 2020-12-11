@@ -572,7 +572,7 @@
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
-                        2020-11-10
+                        2020-12-11
                     </div>
                 
 
@@ -601,7 +601,7 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1.引言"></a>1.引言</h2><p>众所周知，AOP真的是面试里老生常谈的技术点..想当年毕业找工作时，10场面试里7.8场都问AOP。大学毕业前，你肯定怎么都想不到，这辈子会被三个字母搞的晕头转向，脑瓜子嗡嗡的。而如今混了几年的我，决定手撕了他..的表皮，拿来做灵活的日常开发小助手。</p>
+                <h1 id="Aop切面与自定义注解的日常应用"><a href="#Aop切面与自定义注解的日常应用" class="headerlink" title="Aop切面与自定义注解的日常应用"></a>Aop切面与自定义注解的日常应用</h1><h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1.引言"></a>1.引言</h2><p>众所周知，AOP真的是面试里老生常谈的技术点..想当年毕业找工作时，10场面试里7.8场都问AOP。大学毕业前，你肯定怎么都想不到，这辈子会被三个字母搞的晕头转向，脑瓜子嗡嗡的。而如今混了几年的我，决定手撕了他..的表皮，拿来做灵活的日常开发小助手。</p>
 <h2 id="2-AOP"><a href="#2-AOP" class="headerlink" title="2.AOP"></a>2.AOP</h2><p>我们先来聊聊AOP这个知识点。AOP，面向切面编程，我们可以把例如<strong>日志管理、事务处理、权限控制</strong>等这样的公用模块封装起来，通过切面的方式嵌入到业务代码中，降<strong>低系统耦合度，也提升了系统的可扩展性和可维护性</strong>。</p>
 <blockquote>
 <p>日常使用中，大家可以想到<code>@Transaction</code>事务注解。<br>框架源码里，也有很多例子。例如<strong>Alibaba Sentinel</strong>有代码形式的限流和注解形式的限流，其中注解形式的限流就是用到AOP切面的思想，Around环绕来实现<strong>限流</strong></p>
@@ -778,7 +778,9 @@ String <span class="token function">desc</span><span class="token punctuation">(
         <span class="token keyword">return</span> <span class="token string">"success"</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>测试Controller类方法</strong></p>
 <p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/AOP-request-log-post.png" alt="Postman请求示例"></p>
+<p><strong>postman请求示例</strong></p>
 <p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/AOP-request-log-log.png" alt="打印Log"></p>
 <h3 id="4-3-分布式锁（本文基于Redisson）"><a href="#4-3-分布式锁（本文基于Redisson）" class="headerlink" title="4.3 分布式锁（本文基于Redisson）"></a>4.3 分布式锁（本文基于Redisson）</h3><blockquote>
 <p>关于Redisson分布式锁相关，可以查看笔者的另一篇文章<br><a href="http://xuyk.top/posts/redisson.html">浅谈Redis客户端Redisson | 寒暄</a></p>
@@ -898,7 +900,8 @@ redisson<span class="token operator">:</span>
 <p><strong>解锁时的注意事项</strong>：<br>lock.isHeldByCurrentThread()表示锁是否被当前线程所持有<br>如果少了lock.isHeldByCurrentThread()这一判断，在有异步操作时会出现下面这样的异常，提示当前线程并不持有我们需要解的锁，无法尝试去解锁</p>
 </blockquote>
 <p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/AOP-lock-exception.png" alt="异常堆栈"></p>
-<h4 id="4-测试-1"><a href="#4-测试-1" class="headerlink" title="4.测试"></a>4.测试</h4><pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@RestController</span>
+<h4 id="4-测试-1"><a href="#4-测试-1" class="headerlink" title="4.测试"></a>4.测试</h4><p><strong>测试Controller类方法</strong></p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@RestController</span>
 <span class="token annotation punctuation">@Slf4j</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TestController</span> <span class="token punctuation">{</span>
 
@@ -914,6 +917,7 @@ redisson<span class="token operator">:</span>
     <span class="token punctuation">}</span>
 
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>postman请求示例</strong></p>
 <p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/AOP-request-log-postman-lock.png" alt="Postman请求示例"></p>
 <h3 id="4-4-异常日志"><a href="#4-4-异常日志" class="headerlink" title="4.4 异常日志"></a>4.4 异常日志</h3><h4 id="1-自定义注解-ExceptionLog"><a href="#1-自定义注解-ExceptionLog" class="headerlink" title="1.自定义注解@ExceptionLog"></a>1.自定义注解<code>@ExceptionLog</code></h4><pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 运行时使用该注解</span>
 <span class="token annotation punctuation">@Retention</span><span class="token punctuation">(</span>RetentionPolicy<span class="token punctuation">.</span>RUNTIME<span class="token punctuation">)</span>
@@ -1005,7 +1009,7 @@ redisson<span class="token operator">:</span>
 
         Signature signature <span class="token operator">=</span> joinPoint<span class="token punctuation">.</span><span class="token function">getSignature</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-        <span class="token comment" spellcheck="true">// 记录异常相关信息</span>
+        <span class="token comment" spellcheck="true">// 持久化异常相关信息到数据库</span>
         ExceptionLogInfo log <span class="token operator">=</span> ExceptionLogInfo<span class="token punctuation">.</span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
                 <span class="token punctuation">.</span><span class="token function">apiPath</span><span class="token punctuation">(</span>request<span class="token punctuation">.</span><span class="token function">getServletPath</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
                 <span class="token punctuation">.</span><span class="token function">apiMethod</span><span class="token punctuation">(</span>request<span class="token punctuation">.</span><span class="token function">getMethod</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
@@ -1040,6 +1044,12 @@ redisson<span class="token operator">:</span>
 <blockquote>
 <p>记录异常日志信息主要使用到的是<code>@AfterThrowing</code>注解和切面。再结合切点和request/反射等方式获取到请求和异常等信息，汇总记录持久化下来</p>
 </blockquote>
+<h4 id="5-测试"><a href="#5-测试" class="headerlink" title="5.测试"></a>5.测试</h4><p><strong>测试Controller类方法</strong></p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/aop-async-exception-controller.png" alt=""></p>
+<p><strong>postman请求示例</strong></p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/aop-exception-postman.png" alt=""></p>
+<p><strong>数据库记录</strong></p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/aop-exception-mysql.png" alt=""></p>
 <h3 id="4-5-demo代码"><a href="#4-5-demo代码" class="headerlink" title="4.5 demo代码"></a>4.5 demo代码</h3><p><a href="https://github.com/xuyikai1/JavaDemo">JavaDemo：aop-demo</a></p>
 <blockquote>
 <p>参考链接：<br>1：<a href="https:\zhuanlan.zhihu.com\p\60730622">自定义注解（Annontation）</a><br>2：<a href="https:\zhuanlan.zhihu.com\p\143434806">厉害了！老大利用AOP实现自定义注解，半小时完成我三天工作量</a><br>3：<a href="https:\zhuanlan.zhihu.com\p\82539232">如何优雅地在 Spring Boot 中使用自定义注解，AOP 切面统一打印出入参日志</a><br>4：<a href="https:\zhuanlan.zhihu.com\p\81420343">Spring 自定义注解从入门到精通</a><br>5：<a href="https:\zhuanlan.zhihu.com\p\202586806">9000字，通俗易懂的讲解下Java注解</a><br>6：<a href="https://github.com/Snailclimb/JavaGuide/blob/master/docs/system-design/framework/spring/Spring%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93.md">JavaGuide/Spring常见问题总结</a><br>7：<a href="https://mp.weixin.qq.com/s/1ol0ewxckG06V-NqMFib4g">写了个牛逼的日志切面，甩锅更方便了</a><br>8：<a href="https://mp.weixin.qq.com/s/BXwjFpEGBLqqqivpMqfZPA">使用 SpringBoot AOP 记录操作日志、异常日志</a></p>
@@ -1642,7 +1652,7 @@ redisson<span class="token operator">:</span>
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">41.5k</span>&nbsp;字
+                            class="white-color">41.6k</span>&nbsp;字
                 
                 
                 <script>
@@ -1830,7 +1840,7 @@ redisson<span class="token operator">:</span>
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1607475301111')
+  navigator.serviceWorker.register('/sw.js?t=1607658173184')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }
