@@ -572,21 +572,21 @@
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
-                        2020-11-10
+                        2020-12-24
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        3k
+                        3.1k
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        11 分
+                        12 分
                     </div>
                 
 
@@ -797,7 +797,11 @@
 <ul>
 <li><code>@Async</code>也是通过AOP（切面）实现的，与<code>@Transactional</code>相同</li>
 <li>添加<code>@Async</code>注释的方法必须是<strong>public</strong>。因为AOP的本质是动态代理，动态代理要求方法必须是public</li>
-<li><code>@Async</code>必须是<strong>跨类调用</strong>，原因也是同类直接调用无法被动态代理<br>需要添加@EnableAsync注解</li>
+<li><code>@Async</code>必须是<strong>跨类调用</strong>，原因也是同类直接调用无法被动态代理（导致会调用对象本身的方法而不是代理类的方法）</li>
+<li>需要添加@EnableAsync注解</li>
+<li>使用<code>@Async</code>的类需要被Spring所管理，即需要标注<code>@Component</code></li>
+<li><code>@Async</code>标注的方法必须返回void或者Future</li>
+<li>建议设置BlockingQueue的大小，默认设置容量为Integer.MAX_VALUE，也就是无界队列，可能会任务堆积导致内存溢出（容量大于0时<code>@Async</code>绑定的线程池队列为LinkedBlockingQueue，否则为SynchrousQueue），</li>
 </ul>
 <blockquote>
 <p>其实<code>@Async</code>也有获取返回值的功能，但是因为同样是同步阻塞式获取，这里就不展示了。<br>代码上看，注解用起来还是很爽的。当异步方法出现异常时，我们可以配置来捕获异常友好输出到日志，这里需要进行额外配置，配置如下</p>
@@ -859,38 +863,37 @@
 <p>这一做法完美地解决了同步阻塞获取结果的问题，我们可以使用<br>不过单单从代码量角度，下面<strong>jdk1.8</strong>的<code>completableFuture</code>则更胜一筹</p>
 </blockquote>
 <h2 id="5-JDK1-8-CompletableFuture"><a href="#5-JDK1-8-CompletableFuture" class="headerlink" title="5.JDK1.8 CompletableFuture"></a>5.JDK1.8 CompletableFuture</h2><pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@PostMapping</span><span class="token punctuation">(</span><span class="token string">"/completableFutureAsync"</span><span class="token punctuation">)</span>
-<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">completableFuture</span><span class="token punctuation">(</span><span class="token annotation punctuation">@RequestParam</span><span class="token punctuation">(</span><span class="token string">"param"</span><span class="token punctuation">)</span> String param<span class="token punctuation">,</span>
-                              <span class="token annotation punctuation">@RequestParam</span><span class="token punctuation">(</span><span class="token string">"sleepMillTime"</span><span class="token punctuation">)</span> Integer sleepMillTime<span class="token punctuation">)</span><span class="token punctuation">{</span>
+<span class="token keyword">public</span> String <span class="token function">completableFuture</span><span class="token punctuation">(</span><span class="token annotation punctuation">@RequestParam</span><span class="token punctuation">(</span><span class="token string">"param"</span><span class="token punctuation">)</span> String param<span class="token punctuation">,</span>
+                              <span class="token annotation punctuation">@RequestParam</span><span class="token punctuation">(</span><span class="token string">"sleepMillTime"</span><span class="token punctuation">)</span> Integer sleepMillTime<span class="token punctuation">)</span> <span class="token keyword">throws</span> ExecutionException<span class="token punctuation">,</span> InterruptedException <span class="token punctuation">{</span>
     <span class="token comment" spellcheck="true">// ...</span>
     <span class="token comment" spellcheck="true">// 业务代码</span>
+    CompletableFuture<span class="token operator">&lt;</span>String<span class="token operator">></span> future <span class="token operator">=</span> CompletableFuture
+            <span class="token comment" spellcheck="true">// 异步发起话费充值</span>
+            <span class="token punctuation">.</span><span class="token function">supplyAsync</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token function">completableTest</span><span class="token punctuation">(</span>param<span class="token punctuation">,</span> sleepMillTime<span class="token punctuation">)</span><span class="token punctuation">,</span>executorService<span class="token punctuation">)</span>
+            <span class="token comment" spellcheck="true">// 记录异常</span>
+            <span class="token punctuation">.</span><span class="token function">exceptionally</span><span class="token punctuation">(</span>throwable <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">{</span>
+                log<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token string">"【系统异常】:{}"</span><span class="token punctuation">,</span>ExceptionUtil<span class="token punctuation">.</span><span class="token function">stacktraceToString</span><span class="token punctuation">(</span>throwable<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">return</span> <span class="token string">"error"</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    <span class="token comment" spellcheck="true">// 异步执行</span>
-    CompletableFuture<span class="token operator">&lt;</span>String<span class="token operator">></span> completableFuture <span class="token operator">=</span> CompletableFuture<span class="token punctuation">.</span><span class="token function">supplyAsync</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span><span class="token punctuation">{</span>
-            <span class="token comment" spellcheck="true">// 为了灵活测试使用的参数param</span>
-            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token string">"error"</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>param<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-                <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token string">"测试异常"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-            log<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"线程池异步【关心返回值】，日常使用注意合理配置线程池参数"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            ThreadUtil<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span>sleepMillTime<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">return</span> <span class="token string">"CompletableFuture result"</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> future<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-    <span class="token comment" spellcheck="true">// 异步获取结果/处理异常</span>
-    completableFuture<span class="token punctuation">.</span><span class="token function">handleAsync</span><span class="token punctuation">(</span><span class="token punctuation">(</span>result<span class="token punctuation">,</span> exception<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span><span class="token punctuation">{</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>exception <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            log<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token string">"【系统异常】:{}"</span><span class="token punctuation">,</span>ExceptionUtil<span class="token punctuation">.</span><span class="token function">stacktraceToString</span><span class="token punctuation">(</span>exception<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        log<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"获取到异步返回值:{}"</span><span class="token punctuation">,</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> result<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token keyword">private</span> String <span class="token function">completableTest</span><span class="token punctuation">(</span>String param<span class="token punctuation">,</span>Integer sleepMillTime<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    log<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"线程池异步【关心返回值】，日常使用注意合理配置线程池参数，线程池名称:{}"</span><span class="token punctuation">,</span>Thread<span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 为了灵活测试使用的参数param</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token string">"error"</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>param<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token string">"测试异常"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    ThreadUtil<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span>sleepMillTime<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token string">"CompletableFuture result"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
 <p>代码优雅，可读性高，还不知道选啥嘛！<br>两个字，舒服！</p>
 </blockquote>
 <h2 id="6-demo代码"><a href="#6-demo代码" class="headerlink" title="6.demo代码"></a>6.demo代码</h2><p><a href="https://github.com/xuyikai1/JavaDemo">JavaDemo：async-demo</a></p>
 <blockquote>
-<p>1：<a href="https://zhuanlan.zhihu.com/p/42682411">浅谈Java Future - 知乎</a><br>2：<a href="https://zhuanlan.zhihu.com/p/101716685">CompletableFuture：让你的代码免受阻塞之苦</a><br>3：<a href="https://zhuanlan.zhihu.com/p/146336940">你还在写同步程序？Java异步编程了解一下</a><br>4：<a href="https://zhuanlan.zhihu.com/p/42470582">浅谈Java异步编程 - 知乎</a><br>5：<a href="https://mp.weixin.qq.com/s/RZqv0jkq644KcGBHaz7lUA">笑了，面试官问我知不知道异步编程的Future</a><br>6：<a href="https://segmentfault.com/a/1190000022069911">guava并发工具</a><br>7：<a href="https://github.com/Snailclimb/JavaGuide/blob/master/docs/java/multi-thread/%E6%8B%BF%E6%9D%A5%E5%8D%B3%E7%94%A8%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%B1%A0%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5.md">拿来即用的线程池最佳实践</a><br>8：<a href="https://tech.meituan.com/2020/04/02/java-pooling-pratice-in-meituan.html">Java线程池实现原理及其在美团业务中的实践</a></p>
+<p>【参考链接】：<br>1：<a href="https://zhuanlan.zhihu.com/p/42682411">浅谈Java Future - 知乎</a><br>2：<a href="https://zhuanlan.zhihu.com/p/101716685">CompletableFuture：让你的代码免受阻塞之苦</a><br>3：<a href="https://zhuanlan.zhihu.com/p/146336940">你还在写同步程序？Java异步编程了解一下</a><br>4：<a href="https://zhuanlan.zhihu.com/p/42470582">浅谈Java异步编程 - 知乎</a><br>5：<a href="https://mp.weixin.qq.com/s/RZqv0jkq644KcGBHaz7lUA">笑了，面试官问我知不知道异步编程的Future</a><br>6：<a href="https://segmentfault.com/a/1190000022069911">guava并发工具</a><br>7：<a href="https://github.com/Snailclimb/JavaGuide/blob/master/docs/java/multi-thread/%E6%8B%BF%E6%9D%A5%E5%8D%B3%E7%94%A8%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%B1%A0%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5.md">拿来即用的线程池最佳实践</a><br>8：<a href="https://tech.meituan.com/2020/04/02/java-pooling-pratice-in-meituan.html">Java线程池实现原理及其在美团业务中的实践</a><br>9：<a href="https://mp.weixin.qq.com/s/RcPWPkbiuKZsjbhAMS8Ppw">异步线程CompletableFuture让你的代码速度快到飞起</a></p>
 </blockquote>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -1489,7 +1492,7 @@
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">41.6k</span>&nbsp;字
+                            class="white-color">41.7k</span>&nbsp;字
                 
                 
                 <script>
@@ -1677,7 +1680,7 @@
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1607658173184')
+  navigator.serviceWorker.register('/sw.js?t=1608801730859')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }
