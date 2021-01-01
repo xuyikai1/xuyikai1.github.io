@@ -4,8 +4,8 @@
 
 <head><link rel=manifest href=/manifest.json>
     <meta charset="utf-8">
-    <meta name="keywords" content="SpringBoot自动配置">
-    <meta name="description" content="为什么SpringBoot能做到开箱即用">
+    <meta name="keywords" content="Hook shutdownHook">
+    <meta name="description" content="优雅关闭资源">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +14,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="white"/>
-    <title>SpringBoot之自动配置原理 | 寒暄</title>
+    <title>使用钩子shutdownHook优雅关闭资源 | 寒暄</title>
     <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/apple-touch-icon.png">
     <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/favicon.ico">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/awesome/css/font-awesome.min.css">
@@ -419,12 +419,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/15.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/10.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">SpringBoot之自动配置原理</h1>
+                    <h1 class="description center-align post-title">使用钩子shutdownHook优雅关闭资源</h1>
                 </div>
             </div>
         </div>
@@ -540,8 +540,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/SpringBoot/">
-                                    <span class="chip bg-color">SpringBoot</span>
+                                <a href="/tags/shutdownHook/">
+                                    <span class="chip bg-color">shutdownHook</span>
                                 </a>
                             
                         </div>
@@ -552,8 +552,8 @@
                         <div class="post-cate">
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                                <a href="/categories/SpringBoot/" class="post-category">
-                                    SpringBoot
+                                <a href="/categories/shutdownHook/" class="post-category">
+                                    shutdownHook
                                 </a>
                             
                         </div>
@@ -565,28 +565,28 @@
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                        2020-12-08
+                        2021-01-01
                     </div>
                 
 
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
-                        2020-12-09
+                        2021-01-01
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        688
+                        1.2k
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        2 分
+                        5 分
                     </div>
                 
 
@@ -601,42 +601,99 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="SpringBoot之自动配置原理"><a href="#SpringBoot之自动配置原理" class="headerlink" title="SpringBoot之自动配置原理"></a>SpringBoot之自动配置原理</h1><h2 id="1-分析"><a href="#1-分析" class="headerlink" title="1.分析"></a>1.分析</h2><p>创建SpringBoot项目时，都会默认创建一个Application启动类，并且标注着<code>@SpringBootApplication</code>注解。深入探究会发现<code>@SpringBootApplication</code>注解除了自定义注解经常出现的元注解外，主要还有三个注解标注：<code>@SpringBootConfiguration</code>、<code>@ComponentScan</code>、<code>@EnableAutoConfiguration</code>，这三个注解可以说就是入口前的三把钥匙了，但是钥匙只有一把，所以我们不妨跟着其中的注释一一整理一番</p>
-<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/SpringBootApplication.png" alt="SpringBootApplication"></p>
+                <h1 id="使用钩子shutdownHook优雅关闭资源"><a href="#使用钩子shutdownHook优雅关闭资源" class="headerlink" title="使用钩子shutdownHook优雅关闭资源"></a>使用钩子shutdownHook优雅关闭资源</h1><h2 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h2><p>这是一个笔者在造rpc轮子的时候诞生的需求，也是一个挺细节的小知识点。故写一篇blog用于记录。</p>
+<p>这里先来简单讲一下rpc。rpc，远程方法调用，他旨在屏蔽了很多细节让我们调用远程方法和调用本地方法一样简单，目前存在的rpc框架就有<strong>dubbo</strong>、<strong>gRpc</strong>等</p>
 <blockquote>
-<p><code>@SpringBootConfiguration</code>：再进入一层会发现就是我们配置类常用注解<code>@Configuration</code>，目的是<strong>使用JavaConfig的配置方式来代替XML的繁琐配置</strong></p>
+<p>想想平时对接第三方api时是不是经历http请求、序列化、拆箱校验、数据标准化装箱等操作呢</p>
 </blockquote>
+<p>而rpc在使用时也涉及道诸多系统资源的使用，例如线程池、注册中心（zookeeper等）等，当rpc服务端（服务提供方）停止服务时，是否也应该释放这些资源呢？</p>
+<p>结果是必然的。想到这一层，需求就诞生了，经过多方寻找，类似于git + jenkins上的webHook，也就是shutdownHook钩子浮出水面</p>
+<h2 id="2-shutdownHook"><a href="#2-shutdownHook" class="headerlink" title="2.shutdownHook"></a>2.shutdownHook</h2><p>这是JVM本身提供的功能，当 JVM 接受到系统的关闭通知之后，调用 ShutdownHook 内的方法，用以完成清理操作，从而平滑的退出应用，下面是示例代码：</p>
+<p><strong>CustomShutdownHook.class</strong></p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Slf4j</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">CustomShutdownHook</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> CustomShutdownHook CUSTOM_SHUTDOWN_HOOK <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">CustomShutdownHook</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> CustomShutdownHook <span class="token function">getCustomShutdownHook</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> CUSTOM_SHUTDOWN_HOOK<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">releaseResources</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        log<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"addShutdownHook for clearAll"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Runtime<span class="token punctuation">.</span><span class="token function">getRuntime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">addShutdownHook</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">// 1.删除服务端注册信息</span>
+            ZookeeperClient<span class="token punctuation">.</span><span class="token function">clearRegistry</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// 2.关闭所有线程池</span>
+            ThreadPoolExecutorUtils<span class="token punctuation">.</span><span class="token function">shutDownAllThreadPool</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
-<p><code>@ComponentScan</code>：扫描注解，默认是扫描当前类下的package。将Spring一些例如<code>@Controller</code>/<code>@Service</code>/<code>@Component</code>/<code>@Repository</code>等注解加载到IOC容器中。（备注：<code>@EnableAutoConfiguration</code>中的<code>@AutoConfigurationPackage</code>则是用来扫描一些其他组件注解的，比如Spring Data Jpa中的<code>@Entity</code>注解等）</p>
+<p>自定义的shutdownHook，用于关闭服务端在zookeeper上注册的信息以及线程池资源</p>
 </blockquote>
+<p><strong>RpcServer.class</strong></p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">RpcServer</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">startup</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+        <span class="token comment" spellcheck="true">// 校验</span>
+        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+
+        <span class="token comment" spellcheck="true">// 添加JVM钩子 用于应用关闭时 自动释放资源</span>
+        CustomShutdownHook<span class="token punctuation">.</span><span class="token function">getCustomShutdownHook</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">releaseResources</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true">// 启动服务端</span>
+        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
-<p><code>@EnableAutoConfiguration</code>：自动配置核心注解，下文详细分析</p>
+<p>服务端启动时add自定义的ShutDownHook</p>
 </blockquote>
-<h2 id="2-EnableAutoConfiguration实现自动配置"><a href="#2-EnableAutoConfiguration实现自动配置" class="headerlink" title="2.@EnableAutoConfiguration实现自动配置"></a>2.<code>@EnableAutoConfiguration</code>实现自动配置</h2><blockquote>
-<p>我们通过代码一步步抽丝剥茧</p>
+<p><strong>关闭应用</strong></p>
+<p>通过 <strong>kill -2 pid</strong> 通过该java程序对应的pid发送关闭信号即可</p>
+<h2 id="3-Tips"><a href="#3-Tips" class="headerlink" title="3.Tips"></a>3.Tips</h2><blockquote>
+<p>摘自：<a href="https://zhuanlan.zhihu.com/p/82350423">Java中使用shutdownHook的一些注意事项</a></p>
 </blockquote>
-<h3 id="2-1-EnableAutoConfiguration注解"><a href="#2-1-EnableAutoConfiguration注解" class="headerlink" title="2.1 EnableAutoConfiguration注解"></a>2.1 EnableAutoConfiguration注解</h3><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/EnableAutoConfiguration-annotation.png" alt="EnableAutoConfiguration"></p>
+<p><strong>1. 不要使用kill -9来结束你的应用程序</strong></p>
+<p>kill -9是操作系统的终极杀器，如果你使用kill -9的话，应用程序是没有任何发言权的，它只能选择默默退出，几乎可以肯定，shutdownHook不会被调用。</p>
+<p><strong>2. shutdownHook涉及的方法应该尽量的短</strong></p>
+<p>这个可能和操作系统有关系，不同的操作系统可能有不同的差异：</p>
 <blockquote>
-<p>排除元注解和前面我们解释过的<code>@AutoConfigurationPackage</code>注解，可以看出，重点在于<code>@Import(AutoConfigurationImportSelector.class)</code>上。</p>
+<p>When a computer shuts down, the final stage of the shutdown process sends every remaining process a SIGTERM, gives those processes a few seconds grace, then sends them a SIGKILL.</p>
 </blockquote>
-<h3 id="2-2-自动配置链路分析"><a href="#2-2-自动配置链路分析" class="headerlink" title="2.2 自动配置链路分析"></a>2.2 自动配置链路分析</h3><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/selectImports.png" alt="AutoConfigurationImportSelector.selectImports"></p>
-<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/getAutoConfigurationEntry.png" alt="getAutoConfigurationEntry"></p>
-<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/getCandidateConfigurations.png" alt="getCandidateConfigurations"></p>
-<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/loadFactoryNames.png" alt="SpringFactoriesLoader.loadFactoryNames"></p>
-<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/spring.factories.path.png" alt="/spring.factories.path"></p>
-<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/spring.factories.content.png" alt="spring.factories.content"></p>
-<p>从上图和备注我们大致就可以理清自动配置的思路了，通过<strong>自动装配导入选择器</strong><code>AutoConfigurationImportSelector.class</code>来获取候选的一些自动配置项列表，这些自动配置项（127项）都以key为EnableAutoConfiguration统一存储在<strong>spring-boot-autoconfigure-x.x.x.x.jar的META-INF/spring.fatocies中</strong>。</p>
-<h3 id="2-3-配置自动装配加载"><a href="#2-3-配置自动装配加载" class="headerlink" title="2.3 配置自动装配加载"></a>2.3 配置自动装配加载</h3><p>当然这些配置并不是全部127项都加载进去，而是按需分配，开发人员可以通过<code>@SpringBootApplication</code>的<strong>exclude属性</strong>来排除指定的配置项，再根据默认配置的<code>getConfigurationClassFilter()</code>方法获取到的过滤器过滤掉了，最后剩下23个默认配置项</p>
-<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/Application-scanPackages-exclude.png" alt=""></p>
+<p>也就是说，如果shutdownHook过长，可能方法还没执行完，进程就被操作系统强制杀掉了，这一点在addShutdownHook()的文档上也有提及:</p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token operator">*</span> <span class="token operator">&lt;</span>p<span class="token operator">></span> Shutdown hooks should also finish their work quickly<span class="token punctuation">.</span>  When a
+<span class="token operator">*</span> program invokes <span class="token punctuation">{</span><span class="token annotation punctuation">@link</span> #exit exit<span class="token punctuation">}</span> the expectation is
+<span class="token operator">*</span> that the virtual machine will promptly shut down and exit<span class="token punctuation">.</span>  When the
+<span class="token operator">*</span> virtual machine is terminated due to user logoff or system shutdown the
+<span class="token operator">*</span> underlying operating system may only allow a fixed amount of time in
+<span class="token operator">*</span> which to shut down and exit<span class="token punctuation">.</span>  It is therefore inadvisable to attempt any
+<span class="token operator">*</span> user interaction or to perform a <span class="token keyword">long</span><span class="token operator">-</span>running computation in a shutdown
+<span class="token operator">*</span> hook<span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>3. shutdownHook的方法应该是线程安全的</strong></p>
+<p>这是因为，用户可能多次发送信号导致方法被不同的线程被多次调用，关于这一点文档也有说明：</p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token operator">*</span> They should<span class="token punctuation">,</span> in
+<span class="token operator">*</span> particular<span class="token punctuation">,</span> be written to be thread<span class="token operator">-</span>safe and to avoid deadlocks insofar
+<span class="token operator">*</span> as possible<span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p><strong>4. 关于shutdownHook方法的异常</strong></p>
+<p>shutdownHook调用过程中产生的所有异常都会被忽略掉并且可能不会输出任何提示信息，因此程序可能蕴含了一个久久不能被发现的BUG导致你的shutdownHook无法被执行，在调用shutdownHook的过程中，一定要仔细检查你的代码，保证正确性。</p>
+<p><strong>5. 某些场景下要提供at most once的保证</strong></p>
+<p>这点其实是接第三点说的，就是你的shutdownHook可能被调用多次，但其实关闭一次就够了，多次调用可能会引发一些意想不到的异常。比如KafkaStream的close方法，就提供了这样的保证：</p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">synchronized</span> <span class="token keyword">boolean</span> <span class="token function">close</span><span class="token punctuation">(</span><span class="token keyword">long</span> timeout<span class="token punctuation">,</span> TimeUnit timeUnit<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>log<span class="token punctuation">.</span><span class="token function">debug</span><span class="token punctuation">(</span><span class="token string">"Stopping Streams client with timeoutMillis = {} ms."</span><span class="token punctuation">,</span> timeUnit<span class="token punctuation">.</span><span class="token function">toMillis</span><span class="token punctuation">(</span>timeout<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span>KafkaStreams<span class="token punctuation">.</span>State<span class="token punctuation">.</span>PENDING_SHUTDOWN<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>log<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"Already in the pending shutdown state, wait to complete shutdown"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// ....</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>可以使用CAS操作来做这样的检查：</p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">if</span> <span class="token punctuation">(</span>state<span class="token punctuation">.</span><span class="token function">compareAndSet</span><span class="token punctuation">(</span>ACTIVE<span class="token punctuation">,</span> CLOSED<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token comment" spellcheck="true">// close here</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <blockquote>
-<p><code>scanBasePackages</code>：扫描注解，默认是扫描当前类下的package。将Spring一些例如@Controller/@Service/@Component/@Repository等注解加载到IOC容器中。<br><code>exclude</code>：排除特定的自动配置类</p>
-</blockquote>
-<h2 id="3-总结"><a href="#3-总结" class="headerlink" title="3.总结"></a>3.总结</h2><ul>
-<li>自动配置的核心是<code>@EnableAutoConfiguration</code>，SpringBoot在启动时会用SPI机制来加载spring.factories中的自动配置项，然后根据开发者的配置和默认配置筛选保留对应的配置进行加载。</li>
-<li>自动配置功能保证了SpringBoot开箱即用的特点，省心省事</li>
-</ul>
-<blockquote>
-<p>【参考链接】：<br>1：<a href="https://zhuanlan.zhihu.com/p/163685081">面试高频题：springboot自动装配的原理你能说出来吗？</a><br>2：<a href="https://zhuanlan.zhihu.com/p/55637237">SpringBoot自动配置原理</a></p>
+<p>【参考链接】：<br>1：<a href="https://zhuanlan.zhihu.com/p/340284353">微服务项目优雅上线、下线小技巧，你学废了吗</a><br>2：<a href="https://zhuanlan.zhihu.com/p/82350423">Java中使用shutdownHook的一些注意事项</a><br>3：<a href="https://zhuanlan.zhihu.com/p/86392065">ShutdownHook- Java 优雅停机解决方案</a><br>4：<a href="https://zhuanlan.zhihu.com/p/159298442">SpringBoot 2.3.0正式发布：优雅停机，配置文件位置新特性一览</a><br>5：<a href="https://zhuanlan.zhihu.com/p/265806389">Spring Boot 系列：最新版优雅停机详解</a><br>6：<a href="https://zhuanlan.zhihu.com/p/336252174">回调方法？钩子方法？模板模式？</a><br>7：<a href="https://mp.weixin.qq.com/s/EgbqwZ6BL-IJubr_Co4ZEg">拒绝 kill -9， SpringBoot 优雅停机详解！</a><br>8：<a href="https://blog.csdn.net/caide3/article/details/108782865">Java程序优雅关闭的两种方法</a></p>
 </blockquote>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -669,8 +726,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/SpringBoot/">
-                                    <span class="chip bg-color">SpringBoot</span>
+                                <a href="/tags/shutdownHook/">
+                                    <span class="chip bg-color">shutdownHook</span>
                                 </a>
                             
                         </div>
@@ -980,9 +1037,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-            <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
                 <div class="article-badge left-badge text-color">
-                    <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                    <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+                </div>
                 <div class="card">
                     <a href="/posts/shutdownHook.html">
                         <div class="card-image">
@@ -1000,9 +1058,9 @@
                             
                         </div>
                         <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2021-01-01
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-01-01
+                            </span>
                             <span class="publish-author">
                                 
                                     <i class="fa fa-bookmark fa-fw icon-category"></i>
@@ -1015,6 +1073,7 @@
                             </span>
                         </div>
                     </div>
+
                     
                         <div class="card-action article-tags">
                             
@@ -1033,31 +1092,31 @@
                     下一篇&nbsp;<i class="fa fa-chevron-right"></i>
                 </div>
                 <div class="card">
-                    <a href="/posts/threadPool.html">
+                    <a href="/posts/SpringBoot-autoConfiguration.html">
                         <div class="card-image">
                             
                                 
-                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/13.jpg" class="responsive-img" alt="你真的了解线程池吗">
+                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/15.jpg" class="responsive-img" alt="SpringBoot之自动配置原理">
                             
-                            <span class="card-title">你真的了解线程池吗</span>
+                            <span class="card-title">SpringBoot之自动配置原理</span>
                         </div>
                     </a>
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                死磕线程池
+                                为什么SpringBoot能做到开箱即用
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-11-27
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-12-08
                             </span>
                             <span class="publish-author">
                                 
                                     <i class="fa fa-bookmark fa-fw icon-category"></i>
                                     
-                                        <a href="/categories/%E7%BA%BF%E7%A8%8B%E6%B1%A0/" class="post-category">
-                                    线程池
+                                        <a href="/categories/SpringBoot/" class="post-category">
+                                    SpringBoot
                                 </a>
                                     
                                 
@@ -1067,8 +1126,8 @@
                     
                         <div class="card-action article-tags">
                             
-                                <a href="/tags/threadPool/">
-                                    <span class="chip bg-color">threadPool</span>
+                                <a href="/tags/SpringBoot/">
+                                    <span class="chip bg-color">SpringBoot</span>
                                 </a>
                             
                         </div>
