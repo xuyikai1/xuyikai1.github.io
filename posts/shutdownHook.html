@@ -579,7 +579,7 @@
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        1.2k
+                        1.3k
                     </div>
                 
 
@@ -653,7 +653,20 @@
 <p>服务端启动时add自定义的ShutDownHook</p>
 </blockquote>
 <p><strong>关闭应用</strong></p>
-<p>通过 <strong>kill -2 pid</strong> 通过该java程序对应的pid发送关闭信号即可</p>
+<p>此方式支持在以下几种场景优雅停机:</p>
+<ul>
+<li><p>1.程序正常退出</p>
+</li>
+<li><p>2.使用System.exit()</p>
+</li>
+<li><p>3.终端使用Ctrl+C</p>
+</li>
+<li><p>4.使用Kill pid干掉进程4</p>
+</li>
+</ul>
+<blockquote>
+<p>可以通过 <strong>kill -2 pid</strong> 通过该java程序对应的pid发送关闭信号</p>
+</blockquote>
 <h2 id="3-Tips"><a href="#3-Tips" class="headerlink" title="3.Tips"></a>3.Tips</h2><blockquote>
 <p>摘自：<a href="https://zhuanlan.zhihu.com/p/82350423">Java中使用shutdownHook的一些注意事项</a></p>
 </blockquote>
@@ -1295,7 +1308,7 @@
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">42.9k</span>&nbsp;字
+                            class="white-color">43k</span>&nbsp;字
                 
                 
                 <script>
@@ -1483,7 +1496,7 @@
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1609487042989')
+  navigator.serviceWorker.register('/sw.js?t=1609487521882')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }
