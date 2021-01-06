@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>并发编程灵魂拷问系列之HashMap</title>
+      <link href="/posts/Interview-HashMap.html"/>
+      <url>/posts/Interview-HashMap.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="并发编程灵魂拷问系列之HashMap"><a href="#并发编程灵魂拷问系列之HashMap" class="headerlink" title="并发编程灵魂拷问系列之HashMap"></a>并发编程灵魂拷问系列之HashMap</h1><h2 id="1-你知道hashmap底层的数据结构是什么"><a href="#1-你知道hashmap底层的数据结构是什么" class="headerlink" title="1.你知道hashmap底层的数据结构是什么"></a>1.你知道hashmap底层的数据结构是什么</h2><ol><li>JDK1.8之前：数组 + 链表</li><li>JDK1.8之后：数组 + 链表 + 红黑树</li></ol><h2 id="2-hashmap在JDK1-8前后有什么区别"><a href="#2-hashmap在JDK1-8前后有什么区别" class="headerlink" title="2.hashmap在JDK1.8前后有什么区别"></a>2.hashmap在JDK1.8前后有什么区别</h2><ol><li>JDK1.8之前数据结构为数组+链表，JDK1.8+采用数组+链表+红黑树</li></ol><blockquote><p>红黑树查询速度更快，最坏情况的时间复杂度为O(logn)</p></blockquote><ol start="2"><li>JDK1.8之前向链表插入数据时采用头插法，JDK1.8+采用尾插法</li></ol><blockquote><p>因为头插法在多线程环境下，在扩容时resize，也就是节点重新分配位置，有可能会发生A-&gt;B-&gt;A这样的环形链表，导致下次取值时会发生无限循环。尾插法则不会</p></blockquote><ol start="3"><li>JDK1.8之前计算hash值做了四次移位和四次异或，JDK1.8+只用一次异或来提升效率</li></ol><blockquote><p>可能觉得一次扰动就足够了，多了边际作用不大</p></blockquote><ol start="4"><li>JDK1.8之前扩容的时候需要对原数组中的元素进行重新hash定位在新数组的位置，JDK1.8+采用更简单的判断逻辑，位置不变或索引+旧容量大小</li></ol><blockquote><p>扩容为原来数组的两倍，在计算数组位置的二进制掩码中只是高位多了个1，效果等于加上旧数组的长度</p></blockquote><h2 id="3-jdk1-8后hashmap链表和红黑树如何切换"><a href="#3-jdk1-8后hashmap链表和红黑树如何切换" class="headerlink" title="3.jdk1.8后hashmap链表和红黑树如何切换"></a>3.jdk1.8后hashmap链表和红黑树如何切换</h2><ol><li>链表 -&gt; 红黑树： 插入数据时，当链表长度大于等于8，并且数组长度大于等于64，该链表转化为红黑树</li><li>红黑树 -&gt; 链表：长度小于等于6，该红黑树转化成链表</li></ol><h2 id="4-hashmap插入链表是怎么插入的"><a href="#4-hashmap插入链表是怎么插入的" class="headerlink" title="4.hashmap插入链表是怎么插入的"></a>4.hashmap插入链表是怎么插入的</h2><ol><li>JDK1.8之前：头插法，因为当时作者认为新插入的元素往往更可能被查找</li><li>JDK1.8之后：尾插法</li></ol><blockquote><p>【追问】那为什么要改成尾插法呢？</p></blockquote><p>因为头插法在多线程环境下，在扩容时resize，也就是节点重新分配位置，有可能会发生A-&gt;B-&gt;A这样的环形链表，导致下次取值时会发生无限循环。</p><p>尾插法在扩容时会保持链表原本的顺序，就不会出现环的问题</p><blockquote><p>【那么hashmap在JDK1.8之后还线程安全吗】</p></blockquote><p>不安全，例如多线程情况下的put操作，就无法保证上一秒put的值，与下一秒get的还是原值（里面就有很多某属性++，这些都有线程安全问题）</p><blockquote><p>【那有什么办法解决这个线程安全的问题】</p></blockquote><ol><li>可以使用 hashtable ，但是因为直接在方法上锁，导致性能低下所以不考虑</li><li>可以使用 concurrentHashMap </li></ol><h2 id="5-jdk1-8对hash算法和寻址算法是如何优化的？"><a href="#5-jdk1-8对hash算法和寻址算法是如何优化的？" class="headerlink" title="5.jdk1.8对hash算法和寻址算法是如何优化的？"></a>5.jdk1.8对hash算法和寻址算法是如何优化的？</h2><p>我们在put一个kv时，会进行(h = key.hashCode()) ^ (h &gt;&gt;&gt; 16)运算（key为null则取0），也就是<strong>拿key的hash值高16位和低16位做异或运算</strong>；</p><p>【优化】：通过对key的hashcode和hashcode右移16位做<strong>异或运算</strong>，也就是把key的hashcode的高16位和低16位做异或运算，通过这样算出的值会<strong>保留高低16位的特征</strong>，尽可能让结果的低16位值不一样，</p><blockquote><p>【hash算法优化】：hash值高低16为进行异或计算，可以同时保留高低16位的特征，减少hash冲突</p></blockquote><p>接着对异或结果进行 “取模运算” ，定位到数组中具体的某个位置上</p><p>【优化】：因为取模运算性能比较差，所以使用 <strong>(n-1) &amp; hash</strong> 来代替取模运算，这里的&amp;运算一般来讲就都是低16位的运算（因为n是数组长度，一般n-1都很小，换算成32位前16位基本为0），所以要保证hash算法后算出来的hash值要尽可能不一样</p><blockquote><p>【寻址算法优化】：同样效果，则使用性能更高的与运算也就是 (n-1)&amp;hash 来进行寻址</p></blockquote><h2 id="6-HashMap如何解决hash碰撞问题的？"><a href="#6-HashMap如何解决hash碰撞问题的？" class="headerlink" title="6.HashMap如何解决hash碰撞问题的？"></a>6.HashMap如何解决hash碰撞问题的？</h2><p>先说一下发生场景：</p><p>在put\get操作中，当两个key-value键值对通过hash算法异或和取模运算之后，定位到的数组位置还是一样时，我们称之为发生了hash碰撞\hash冲突</p><p>【解决方法】<br>hashmap通过在该数组位置挂上链表+红黑树的方式来解决hash碰撞的问题。当发生hash碰撞时，后面的kv会在定位到链表的下个空置节点</p><p>但是如果链表长度过长，极端情况下查询某个值的时间复杂度就为O(n)，性能比较差，所以hashmap在链表达到8（同时数组长度大于64）后会把链表转换成红黑树（时间复杂度为O(logn)），性能会好一些</p><blockquote><p>红黑树长度达到6或6以下后，会由红黑树转为链表</p></blockquote><h2 id="7-hashmap是如何扩容的"><a href="#7-hashmap是如何扩容的" class="headerlink" title="7.hashmap是如何扩容的"></a>7.hashmap是如何扩容的</h2><ol><li>当hashmap数组长度达到 负载因子（默认0.75）* 当前数组容量时，会进行扩容，扩容到原来的2倍，扩容过程涉及到rehash、复制数据等</li><li>当某一链表长度达到8但是数组长度小于64时，会进行扩容</li></ol><p>具体扩容：创建新的数组，将原数组重新hash并且分散到新数组中，可能位置不变或索引+旧容量大小</p><blockquote><p>数组长度变化，取模（与运算）后的结果也相应发生改变</p></blockquote><h2 id="8-HashMap的主要参数都有哪些？"><a href="#8-HashMap的主要参数都有哪些？" class="headerlink" title="8. HashMap的主要参数都有哪些？"></a>8. HashMap的主要参数都有哪些？</h2><p><img src="https:%5Cmmbiz.qpic.cn%5Cmmbiz_png%5C2BGWl1qPxib1bEDAPqSM5SyMR2iatxmO0NgwCrTkkfErhN44VjXLuciaQiaheoyu5zRF0zicrO7wNgViaxHl20eqrRcg%5C640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1"></p><blockquote><p>摘自公众号【Java3y】</p></blockquote><blockquote><p>1：<a href="https:\mp.weixin.qq.com\s\0Gf2DzuzgEx0i3mHVvhKNQ">《吊打面试官》系列-HashMap</a><br>2：<a href="https:\mp.weixin.qq.com\s\ubwe-2U19Y7GQsIByYTWng">HashMap就是这么简单【源码剖析】</a><br>3：<a href="http:\xuyk.top\posts\hashmap.html">HashMap-链表散列</a><br>4：<a href="https:\zhuanlan.zhihu.com\p\125628540">一个HashMap跟面试官扯了半个小时</a></p></blockquote><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+      
+      
+      <categories>
+          
+          <category> 并发编程灵魂拷问系列 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> HashMap </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>一款自定义RPC框架 x-rpc</title>
       <link href="/posts/x-rpc.html"/>
       <url>/posts/x-rpc.html</url>
