@@ -2,16 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://xuyk.top/friends/index.html</loc>
+    <loc>http://xuyk.top/posts/interview-synchronized.html</loc>
     
-    <lastmod>2021-01-09T06:07:51.791Z</lastmod>
+    <lastmod>2021-01-10T02:05:04.614Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://xuyk.top/posts/Interview-HashMap.html</loc>
+    <loc>http://xuyk.top/posts/interview-HashMap.html</loc>
     
-    <lastmod>2021-01-06T09:08:55.426Z</lastmod>
+    <lastmod>2021-01-10T02:05:01.041Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xuyk.top/friends/index.html</loc>
+    
+    <lastmod>2021-01-09T06:07:51.791Z</lastmod>
     
   </url>
   
@@ -156,14 +163,14 @@
   </url>
   
   <url>
-    <loc>http://xuyk.top/archives/index.html</loc>
+    <loc>http://xuyk.top/about/index.html</loc>
     
     <lastmod>2020-06-14T11:18:47.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://xuyk.top/about/index.html</loc>
+    <loc>http://xuyk.top/archives/index.html</loc>
     
     <lastmod>2020-06-14T11:18:47.000Z</lastmod>
     
