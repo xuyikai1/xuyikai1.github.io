@@ -572,14 +572,14 @@
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
-                        2021-01-10
+                        2021-01-12
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        1.5k
+                        1.6k
                     </div>
                 
 
@@ -674,16 +674,19 @@
 <li>当hashmap数组长度达到 负载因子（默认0.75）* 当前数组容量时，会进行扩容，扩容到原来的2倍，扩容过程涉及到rehash、复制数据等</li>
 <li>当某一链表长度达到8但是数组长度小于64时，会进行扩容</li>
 </ol>
-<p>具体扩容：创建新的数组，将原数组重新hash并且分散到新数组中，可能位置不变或索引+旧容量大小</p>
+<p>具体扩容：创建新的数组，将原数组重新hash并且分散到新数组中，可能 位置不变 或 索引+旧容量大小</p>
 <blockquote>
-<p>数组长度变化，取模（与运算）后的结果也相应发生改变</p>
+<p>数组长度变化，取模（与运算）后的结果也相应发生改变。rehash过程中使用 (n-1) &amp; hash(key) 代替取模操作，提高了性能</p>
 </blockquote>
 <h2 id="8-HashMap的主要参数都有哪些？"><a href="#8-HashMap的主要参数都有哪些？" class="headerlink" title="8. HashMap的主要参数都有哪些？"></a>8. HashMap的主要参数都有哪些？</h2><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/HashMap-params.jpg" alt=""></p>
 <blockquote>
 <p>摘自公众号【Java3y】</p>
 </blockquote>
+<h2 id="9-阐述一下HashMap在JDK7的环产生原理"><a href="#9-阐述一下HashMap在JDK7的环产生原理" class="headerlink" title="9.阐述一下HashMap在JDK7的环产生原理"></a>9.阐述一下HashMap在JDK7的环产生原理</h2><p>因为1.7头插法扩容时，头插法会使链表发生反转，多线程环境下会产生环；</p>
+<p>A线程在插入节点B，B线程也在插入，遇到容量不够开始扩容，重新hash，放置元素，采用头插法，后遍历到的B节点放入了头部，这样形成了环，如下图所示：</p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/HashMap-ring.jpg" alt=""></p>
 <blockquote>
-<p>1：<a href="https:\mp.weixin.qq.com\s\0Gf2DzuzgEx0i3mHVvhKNQ">《吊打面试官》系列-HashMap</a><br>2：<a href="https:\mp.weixin.qq.com\s\ubwe-2U19Y7GQsIByYTWng">HashMap就是这么简单【源码剖析】</a><br>3：<a href="http:\xuyk.top\posts\hashmap.html">HashMap-链表散列</a><br>4：<a href="https:\zhuanlan.zhihu.com\p\125628540">一个HashMap跟面试官扯了半个小时</a></p>
+<p>【参考链接】：<br>1：<a href="https:\mp.weixin.qq.com\s\0Gf2DzuzgEx0i3mHVvhKNQ">《吊打面试官》系列-HashMap</a><br>2：<a href="https:\mp.weixin.qq.com\s\ubwe-2U19Y7GQsIByYTWng">HashMap就是这么简单【源码剖析】</a><br>3：<a href="http:\xuyk.top\posts\hashmap.html">HashMap-链表散列</a><br>4：<a href="https:\zhuanlan.zhihu.com\p\125628540">一个HashMap跟面试官扯了半个小时</a></p>
 </blockquote>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -1295,7 +1298,7 @@
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">47.5k</span>&nbsp;字
+                            class="white-color">47.6k</span>&nbsp;字
                 
                 
                 <script>
@@ -1483,7 +1486,7 @@
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1610250799194')
+  navigator.serviceWorker.register('/sw.js?t=1610419188933')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }
