@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>并发编程灵魂拷问系列之ConcurrentHashMap</title>
+      <link href="/posts/interview-ConcurrentHashMap.html"/>
+      <url>/posts/interview-ConcurrentHashMap.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="并发编程灵魂拷问系列之ConcurrentHashMap"><a href="#并发编程灵魂拷问系列之ConcurrentHashMap" class="headerlink" title="并发编程灵魂拷问系列之ConcurrentHashMap"></a>并发编程灵魂拷问系列之ConcurrentHashMap</h1><h2 id="那有什么线程安全的HashMap可以代替呢"><a href="#那有什么线程安全的HashMap可以代替呢" class="headerlink" title="那有什么线程安全的HashMap可以代替呢"></a>那有什么线程安全的HashMap可以代替呢</h2><p>一般面试连环炮会在大致问完HashMap后有此一问，<strong>既然HashMap是线程不安全的，那有什么线程安全的HashMap可以代替呢</strong>，就是为了引出ConcurrentHashMap。</p><ul><li><p>JDK1.8之前：采用分段锁的机制，整个数组被分为对个段（segment），每一段都有一个锁，段与段之间可以并发访问，但是多个线程同时访问同一段时，需要获取锁才能进行访问，提升了一定的性能，但是高并发下性能还是不够强</p></li><li><p>JDK1.8之后：取消分段锁机制，回归一个大数组的方式，采用CAS + synchronized，数据结构和Hashmap一样，使用数组 + 链表 + 红黑树</p></li></ul><blockquote><p>【分析】：JDK1.8之后，锁的粒度控制到了数组的每一个元素，当多线程对数组同一个元素进行操作比如put等，会先通过 CAS 的方式让同一时间只有一个线程A成功执行 CAS ，然后进行put ，其他线程就会使用synchronized 关键字对这个数组元素对象加锁，串行的等待线程A执行完毕后继续获取锁，进行后续操作</p></blockquote><p>【总结】：JDK1.8之后的ConcurrentHashMap，当多个线程对数组不同位置的元素进行操作时，可以并发操作；如果多个线程对数组统一位置元素进行操作时，则加锁串行化处理</p><blockquote><p>【参考链接】：<br>1：<a href="https://mp.weixin.qq.com/s/XajTc9dqNNi_ByLR2B_J3A">为什么ConcurrentHashMap的读操作不需要加锁？</a><br>2：<a href="https://mp.weixin.qq.com/s/wZWPg2ldcG1QwHbk6oPOWQ">面试官邪魅一笑: 你说说 Java8 的 ConcurrentHashMap ？</a></p></blockquote><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+      
+      
+      <categories>
+          
+          <category> 并发编程灵魂拷问系列 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> ConcurrentHashMap </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>并发编程灵魂拷问系列之说说synchronized</title>
       <link href="/posts/interview-synchronized.html"/>
       <url>/posts/interview-synchronized.html</url>

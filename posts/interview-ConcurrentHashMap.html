@@ -4,8 +4,8 @@
 
 <head><link rel=manifest href=/manifest.json>
     <meta charset="utf-8">
-    <meta name="keywords" content="消息队列 RabbitMQ 可靠性投递">
-    <meta name="description" content="RabbitMQ消息的可靠性投递">
+    <meta name="keywords" content="ConcurrentHashMap">
+    <meta name="description" content="ConcurrentHashMap记录">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +14,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="white"/>
-    <title>基于RabbitMQ的消息投递组件封装 | 寒暄</title>
+    <title>并发编程灵魂拷问系列之ConcurrentHashMap | 寒暄</title>
     <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/apple-touch-icon.png">
     <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/favicon.ico">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/awesome/css/font-awesome.min.css">
@@ -419,12 +419,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/20.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/1.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">基于RabbitMQ的消息投递组件封装</h1>
+                    <h1 class="description center-align post-title">并发编程灵魂拷问系列之ConcurrentHashMap</h1>
                 </div>
             </div>
         </div>
@@ -540,12 +540,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/">
-                                    <span class="chip bg-color">消息队列</span>
-                                </a>
-                            
-                                <a href="/tags/RabbitMQ/">
-                                    <span class="chip bg-color">RabbitMQ</span>
+                                <a href="/tags/ConcurrentHashMap/">
+                                    <span class="chip bg-color">ConcurrentHashMap</span>
                                 </a>
                             
                         </div>
@@ -556,8 +552,8 @@
                         <div class="post-cate">
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                                <a href="/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" class="post-category">
-                                    消息队列
+                                <a href="/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E7%81%B5%E9%AD%82%E6%8B%B7%E9%97%AE%E7%B3%BB%E5%88%97/" class="post-category">
+                                    并发编程灵魂拷问系列
                                 </a>
                             
                         </div>
@@ -569,28 +565,28 @@
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                        2020-07-23
+                        2021-01-13
                     </div>
                 
 
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
-                        2020-09-29
+                        2021-01-13
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        1.3k
+                        470
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        4 分
+                        1 分
                     </div>
                 
 
@@ -605,85 +601,20 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="RabbitMQ消息投递组件封装"><a href="#RabbitMQ消息投递组件封装" class="headerlink" title="RabbitMQ消息投递组件封装"></a>RabbitMQ消息投递组件封装</h1><h2 id="0-引言"><a href="#0-引言" class="headerlink" title="0.引言"></a>0.引言</h2><p>  在如今越来越内卷的IT行业，高并发，基本会出现在每一场面试中。而面试者关于此的回答中，我们也始终能听到一个熟悉的名词：消息队列，以及他所存在的一些特性和问题。例如：<strong>削峰填谷</strong>，<strong>异步化缓冲</strong>等，借着学习课程的契机以及自身的理解，也对消息队列中的RabbitMQ进行封装，做到开箱即用。</p>
-<h2 id="1-架构图解"><a href="#1-架构图解" class="headerlink" title="1.架构图解"></a>1.架构图解</h2><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/rabbitmq-%E6%9E%B6%E6%9E%84%E5%9B%BE%E8%A7%A3.png" alt="架构图解"></p>
-<table>
-<thead>
-<tr>
-<th align="center">名称</th>
-<th align="center">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">Sender</td>
-<td align="center">生产消息-生产端</td>
-</tr>
-<tr>
-<td align="center">MQ Broker</td>
-<td align="center">接收生产端发出的消息，MQ Broker接收</td>
-</tr>
-<tr>
-<td align="center">Confirm Listener</td>
-<td align="center">接收RabbitMQ响应给生产端，表示RabbitMQ收到消息，返回确认，而Listener接收确认消息</td>
-</tr>
-<tr>
-<td align="center">分布式定时任务</td>
-<td align="center">xxl-job分布式调度，定时轮询未投递\消费成功的消息，重新让Sender进行二次\重复投递</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>大体流程：消息生产端Sender在发送消息前，对消息进行初始化并且落库MSG DB（业务上也可同时记录-&gt; BIZ DB），而后发送至MQ，MQ Broker收到消息后发回该条消息的响应，表示消息已收到，Comfirm Listener负责接收响应，并且更新MSG DB的该条消息状态为已投递。而另一端定时任务会抽取待确认的消息，到达重试时间并且重试多次（自定义），让Sender进行再次投递，保证消息投递成功。</p>
-</blockquote>
-<h2 id="2-组件关键点概述"><a href="#2-组件关键点概述" class="headerlink" title="2.组件关键点概述"></a>2.组件关键点概述</h2><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/rabbitmq-%E7%BB%84%E4%BB%B6%E6%A6%82%E8%BF%B0.png" alt="组件概述"></p>
-<p>根据上图，组件封装的关键点清晰可见</p>
-<table>
-<thead>
-<tr>
-<th align="center">部分要点</th>
-<th align="center">技术选型</th>
-<th align="center">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">数据交互层</td>
-<td align="center">tk-mybatis</td>
-<td align="center">通用性mapper</td>
-</tr>
-<tr>
-<td align="center">序列化</td>
-<td align="center">jackson</td>
-<td align="center">保证自定义message与amqp message的转换</td>
-</tr>
-<tr>
-<td align="center">定时任务</td>
-<td align="center">xxl-job分布式调度</td>
-<td align="center">定时任务</td>
-</tr>
-</tbody></table>
-<h3 id="1-1-消息类型区分"><a href="#1-1-消息类型区分" class="headerlink" title="1.1 消息类型区分"></a>1.1 消息类型区分</h3><p>消息在组件中分为三种类型：<br>（1）<strong>迅速\普通消息</strong>：普通消息，不要求MQ返回ack确认收到，力求消息投递速度<br>（2）<strong>可靠消息</strong>：要求MQ返回ack确认收到，生产端发出的每一条消息不回丢失<br>（3）<strong>延迟消息</strong>：要求MQ返回ack确认收到，生产端发出的消息会在自定义的时间后要求MQ返回ack确认收到</p>
-<h3 id="1-2-消息异步化-序列化"><a href="#1-2-消息异步化-序列化" class="headerlink" title="1.2 消息异步化\序列化"></a>1.2 消息异步化\序列化</h3><p>（1）消息通过JacksonSerializer序列化和反序列化，做到amqp Message与自定义Message之间的转换。发送的时候是自定义的message，能通过自定义序列化保证收到也是自定义的message<br>（2）生产消息异步化</p>
-<h3 id="1-3-链接池化-高性能"><a href="#1-3-链接池化-高性能" class="headerlink" title="1.3 链接池化\高性能"></a>1.3 链接池化\高性能</h3><p>（1）RabbitMQ每个topic对应一个RabbitTemplate，缓存起来，有效节约创建销毁开支。template单例模式下，在多生产者时（不同topic不同exchange）性能会受到影响，以topic为key生成多生产者，不同种类的topic对应相应的template，做不同的定制操作，提升性能<br>（2）在生产消息的过程中，由线程池统一调度</p>
-<h3 id="1-4-完备的补偿机制"><a href="#1-4-完备的补偿机制" class="headerlink" title="1.4 完备的补偿机制"></a>1.4 完备的补偿机制</h3><p>消息信息落库，并且对消息进行状态标记，再由xxl-job分布式定时任务扫描进行重新投递，保证消息不因为网络抖动发生丢失，以达到准确投递</p>
-<h2 id="3-可靠性投递剖析与改进点"><a href="#3-可靠性投递剖析与改进点" class="headerlink" title="3.可靠性投递剖析与改进点"></a>3.可靠性投递剖析与改进点</h2><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/rabbitmq-%E7%94%9F%E4%BA%A7%E7%AB%AF%E7%9A%84%E5%8F%AF%E9%9D%A0%E6%80%A7%E6%8A%95%E9%80%92.png" alt="可靠性投递"></p>
-<h3 id="3-1-消息不可靠要点"><a href="#3-1-消息不可靠要点" class="headerlink" title="3.1 消息不可靠要点"></a>3.1 消息不可靠要点</h3><ul>
-<li>RabbitMQ收到消息生产端发送的消息之后，因为负载压力过大等因素，返回给生产端的失败(confirm失败)，但实际是成功的</li>
-<li>broker因为网络抖动没收到消息，消息丢失</li>
-<li>broker收到消息，confirm因为网络抖动没收到消息，消息丢失</li>
+                <h1 id="并发编程灵魂拷问系列之ConcurrentHashMap"><a href="#并发编程灵魂拷问系列之ConcurrentHashMap" class="headerlink" title="并发编程灵魂拷问系列之ConcurrentHashMap"></a>并发编程灵魂拷问系列之ConcurrentHashMap</h1><h2 id="那有什么线程安全的HashMap可以代替呢"><a href="#那有什么线程安全的HashMap可以代替呢" class="headerlink" title="那有什么线程安全的HashMap可以代替呢"></a>那有什么线程安全的HashMap可以代替呢</h2><p>一般面试连环炮会在大致问完HashMap后有此一问，<strong>既然HashMap是线程不安全的，那有什么线程安全的HashMap可以代替呢</strong>，就是为了引出ConcurrentHashMap。</p>
+<ul>
+<li><p>JDK1.8之前：采用分段锁的机制，整个数组被分为对个段（segment），每一段都有一个锁，段与段之间可以并发访问，但是多个线程同时访问同一段时，需要获取锁才能进行访问，提升了一定的性能，但是高并发下性能还是不够强</p>
+</li>
+<li><p>JDK1.8之后：取消分段锁机制，回归一个大数组的方式，采用CAS + synchronized，数据结构和Hashmap一样，使用数组 + 链表 + 红黑树</p>
+</li>
 </ul>
-<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/rabbitmq-%E4%BA%92%E8%81%94%E7%BD%91%E5%A4%A7%E5%8E%82%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88.png" alt="解决方案"></p>
-<h3 id="3-2-消息落库，消息打标"><a href="#3-2-消息落库，消息打标" class="headerlink" title="3.2 消息落库，消息打标"></a>3.2 消息落库，消息打标</h3><p>此项目采用的就是这一解决方案来做到可靠性投递</p>
-<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/rabbitmq-%E6%B6%88%E6%81%AF%E4%BF%A1%E6%81%AF%E8%90%BD%E5%BA%93.png" alt="消息信息落库"></p>
-<h3 id="3-3-消息的延迟投递，做二次确认，回调检查"><a href="#3-3-消息的延迟投递，做二次确认，回调检查" class="headerlink" title="3.3 消息的延迟投递，做二次确认，回调检查"></a>3.3 消息的延迟投递，做二次确认，回调检查</h3><blockquote>
-<p>（99.99%的可靠性） - 减少数据库操作，保证性能</p>
-</blockquote>
-<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/rabbitmq-%E4%BA%8C%E6%AC%A1%E7%A1%AE%E8%AE%A4.png" alt="延迟投递二次确认"></p>
 <blockquote>
-<p><strong>upstream service：</strong> 上游服务<br><strong>callback service：</strong> 回调服务<br><strong>重点：</strong> 一定是数据库操作完了再去发送消息，互联网大厂不加事务（导致性能瓶颈）<br><strong>优点：</strong> 主流程中，相比第一种方案少了一次DB操作，而是使用callback service异步来承担</p>
+<p>【分析】：JDK1.8之后，锁的粒度控制到了数组的每一个元素，当多线程对数组同一个元素进行操作比如put等，会先通过 CAS 的方式让同一时间只有一个线程A成功执行 CAS ，然后进行put ，其他线程就会使用synchronized 关键字对这个数组元素对象加锁，串行的等待线程A执行完毕后继续获取锁，进行后续操作</p>
 </blockquote>
-<p>1.一次性生成两条MQ消息（第二条为延迟消息投递- 用来n分钟之后检查，两条消息投递的队列不同，查看图中线的颜色）</p>
-<p>2.消费端处理完消息之后，再发一条处理成功的消息并且入库msg db，callback service来专门监听消费端的处理成功的消息队列，也同时监听生产端发出的延迟消息队列，callback收到延迟消息时查询db</p>
-<p>3.如果消费端返回处理失败或者没有响应时，callback service要做消息补偿（即收到延迟消息查询之后发现没有处理成功，则主动发起rpc通信，给上游服务发送reSend命令，生产端再根据biz的业务相关id来查询biz db再次发送两条消息）</p>
-<h2 id="4-封装组件源码"><a href="#4-封装组件源码" class="headerlink" title="4.封装组件源码"></a>4.封装组件源码</h2><p><strong><a href="https:\github.com\xuyikai1\rabbit-parent">源码link下载</a></strong></p>
+<p>【总结】：JDK1.8之后的ConcurrentHashMap，当多个线程对数组不同位置的元素进行操作时，可以并发操作；如果多个线程对数组统一位置元素进行操作时，则加锁串行化处理</p>
+<blockquote>
+<p>【参考链接】：<br>1：<a href="https://mp.weixin.qq.com/s/XajTc9dqNNi_ByLR2B_J3A">为什么ConcurrentHashMap的读操作不需要加锁？</a><br>2：<a href="https://mp.weixin.qq.com/s/wZWPg2ldcG1QwHbk6oPOWQ">面试官邪魅一笑: 你说说 Java8 的 ConcurrentHashMap ？</a></p>
+</blockquote>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -715,12 +646,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/">
-                                    <span class="chip bg-color">消息队列</span>
-                                </a>
-                            
-                                <a href="/tags/RabbitMQ/">
-                                    <span class="chip bg-color">RabbitMQ</span>
+                                <a href="/tags/ConcurrentHashMap/">
+                                    <span class="chip bg-color">ConcurrentHashMap</span>
                                 </a>
                             
                         </div>
@@ -1030,46 +957,48 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-            <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
                 <div class="article-badge left-badge text-color">
-                    <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                    <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+                </div>
                 <div class="card">
-                    <a href="/posts/operation.html">
+                    <a href="/posts/interview-ConcurrentHashMap.html">
                         <div class="card-image">
                             
                                 
-                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/6.jpg" class="responsive-img" alt="初涉自动化部署">
+                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/1.jpg" class="responsive-img" alt="并发编程灵魂拷问系列之ConcurrentHashMap">
                             
-                            <span class="card-title">初涉自动化部署</span>
+                            <span class="card-title">并发编程灵魂拷问系列之ConcurrentHashMap</span>
                         </div>
                     </a>
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                简化Javaer的繁琐日常
+                                ConcurrentHashMap记录
                             
                         </div>
                         <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-08-03
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-01-13
+                            </span>
                             <span class="publish-author">
                                 
                                     <i class="fa fa-bookmark fa-fw icon-category"></i>
                                     
-                                        <a href="/categories/%E8%BF%90%E7%BB%B4%E9%83%A8%E7%BD%B2/" class="post-category">
-                                    运维部署
+                                        <a href="/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E7%81%B5%E9%AD%82%E6%8B%B7%E9%97%AE%E7%B3%BB%E5%88%97/" class="post-category">
+                                    并发编程灵魂拷问系列
                                 </a>
                                     
                                 
                             </span>
                         </div>
                     </div>
+
                     
                         <div class="card-action article-tags">
                             
-                                <a href="/tags/operation/">
-                                    <span class="chip bg-color">operation</span>
+                                <a href="/tags/ConcurrentHashMap/">
+                                    <span class="chip bg-color">ConcurrentHashMap</span>
                                 </a>
                             
                         </div>
@@ -1083,31 +1012,31 @@
                     下一篇&nbsp;<i class="fa fa-chevron-right"></i>
                 </div>
                 <div class="card">
-                    <a href="/posts/spring-annotation.html">
+                    <a href="/posts/interview-synchronized.html">
                         <div class="card-image">
                             
                                 
-                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/0.jpg" class="responsive-img" alt="Spring注解">
+                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/3.jpg" class="responsive-img" alt="并发编程灵魂拷问系列之说说synchronized">
                             
-                            <span class="card-title">Spring注解</span>
+                            <span class="card-title">并发编程灵魂拷问系列之说说synchronized</span>
                         </div>
                     </a>
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                解释那些形形色色的注解
+                                心里盘算一下synchronized
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-07-19
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-01-10
                             </span>
                             <span class="publish-author">
                                 
                                     <i class="fa fa-bookmark fa-fw icon-category"></i>
                                     
-                                        <a href="/categories/Spring/" class="post-category">
-                                    Spring
+                                        <a href="/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E7%81%B5%E9%AD%82%E6%8B%B7%E9%97%AE%E7%B3%BB%E5%88%97/" class="post-category">
+                                    并发编程灵魂拷问系列
                                 </a>
                                     
                                 
@@ -1117,8 +1046,8 @@
                     
                         <div class="card-action article-tags">
                             
-                                <a href="/tags/Spring%E6%B3%A8%E8%A7%A3/">
-                                    <span class="chip bg-color">Spring注解</span>
+                                <a href="/tags/synchronized/">
+                                    <span class="chip bg-color">synchronized</span>
                                 </a>
                             
                         </div>
