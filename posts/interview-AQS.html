@@ -4,8 +4,8 @@
 
 <head><link rel=manifest href=/manifest.json>
     <meta charset="utf-8">
-    <meta name="keywords" content="HashMap">
-    <meta name="description" content="HashMap面试可能这么问">
+    <meta name="keywords" content="AQS">
+    <meta name="description" content="小小嘀咕AQS">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +14,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="white"/>
-    <title>并发编程灵魂拷问系列之HashMap | 寒暄</title>
+    <title>并发编程灵魂拷问系列之对AQS理解吗 | 寒暄</title>
     <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/apple-touch-icon.png">
     <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/favicon.ico">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/awesome/css/font-awesome.min.css">
@@ -419,12 +419,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/10.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/18.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">并发编程灵魂拷问系列之HashMap</h1>
+                    <h1 class="description center-align post-title">并发编程灵魂拷问系列之对AQS理解吗</h1>
                 </div>
             </div>
         </div>
@@ -540,8 +540,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/HashMap/">
-                                    <span class="chip bg-color">HashMap</span>
+                                <a href="/tags/AQS/">
+                                    <span class="chip bg-color">AQS</span>
                                 </a>
                             
                         </div>
@@ -565,28 +565,28 @@
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                        2021-01-06
+                        2021-01-16
                     </div>
                 
 
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
-                        2021-01-12
+                        2021-01-16
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        1.6k
+                        429
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        5 分
+                        1 分
                     </div>
                 
 
@@ -601,92 +601,26 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="并发编程灵魂拷问系列之HashMap"><a href="#并发编程灵魂拷问系列之HashMap" class="headerlink" title="并发编程灵魂拷问系列之HashMap"></a>并发编程灵魂拷问系列之HashMap</h1><h2 id="1-你知道hashmap底层的数据结构是什么"><a href="#1-你知道hashmap底层的数据结构是什么" class="headerlink" title="1.你知道hashmap底层的数据结构是什么"></a>1.你知道hashmap底层的数据结构是什么</h2><ol>
-<li>JDK1.8之前：数组 + 链表</li>
-<li>JDK1.8之后：数组 + 链表 + 红黑树</li>
-</ol>
-<h2 id="2-hashmap在JDK1-8前后有什么区别"><a href="#2-hashmap在JDK1-8前后有什么区别" class="headerlink" title="2.hashmap在JDK1.8前后有什么区别"></a>2.hashmap在JDK1.8前后有什么区别</h2><ol>
-<li>JDK1.8之前数据结构为数组+链表，JDK1.8+采用数组+链表+红黑树</li>
-</ol>
-<blockquote>
-<p>红黑树查询速度更快，最坏情况的时间复杂度为O(logn)</p>
-</blockquote>
-<ol start="2">
-<li>JDK1.8之前向链表插入数据时采用头插法，JDK1.8+采用尾插法</li>
-</ol>
-<blockquote>
-<p>因为头插法在多线程环境下，在扩容时resize，也就是节点重新分配位置，有可能会发生A-&gt;B-&gt;A这样的环形链表，导致下次取值时会发生无限循环。尾插法则不会</p>
-</blockquote>
-<ol start="3">
-<li>JDK1.8之前计算hash值做了四次移位和四次异或，JDK1.8+只用一次异或来提升效率</li>
-</ol>
-<blockquote>
-<p>可能觉得一次扰动就足够了，多了边际作用不大</p>
-</blockquote>
-<ol start="4">
-<li>JDK1.8之前扩容的时候需要对原数组中的元素进行重新hash定位在新数组的位置，JDK1.8+采用更简单的判断逻辑，位置不变或索引+旧容量大小</li>
-</ol>
-<blockquote>
-<p>扩容为原来数组的两倍，在计算数组位置的二进制掩码中只是高位多了个1，效果等于加上旧数组的长度</p>
-</blockquote>
-<h2 id="3-jdk1-8后hashmap链表和红黑树如何切换"><a href="#3-jdk1-8后hashmap链表和红黑树如何切换" class="headerlink" title="3.jdk1.8后hashmap链表和红黑树如何切换"></a>3.jdk1.8后hashmap链表和红黑树如何切换</h2><ol>
-<li>链表 -&gt; 红黑树： 插入数据时，当链表长度大于等于8，并且数组长度大于等于64，该链表转化为红黑树</li>
-<li>红黑树 -&gt; 链表：长度小于等于6，该红黑树转化成链表</li>
-</ol>
-<h2 id="4-hashmap插入链表是怎么插入的"><a href="#4-hashmap插入链表是怎么插入的" class="headerlink" title="4.hashmap插入链表是怎么插入的"></a>4.hashmap插入链表是怎么插入的</h2><ol>
-<li>JDK1.8之前：头插法，因为当时作者认为新插入的元素往往更可能被查找</li>
-<li>JDK1.8之后：尾插法</li>
-</ol>
-<blockquote>
-<p>【追问】那为什么要改成尾插法呢？</p>
-</blockquote>
-<p>因为头插法在多线程环境下，在扩容时resize，也就是节点重新分配位置，有可能会发生A-&gt;B-&gt;A这样的环形链表，导致下次取值时会发生无限循环。</p>
-<p>尾插法在扩容时会保持链表原本的顺序，就不会出现环的问题</p>
-<blockquote>
-<p>【那么hashmap在JDK1.8之后还线程安全吗】</p>
-</blockquote>
-<p>不安全，例如多线程情况下的put操作，就无法保证上一秒put的值，与下一秒get的还是原值（里面就有很多某属性++，这些都有线程安全问题）</p>
-<blockquote>
-<p>【那有什么办法解决这个线程安全的问题】</p>
-</blockquote>
+                <h1 id="并发编程灵魂拷问系列之对AQS理解吗"><a href="#并发编程灵魂拷问系列之对AQS理解吗" class="headerlink" title="并发编程灵魂拷问系列之对AQS理解吗"></a>并发编程灵魂拷问系列之对AQS理解吗</h1><p><strong>AQS</strong> 即 AbstractQueuedSynchronizer，队列同步器。早期是因为JDK6以前的synchronized关键字使用的是重量级锁，性能不太好，所以作者编写了AQS。</p>
+<p>在JUC中 CountDownLatch、ReentrantLock、ThreadPoolExecutor、ReentrantReadWriteLock 等底层用的都是AQS，AQS几乎占据了JUC并发包里的半壁江山，如果想要获取锁可以被中断、超时获取锁、尝试获取锁那就用AQS吧。</p>
+<p>使用 <strong>state</strong> 字段来标记加锁的状态，1表示加锁成功 0未加锁<br>volatile修饰，保证可见性</p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/AQS-first.png" alt=""></p>
 <ol>
-<li>可以使用 hashtable ，但是因为直接在方法上锁，导致性能低下所以不考虑</li>
-<li>可以使用 concurrentHashMap </li>
+<li>当线程1操作CAS加锁成功，AQS中的加锁线程变为线程1，state设置为1。</li>
+<li>与此同时线程2加锁失败会进入FIFO先进先出等待队列，当线程1执行完成后，state设为0，然后唤醒等待队列的首位线程也就是线程2，让线程2进行CAS操作</li>
 </ol>
-<h2 id="5-jdk1-8对hash算法和寻址算法是如何优化的？"><a href="#5-jdk1-8对hash算法和寻址算法是如何优化的？" class="headerlink" title="5.jdk1.8对hash算法和寻址算法是如何优化的？"></a>5.jdk1.8对hash算法和寻址算法是如何优化的？</h2><p>我们在put一个kv时，会进行(h = key.hashCode()) ^ (h &gt;&gt;&gt; 16)运算（key为null则取0），也就是<strong>拿key的hash值高16位和低16位做异或运算</strong>；</p>
-<p>【优化】：通过对key的hashcode和hashcode右移16位做<strong>异或运算</strong>，也就是把key的hashcode的高16位和低16位做异或运算，通过这样算出的值会<strong>保留高低16位的特征</strong>，尽可能让结果的低16位值不一样，</p>
+<p><strong>独占式锁和共享式锁</strong></p>
+<ul>
+<li>独占式：有且只有一个线程能获取到锁，如：ReentrantLock。</li>
+<li>共享式：可以多个线程同时获取到锁，如：CountDownLatch</li>
+</ul>
+<p><strong>公平锁和非公平锁</strong></p>
+<ul>
+<li>公平锁：先到先得，线程通过排队的方式来获取锁</li>
+<li>非公平锁：后来的线程可能会率先获取到锁，非公平锁性能优于公平锁</li>
+</ul>
 <blockquote>
-<p>【hash算法优化】：hash值高低16为进行异或计算，可以同时保留高低16位的特征，减少hash冲突</p>
-</blockquote>
-<p>接着对异或结果进行 “取模运算” ，定位到数组中具体的某个位置上</p>
-<p>【优化】：因为取模运算性能比较差，所以使用 <strong>(n-1) &amp; hash</strong> 来代替取模运算，这里的&amp;运算一般来讲就都是低16位的运算（因为n是数组长度，一般n-1都很小，换算成32位前16位基本为0），所以要保证hash算法后算出来的hash值要尽可能不一样</p>
-<blockquote>
-<p>【寻址算法优化】：同样效果，则使用性能更高的与运算也就是 (n-1)&amp;hash 来进行寻址</p>
-</blockquote>
-<h2 id="6-HashMap如何解决hash碰撞问题的？"><a href="#6-HashMap如何解决hash碰撞问题的？" class="headerlink" title="6.HashMap如何解决hash碰撞问题的？"></a>6.HashMap如何解决hash碰撞问题的？</h2><p>先说一下发生场景：</p>
-<p>在put\get操作中，当两个key-value键值对通过hash算法异或和取模运算之后，定位到的数组位置还是一样时，我们称之为发生了hash碰撞\hash冲突</p>
-<p>【解决方法】<br>hashmap通过在该数组位置挂上链表+红黑树的方式来解决hash碰撞的问题。当发生hash碰撞时，后面的kv会在定位到链表的下个空置节点</p>
-<p>但是如果链表长度过长，极端情况下查询某个值的时间复杂度就为O(n)，性能比较差，所以hashmap在链表达到8（同时数组长度大于64）后会把链表转换成红黑树（时间复杂度为O(logn)），性能会好一些</p>
-<blockquote>
-<p>红黑树长度达到6或6以下后，会由红黑树转为链表</p>
-</blockquote>
-<h2 id="7-hashmap是如何扩容的"><a href="#7-hashmap是如何扩容的" class="headerlink" title="7.hashmap是如何扩容的"></a>7.hashmap是如何扩容的</h2><ol>
-<li>当hashmap数组长度达到 负载因子（默认0.75）* 当前数组容量时，会进行扩容，扩容到原来的2倍，扩容过程涉及到rehash、复制数据等</li>
-<li>当某一链表长度达到8但是数组长度小于64时，会进行扩容</li>
-</ol>
-<p>具体扩容：创建新的数组，将原数组重新hash并且分散到新数组中，可能 位置不变 或 索引+旧容量大小</p>
-<blockquote>
-<p>数组长度变化，取模（与运算）后的结果也相应发生改变。rehash过程中使用 (n-1) &amp; hash(key) 代替取模操作，提高了性能</p>
-</blockquote>
-<h2 id="8-HashMap的主要参数都有哪些？"><a href="#8-HashMap的主要参数都有哪些？" class="headerlink" title="8. HashMap的主要参数都有哪些？"></a>8. HashMap的主要参数都有哪些？</h2><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/HashMap-params.jpg" alt=""></p>
-<blockquote>
-<p>摘自公众号【Java3y】</p>
-</blockquote>
-<h2 id="9-阐述一下HashMap在JDK7的环产生原理"><a href="#9-阐述一下HashMap在JDK7的环产生原理" class="headerlink" title="9.阐述一下HashMap在JDK7的环产生原理"></a>9.阐述一下HashMap在JDK7的环产生原理</h2><p>因为1.7头插法扩容时，头插法会使链表发生反转，多线程环境下会产生环；</p>
-<p>A线程在插入节点B，B线程也在插入，遇到容量不够开始扩容，重新hash，放置元素，采用头插法，后遍历到的B节点放入了头部，这样形成了环，如下图所示：</p>
-<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/HashMap-ring.jpg" alt=""></p>
-<blockquote>
-<p>【参考链接】：<br>1：<a href="https:\mp.weixin.qq.com\s\0Gf2DzuzgEx0i3mHVvhKNQ">《吊打面试官》系列-HashMap</a><br>2：<a href="https:\mp.weixin.qq.com\s\ubwe-2U19Y7GQsIByYTWng">HashMap就是这么简单【源码剖析】</a><br>3：<a href="http:\xuyk.top\posts\hashmap.html">HashMap-链表散列</a><br>4：<a href="https:\zhuanlan.zhihu.com\p\125628540">一个HashMap跟面试官扯了半个小时</a></p>
+<p>【参考链接】：<br>1：<a href="https://mp.weixin.qq.com/s/k8s-B1ZsEQylba4NWjehEA">由浅入深逐步讲解Java并发的半壁江山AQS</a><br>2：<a href="https://mp.weixin.qq.com/s/mn4eujncsYZwAgwgm8d-vg">Java中的锁原理、锁优化、CAS、AQS详解</a><br>3：<a href="https://mp.weixin.qq.com/s/ZNURbYIdYqDNXLtRAvDxBQ">1.5w字，30图带你彻底掌握 AQS</a></p>
 </blockquote>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -719,8 +653,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/HashMap/">
-                                    <span class="chip bg-color">HashMap</span>
+                                <a href="/tags/AQS/">
+                                    <span class="chip bg-color">AQS</span>
                                 </a>
                             
                         </div>
@@ -1030,29 +964,80 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-            <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
                 <div class="article-badge left-badge text-color">
-                    <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                    <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+                </div>
                 <div class="card">
-                    <a href="/posts/interview-synchronized.html">
+                    <a href="/posts/interview-AQS.html">
                         <div class="card-image">
                             
                                 
-                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/3.jpg" class="responsive-img" alt="并发编程灵魂拷问系列之说说synchronized">
+                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/18.jpg" class="responsive-img" alt="并发编程灵魂拷问系列之对AQS理解吗">
                             
-                            <span class="card-title">并发编程灵魂拷问系列之说说synchronized</span>
+                            <span class="card-title">并发编程灵魂拷问系列之对AQS理解吗</span>
                         </div>
                     </a>
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                心里盘算一下synchronized
+                                小小嘀咕AQS
                             
                         </div>
                         <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2021-01-10
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-01-16
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E7%81%B5%E9%AD%82%E6%8B%B7%E9%97%AE%E7%B3%BB%E5%88%97/" class="post-category">
+                                    并发编程灵魂拷问系列
+                                </a>
+                                    
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                        <div class="card-action article-tags">
+                            
+                                <a href="/tags/AQS/">
+                                    <span class="chip bg-color">AQS</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+            </div>
+        
+        
+            <div class="article col s12 m6" data-aos="fade-up">
+                <div class="article-badge right-badge text-color">
+                    下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+                </div>
+                <div class="card">
+                    <a href="/posts/interview-CAS.html">
+                        <div class="card-image">
+                            
+                                
+                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/12.jpg" class="responsive-img" alt="并发编程灵魂拷问系列之如何理解CAS">
+                            
+                            <span class="card-title">并发编程灵魂拷问系列之如何理解CAS</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                初识CAS
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-01-15
+                            </span>
                             <span class="publish-author">
                                 
                                     <i class="fa fa-bookmark fa-fw icon-category"></i>
@@ -1068,69 +1053,8 @@
                     
                         <div class="card-action article-tags">
                             
-                                <a href="/tags/synchronized/">
-                                    <span class="chip bg-color">synchronized</span>
-                                </a>
-                            
-                        </div>
-                    
-                </div>
-            </div>
-        
-        
-            <div class="article col s12 m6" data-aos="fade-up">
-                <div class="article-badge right-badge text-color">
-                    下一篇&nbsp;<i class="fa fa-chevron-right"></i>
-                </div>
-                <div class="card">
-                    <a href="/posts/x-rpc.html">
-                        <div class="card-image">
-                            
-                                
-                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/14.jpg" class="responsive-img" alt="一款自定义RPC框架 x-rpc">
-                            
-                            <span class="card-title">一款自定义RPC框架 x-rpc</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                基于Netty+protostuff+Zookeeper
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-01-05
-                            </span>
-                            <span class="publish-author">
-                                
-                                    <i class="fa fa-bookmark fa-fw icon-category"></i>
-                                    
-                                        <a href="/categories/rpc/" class="post-category">
-                                    rpc
-                                </a>
-                                    
-                                
-                            </span>
-                        </div>
-                    </div>
-                    
-                        <div class="card-action article-tags">
-                            
-                                <a href="/tags/rpc/">
-                                    <span class="chip bg-color">rpc</span>
-                                </a>
-                            
-                                <a href="/tags/netty/">
-                                    <span class="chip bg-color">netty</span>
-                                </a>
-                            
-                                <a href="/tags/protostuff/">
-                                    <span class="chip bg-color">protostuff</span>
-                                </a>
-                            
-                                <a href="/tags/zookeeper/">
-                                    <span class="chip bg-color">zookeeper</span>
+                                <a href="/tags/CAS/">
+                                    <span class="chip bg-color">CAS</span>
                                 </a>
                             
                         </div>
