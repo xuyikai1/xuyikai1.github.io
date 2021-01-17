@@ -4,8 +4,8 @@
 
 <head><link rel=manifest href=/manifest.json>
     <meta charset="utf-8">
-    <meta name="keywords" content="布隆过滤器 bloomFilter">
-    <meta name="description" content="高效性能的数据结构">
+    <meta name="keywords" content="JMM Java内存模型">
+    <meta name="description" content="JMM到底是什么">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +14,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="white"/>
-    <title>5分钟搞懂布隆过滤器 | 寒暄</title>
+    <title>并发编程灵魂拷问系列之Java内存模型 | 寒暄</title>
     <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/apple-touch-icon.png">
     <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/favicon.ico">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/awesome/css/font-awesome.min.css">
@@ -419,12 +419,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/10.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/21.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">5分钟搞懂布隆过滤器</h1>
+                    <h1 class="description center-align post-title">并发编程灵魂拷问系列之Java内存模型</h1>
                 </div>
             </div>
         </div>
@@ -540,8 +540,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/bloomFilter/">
-                                    <span class="chip bg-color">bloomFilter</span>
+                                <a href="/tags/JMM/">
+                                    <span class="chip bg-color">JMM</span>
                                 </a>
                             
                         </div>
@@ -552,8 +552,8 @@
                         <div class="post-cate">
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                                <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="post-category">
-                                    数据结构
+                                <a href="/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E7%81%B5%E9%AD%82%E6%8B%B7%E9%97%AE%E7%B3%BB%E5%88%97/" class="post-category">
+                                    并发编程灵魂拷问系列
                                 </a>
                             
                         </div>
@@ -565,21 +565,21 @@
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                        2020-05-19
+                        2021-01-17
                     </div>
                 
 
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
-                        2021-01-05
+                        2021-01-17
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        1k
+                        1.2k
                     </div>
                 
 
@@ -601,89 +601,39 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="布隆过滤器"><a href="#布隆过滤器" class="headerlink" title="布隆过滤器"></a>布隆过滤器</h1><h2 id="0-引言"><a href="#0-引言" class="headerlink" title="0.引言"></a>0.引言</h2><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/bloomfilter-douyin.png" alt=""></p>
-<p>P：我们平时在刷抖音时，开发人员如何保证 <strong>不会刷到同样的内容</strong> ？</p>
-<ul>
-<li>1：<strong>把算法推荐中的内容根据历史记录做一遍筛选</strong>？在用户量大，用户查看内容多的场景，<strong>性能低</strong></li>
-<li>2：<strong>历史记录全部计入缓存</strong>？资源量大，并且会随着时间逐渐上涨，<strong>服务器耗费up</strong></li>
-<li>3：<strong>布隆过滤器</strong>？专门用于解决去重问题，存在一定误判概率但是在去重的同时能节省90%的空间</li>
-</ul>
-<h2 id="1-使用场景"><a href="#1-使用场景" class="headerlink" title="1.使用场景"></a>1.使用场景</h2><ul>
-<li>1：<strong>在数据量很大(5亿以上)的场景下判断某一数据是否存在</strong>。对比hashMap节省了很大的存储空间</li>
-<li>2：<strong>黑名单、邮箱的垃圾邮件过滤</strong>。正常邮件被放入垃圾邮箱，就是布隆过滤器的误判导致</li>
-<li>3：<strong>去重</strong>。例如爬虫时，对已经爬取过的内容去重</li>
-<li>4：<strong>缓存穿透</strong>（非法用户会使用一般数据库里没有的key来进行访问导致请求一直打到数据库，导致数据库崩溃）。布隆过滤器删除key困难（会影响其他key），更建议直接使用redis set（设置过期时间）</li>
-</ul>
-<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/bloomFilter%20blackList.png" alt="黑名单解决缓存穿透"></p>
-<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/bloomFilter%20whiteList.png" alt="白名单解决缓存穿透"></p>
-<h2 id="2-什么是布隆过滤器"><a href="#2-什么是布隆过滤器" class="headerlink" title="2.什么是布隆过滤器"></a>2.什么是布隆过滤器</h2><h3 id="2-1数据结构"><a href="#2-1数据结构" class="headerlink" title="2.1数据结构"></a>2.1数据结构</h3><p>布隆过滤器（Bloom Filter）1970年由Bloom的老哥提出</p>
-<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/bloomFilter-init.png" alt="init"></p>
-<p>它由一个二进制数组来记录数据的相关性,数组中只有1或0</p>
+                <h1 id="并发编程灵魂拷问系列之Java内存模型"><a href="#并发编程灵魂拷问系列之Java内存模型" class="headerlink" title="并发编程灵魂拷问系列之Java内存模型"></a>并发编程灵魂拷问系列之Java内存模型</h1><h2 id="0-面试连环炮路径"><a href="#0-面试连环炮路径" class="headerlink" title="0.面试连环炮路径"></a>0.面试连环炮路径</h2><p>JMM（Java内存模型）-&gt; 原子性、可见性、有序性 -&gt; volatile和可见性 -&gt; volatile和有序性（指令重排+happens-before）-&gt; volatile和原子性 -&gt; volatile底层原理（内存屏障级别的原理）</p>
+<h2 id="1-聊一下Java的内存模型"><a href="#1-聊一下Java的内存模型" class="headerlink" title="1.聊一下Java的内存模型"></a>1.聊一下Java的内存模型</h2><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/JMM-process.jpg" alt=""></p>
+<p>volatile：共享变量修改时会强制刷新一下主内存的值</p>
+<ol>
+<li>线程1/2 read 主内存的共享变量， load 到工作内存中，此时读到的值都为0</li>
+<li>线程1/2 use 从工作内存中拿出共享变量，进行操作（比如 <strong>++</strong> 操作，那么计算之后的值都为1）</li>
+<li>线程1/2 assign 把工作内存设置回工作内存中，之后工作内存尝试 <strong>store</strong> 写入主内存，写入成功就是 <strong>write</strong></li>
+<li>结果就是主内存data从 0 -&gt; 1</li>
+</ol>
+<h2 id="2-你知道Java内存模型的原子性、有序性、可见性是什么"><a href="#2-你知道Java内存模型的原子性、有序性、可见性是什么" class="headerlink" title="2.你知道Java内存模型的原子性、有序性、可见性是什么"></a>2.你知道Java内存模型的原子性、有序性、可见性是什么</h2><p><strong>原子性</strong>：指该操作是不可再分的。不论是多核还是单核，具有原子性的量，同一时刻只能有一个线程来对它进行操作。在整个操作过程中不会被线程调度器中断的操作，都可认为是原子性。比如 a = 1。</p>
+<p><strong>可见性</strong>：指当多个线程访问同一个变量时，一个线程修改了这个变量的值，其他线程能够立即看得到修改的值。Java保证可见性可以认为通过volatile、synchronized、final来实现。</p>
+<p><strong>有序性</strong>：程序执行的顺序按照代码的先后顺序执行，Java通过volatile、synchronized来保证。具备有序性，则不会发生指令重排</p>
+<p>volatile禁止指令重排序，防止编译器编译优化时对代码重新排序，导致代码顺序变化。</p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/JMM_orderliness.png" alt=""></p>
+<p>【例子】正常情况是资源准备完毕，flag才设置为true，但是如图，如果发生指令重排，可能导致先设置为true再进行资源准备，导致直接直接execute而报错</p>
+<h2 id="3-讲讲volatile的工作原理，如何保证可见性？"><a href="#3-讲讲volatile的工作原理，如何保证可见性？" class="headerlink" title="3.讲讲volatile的工作原理，如何保证可见性？"></a>3.讲讲volatile的工作原理，如何保证可见性？</h2><p>volatile关键字用来保证 <strong>可见性</strong> 和 <strong>有序性</strong> 的，不能保证原子性（极端特殊情况下可保证而已）</p>
+<p>举例说明无法保证原子性（还是这张图）：<br><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/JMM-process.jpg" alt=""></p>
 <blockquote>
-<p>二进制数组的优势：申请一个 100w 个元素的位数组只占用 1000000Bit \ 8 = 125000 Byte = 125000\1024 kb ≈ 122kb 的空间。</p>
+<p>就算使用volatile修饰data，当线程1更新data=1到主内存，使得线程二工作内存的data值失效，但是可能此时data已经在被运算中，及时失效了，还是会通过assign把data=1设置到工作内存中，最后write到主内存<br>需要保证原子性，还是需要 <strong>synchronized</strong> 、 <strong>lock</strong> 来保证</p>
 </blockquote>
-<p>因为数组为固定长度，在数据量越多而空间越少的情况，判断误差率会变大</p>
-<h3 id="2-2-原理"><a href="#2-2-原理" class="headerlink" title="2.2 原理"></a>2.2 原理</h3><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/bloomFilter-add.png" alt="add"></p>
-<p><strong>当一个元素加入布隆过滤器时：</strong></p>
-<ol>
-<li>布隆过滤器中的多个哈希函数对元素值进行计算，得到索引值，之后数组长度对该索引值取模算的数组位置</li>
-<li>多个哈希函数有多个计算后的数组位置，置为1，完成add操作</li>
-</ol>
-<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/bloomFilter-exist.png" alt="exist"></p>
-<p><strong>当判断一个元素是否存在时：</strong></p>
-<ol>
-<li>多个哈希函数对元素值计算出位置后，如果有一个位置值为0，则肯定不存在</li>
-<li>如果多个位置值都为1，则表示极有可能存在（可能其他元素把这几个位置提前置为1了，导致的误判）</li>
-</ol>
-<h3 id="2-3-使用"><a href="#2-3-使用" class="headerlink" title="2.3 使用"></a>2.3 使用</h3><h4 id="1-使用注意点"><a href="#1-使用注意点" class="headerlink" title="1. 使用注意点"></a>1. 使用注意点</h4><ol>
-<li>使用时 不要让实际元素数量远大于初始化数量；</li>
-<li>当实际元素数量超过初始化数量时，应该对布隆过滤器进行 重建，重新分配一个 size 更大的过滤器，再将所有的历史元素批量 add 进行；</li>
-<li>初始化的数量和误判率根据实际业务场景分配</li>
-</ol>
-<h4 id="2-场景"><a href="#2-场景" class="headerlink" title="2. 场景"></a>2. 场景</h4><h5 id="1-单机场景中-Guava-Bloom-Filter"><a href="#1-单机场景中-Guava-Bloom-Filter" class="headerlink" title="1. 单机场景中 - Guava Bloom Filter"></a>1. 单机场景中 - Guava Bloom Filter</h5><pre class="line-numbers language-java"><code class="language-java"><span class="token number">1</span><span class="token punctuation">.</span>依赖
-<span class="token operator">&lt;</span>dependency<span class="token operator">></span>
-    <span class="token operator">&lt;</span>groupId<span class="token operator">></span>com<span class="token punctuation">.</span>google<span class="token punctuation">.</span>guava<span class="token operator">&lt;</span>\groupId<span class="token operator">></span>
-    <span class="token operator">&lt;</span>artifactId<span class="token operator">></span>guava<span class="token operator">&lt;</span>\artifactId<span class="token operator">></span>
-    <span class="token operator">&lt;</span>version<span class="token operator">></span><span class="token number">28.0</span><span class="token operator">-</span>jre<span class="token operator">&lt;</span>\version<span class="token operator">></span>
-<span class="token operator">&lt;</span>\dependency<span class="token operator">></span>
-
-# <span class="token number">2</span><span class="token punctuation">.</span>使用
-# <span class="token number">2.1</span> 创建布隆过滤器对象
-BloomFilter<span class="token operator">&lt;</span>Integer<span class="token operator">></span> filter <span class="token operator">=</span> BloomFilter<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span>
-        Funnels<span class="token punctuation">.</span><span class="token function">integerFunnel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-        <span class="token number">1500</span><span class="token punctuation">,</span>
-        <span class="token number">0.01</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-# <span class="token number">2.2</span> 判断指定元素是否存在
-System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>filter<span class="token punctuation">.</span><span class="token function">mightContain</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>filter<span class="token punctuation">.</span><span class="token function">mightContain</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-# <span class="token number">2.3</span> 将元素添加进布隆过滤器
-filter<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-filter<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>filter<span class="token punctuation">.</span><span class="token function">mightContain</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>filter<span class="token punctuation">.</span><span class="token function">mightContain</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h5 id="2-分布式场景中-Redisson-Bloom-Filter"><a href="#2-分布式场景中-Redisson-Bloom-Filter" class="headerlink" title="2. 分布式场景中 - Redisson Bloom Filter"></a>2. 分布式场景中 - Redisson Bloom Filter</h5><pre class="line-numbers language-java"><code class="language-java"># <span class="token number">1</span><span class="token punctuation">.</span>依赖
-<span class="token operator">&lt;</span>dependency<span class="token operator">></span>
-    <span class="token operator">&lt;</span>groupId<span class="token operator">></span>org<span class="token punctuation">.</span>redisson<span class="token operator">&lt;</span>\groupId<span class="token operator">></span>
-    <span class="token operator">&lt;</span>artifactId<span class="token operator">></span>redisson<span class="token operator">&lt;</span>\artifactId<span class="token operator">></span>
-    <span class="token operator">&lt;</span>version<span class="token operator">></span><span class="token number">3.7</span><span class="token punctuation">.</span><span class="token number">5</span><span class="token operator">&lt;</span>\version<span class="token operator">></span>
-<span class="token operator">&lt;</span>\dependency<span class="token operator">></span>
-
-# <span class="token number">2</span><span class="token punctuation">.</span>获取存储在redis中的布隆过滤器
-RBloomFilter<span class="token operator">&lt;</span>String<span class="token operator">></span> filter <span class="token operator">=</span> redissonClient<span class="token punctuation">.</span><span class="token function">getBloomFilter</span><span class="token punctuation">(</span><span class="token string">"BloomFilter"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-# <span class="token number">3</span><span class="token punctuation">.</span>不存在时初始化<span class="token punctuation">,</span>
-filter<span class="token punctuation">.</span><span class="token function">tryInit</span><span class="token punctuation">(</span><span class="token number">10000</span><span class="token punctuation">,</span> <span class="token number">0.01</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span><span class="token number">20</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-    # <span class="token number">4</span><span class="token punctuation">.</span>新增
-    filter<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>StrUtil<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-# <span class="token number">5</span><span class="token punctuation">.</span>判断是否存在
-<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span><span class="token number">20</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-    log<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"key:{},是否存在：{}"</span><span class="token punctuation">,</span>i<span class="token punctuation">,</span>filter<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>StrUtil<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>当volatile修饰值data，保证data在多线程之间的 <strong>可见性</strong> ，如果data修改，会强制刷新其他线程工作内存中的data的值（让其他线程工作内存data的值失效，来起到强制刷新的作用）</p>
+<p>volatile通过 <strong>禁止指令重排</strong> 来保证 <strong>有序性</strong> </p>
+<h2 id="4-你知道指令重排和happens-before是什么吗？"><a href="#4-你知道指令重排和happens-before是什么吗？" class="headerlink" title="4.你知道指令重排和happens-before是什么吗？"></a>4.你知道指令重排和happens-before是什么吗？</h2><p>一般情况下，为了提高程序执行的效率，编译器或者指令器会对代码进行优化，例如指令重排。</p>
+<p>java中有一个 <strong>happens-before</strong> 原则,<strong>一定程度上来避免胡乱地指令重排</strong>。他在一些特殊情况下，不允许编译器或者指令器对写的代码进行指令重排。</p>
+<p>其中有一个与volatile相关的原则，如果代码中存在volatile修饰的值，此值进行volatile写后，再volatile读，那么顺序上必须先写再读</p>
 <blockquote>
-<p>参考链接：<br>1：<a href="https:\github.com\Snailclimb\JavaGuide\blob\master\docs\dataStructures-algorithms\data-structure\bloom-filter.md">JavaGuide - 布隆过滤器</a><br>2：<a href="https:\mp.weixin.qq.com\s\wNtpO7TtxnhoiDHuv1grXg">亿级数据过滤和布隆过滤器</a><br>3：<a href="https://mp.weixin.qq.com/s/NfFt_OMAcDrhnJ6lD2VlOA">学会布隆过滤器，能当CEO？</a></p>
+<p>比如代码中,代码顺序A-&gt;B-&gt;C，那么A的顺序就优于C；或者比如对lock的操作顺序不能被重排（代码先unlock再lock，就不能重排为lock后unlock，否则导致流程错乱）</p>
+</blockquote>
+<h2 id="5-volatile是如何基于内存屏障保证可见性和有序性的？"><a href="#5-volatile是如何基于内存屏障保证可见性和有序性的？" class="headerlink" title="5.volatile是如何基于内存屏障保证可见性和有序性的？"></a>5.volatile是如何基于内存屏障保证可见性和有序性的？</h2><p>内存屏障：禁止重排序</p>
+<p><strong>如何保证有序性</strong><br>如果使用了volatile修饰一个值后，那么会对该值的读写前后会加入一些内存屏障，加入屏障之后，来避免发生指令重排</p>
+<p><strong>如何保证可见性</strong><br>如果使用了volatile修饰一个值data后，在对data执行写操作，JVM会发送<strong>lock前缀指令</strong>给CPU，CPU收到指令，计算完毕会把data强制刷新到主内存里，其他线程通过<strong>对总线的嗅探</strong>，让工作内存的data值失效，之后读取data值时因为工作内存data值失效，所以从缓存中获取。保证了可见性</p>
+<blockquote>
+<p>lock前缀指令 + MESI缓存一致性协议</p>
 </blockquote>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -716,8 +666,8 @@ filter<span class="token punctuation">.</span><span class="token function">tryIn
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/bloomFilter/">
-                                    <span class="chip bg-color">bloomFilter</span>
+                                <a href="/tags/JMM/">
+                                    <span class="chip bg-color">JMM</span>
                                 </a>
                             
                         </div>
@@ -1027,88 +977,36 @@ filter<span class="token punctuation">.</span><span class="token function">tryIn
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-            <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
                 <div class="article-badge left-badge text-color">
-                    <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                    <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+                </div>
                 <div class="card">
-                    <a href="/posts/spring-event.html">
+                    <a href="/posts/interview-JMM.html">
                         <div class="card-image">
                             
                                 
-                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/15.jpg" class="responsive-img" alt="Spring 事件发布监听机制实现业务解耦">
+                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/21.jpg" class="responsive-img" alt="并发编程灵魂拷问系列之Java内存模型">
                             
-                            <span class="card-title">Spring 事件发布监听机制实现业务解耦</span>
+                            <span class="card-title">并发编程灵魂拷问系列之Java内存模型</span>
                         </div>
                     </a>
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                告别冗长的代码的开始
-                            
-                        </div>
-                        <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-06-10
-                        </span>
-                            <span class="publish-author">
-                                
-                                    <i class="fa fa-bookmark fa-fw icon-category"></i>
-                                    
-                                        <a href="/categories/%E6%97%A5%E5%B8%B8%E5%B7%A5%E4%BD%9C%E5%BA%94%E7%94%A8/" class="post-category">
-                                    日常工作应用
-                                </a>
-                                    
-                                
-                            </span>
-                        </div>
-                    </div>
-                    
-                        <div class="card-action article-tags">
-                            
-                                <a href="/tags/Spring-Event/">
-                                    <span class="chip bg-color">Spring Event</span>
-                                </a>
-                            
-                                <a href="/tags/%E4%BA%8B%E4%BB%B6%E7%9B%91%E5%90%AC/">
-                                    <span class="chip bg-color">事件监听</span>
-                                </a>
-                            
-                        </div>
-                    
-                </div>
-            </div>
-        
-        
-            <div class="article col s12 m6" data-aos="fade-up">
-                <div class="article-badge right-badge text-color">
-                    本篇&nbsp;<i class="fa fa-dot-circle-o"></i>
-                </div>
-                <div class="card">
-                    <a href="/posts/bloom-filter.html">
-                        <div class="card-image">
-                            
-                                
-                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/10.jpg" class="responsive-img" alt="5分钟搞懂布隆过滤器">
-                            
-                            <span class="card-title">5分钟搞懂布隆过滤器</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                高效性能的数据结构
+                                JMM到底是什么
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-05-19
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-01-17
                             </span>
                             <span class="publish-author">
                                 
                                     <i class="fa fa-bookmark fa-fw icon-category"></i>
                                     
-                                        <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="post-category">
-                                    数据结构
+                                        <a href="/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E7%81%B5%E9%AD%82%E6%8B%B7%E9%97%AE%E7%B3%BB%E5%88%97/" class="post-category">
+                                    并发编程灵魂拷问系列
                                 </a>
                                     
                                 
@@ -1119,8 +1017,57 @@ filter<span class="token punctuation">.</span><span class="token function">tryIn
                     
                         <div class="card-action article-tags">
                             
-                                <a href="/tags/bloomFilter/">
-                                    <span class="chip bg-color">bloomFilter</span>
+                                <a href="/tags/JMM/">
+                                    <span class="chip bg-color">JMM</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+            </div>
+        
+        
+            <div class="article col s12 m6" data-aos="fade-up">
+                <div class="article-badge right-badge text-color">
+                    下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+                </div>
+                <div class="card">
+                    <a href="/posts/interview-AQS.html">
+                        <div class="card-image">
+                            
+                                
+                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/18.jpg" class="responsive-img" alt="并发编程灵魂拷问系列之对AQS理解吗">
+                            
+                            <span class="card-title">并发编程灵魂拷问系列之对AQS理解吗</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                小小嘀咕AQS
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-01-16
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E7%81%B5%E9%AD%82%E6%8B%B7%E9%97%AE%E7%B3%BB%E5%88%97/" class="post-category">
+                                    并发编程灵魂拷问系列
+                                </a>
+                                    
+                                
+                            </span>
+                        </div>
+                    </div>
+                    
+                        <div class="card-action article-tags">
+                            
+                                <a href="/tags/AQS/">
+                                    <span class="chip bg-color">AQS</span>
                                 </a>
                             
                         </div>
@@ -1262,7 +1209,7 @@ filter<span class="token punctuation">.</span><span class="token function">tryIn
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             <span id="year">2020</span>
-            <a href="/about" rel="external nofollow noreferrer">Xuyk</a>
+            <a href="/about" rel="external nofollow noreferrer">xuyk</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>

@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>并发编程灵魂拷问系列之Java内存模型</title>
+      <link href="/posts/interview-JMM.html"/>
+      <url>/posts/interview-JMM.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="并发编程灵魂拷问系列之Java内存模型"><a href="#并发编程灵魂拷问系列之Java内存模型" class="headerlink" title="并发编程灵魂拷问系列之Java内存模型"></a>并发编程灵魂拷问系列之Java内存模型</h1><h2 id="0-面试连环炮路径"><a href="#0-面试连环炮路径" class="headerlink" title="0.面试连环炮路径"></a>0.面试连环炮路径</h2><p>JMM（Java内存模型）-&gt; 原子性、可见性、有序性 -&gt; volatile和可见性 -&gt; volatile和有序性（指令重排+happens-before）-&gt; volatile和原子性 -&gt; volatile底层原理（内存屏障级别的原理）</p><h2 id="1-聊一下Java的内存模型"><a href="#1-聊一下Java的内存模型" class="headerlink" title="1.聊一下Java的内存模型"></a>1.聊一下Java的内存模型</h2><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/JMM-process.jpg" alt=""></p><p>volatile：共享变量修改时会强制刷新一下主内存的值</p><ol><li>线程1/2 read 主内存的共享变量， load 到工作内存中，此时读到的值都为0</li><li>线程1/2 use 从工作内存中拿出共享变量，进行操作（比如 <strong>++</strong> 操作，那么计算之后的值都为1）</li><li>线程1/2 assign 把工作内存设置回工作内存中，之后工作内存尝试 <strong>store</strong> 写入主内存，写入成功就是 <strong>write</strong></li><li>结果就是主内存data从 0 -&gt; 1</li></ol><h2 id="2-你知道Java内存模型的原子性、有序性、可见性是什么"><a href="#2-你知道Java内存模型的原子性、有序性、可见性是什么" class="headerlink" title="2.你知道Java内存模型的原子性、有序性、可见性是什么"></a>2.你知道Java内存模型的原子性、有序性、可见性是什么</h2><p><strong>原子性</strong>：指该操作是不可再分的。不论是多核还是单核，具有原子性的量，同一时刻只能有一个线程来对它进行操作。在整个操作过程中不会被线程调度器中断的操作，都可认为是原子性。比如 a = 1。</p><p><strong>可见性</strong>：指当多个线程访问同一个变量时，一个线程修改了这个变量的值，其他线程能够立即看得到修改的值。Java保证可见性可以认为通过volatile、synchronized、final来实现。</p><p><strong>有序性</strong>：程序执行的顺序按照代码的先后顺序执行，Java通过volatile、synchronized来保证。具备有序性，则不会发生指令重排</p><p>volatile禁止指令重排序，防止编译器编译优化时对代码重新排序，导致代码顺序变化。</p><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/JMM_orderliness.png" alt=""></p><p>【例子】正常情况是资源准备完毕，flag才设置为true，但是如图，如果发生指令重排，可能导致先设置为true再进行资源准备，导致直接直接execute而报错</p><h2 id="3-讲讲volatile的工作原理，如何保证可见性？"><a href="#3-讲讲volatile的工作原理，如何保证可见性？" class="headerlink" title="3.讲讲volatile的工作原理，如何保证可见性？"></a>3.讲讲volatile的工作原理，如何保证可见性？</h2><p>volatile关键字用来保证 <strong>可见性</strong> 和 <strong>有序性</strong> 的，不能保证原子性（极端特殊情况下可保证而已）</p><p>举例说明无法保证原子性（还是这张图）：<br><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/JMM-process.jpg" alt=""></p><blockquote><p>就算使用volatile修饰data，当线程1更新data=1到主内存，使得线程二工作内存的data值失效，但是可能此时data已经在被运算中，及时失效了，还是会通过assign把data=1设置到工作内存中，最后write到主内存<br>需要保证原子性，还是需要 <strong>synchronized</strong> 、 <strong>lock</strong> 来保证</p></blockquote><p>当volatile修饰值data，保证data在多线程之间的 <strong>可见性</strong> ，如果data修改，会强制刷新其他线程工作内存中的data的值（让其他线程工作内存data的值失效，来起到强制刷新的作用）</p><p>volatile通过 <strong>禁止指令重排</strong> 来保证 <strong>有序性</strong> </p><h2 id="4-你知道指令重排和happens-before是什么吗？"><a href="#4-你知道指令重排和happens-before是什么吗？" class="headerlink" title="4.你知道指令重排和happens-before是什么吗？"></a>4.你知道指令重排和happens-before是什么吗？</h2><p>一般情况下，为了提高程序执行的效率，编译器或者指令器会对代码进行优化，例如指令重排。</p><p>java中有一个 <strong>happens-before</strong> 原则,<strong>一定程度上来避免胡乱地指令重排</strong>。他在一些特殊情况下，不允许编译器或者指令器对写的代码进行指令重排。</p><p>其中有一个与volatile相关的原则，如果代码中存在volatile修饰的值，此值进行volatile写后，再volatile读，那么顺序上必须先写再读</p><blockquote><p>比如代码中,代码顺序A-&gt;B-&gt;C，那么A的顺序就优于C；或者比如对lock的操作顺序不能被重排（代码先unlock再lock，就不能重排为lock后unlock，否则导致流程错乱）</p></blockquote><h2 id="5-volatile是如何基于内存屏障保证可见性和有序性的？"><a href="#5-volatile是如何基于内存屏障保证可见性和有序性的？" class="headerlink" title="5.volatile是如何基于内存屏障保证可见性和有序性的？"></a>5.volatile是如何基于内存屏障保证可见性和有序性的？</h2><p>内存屏障：禁止重排序</p><p><strong>如何保证有序性</strong><br>如果使用了volatile修饰一个值后，那么会对该值的读写前后会加入一些内存屏障，加入屏障之后，来避免发生指令重排</p><p><strong>如何保证可见性</strong><br>如果使用了volatile修饰一个值data后，在对data执行写操作，JVM会发送<strong>lock前缀指令</strong>给CPU，CPU收到指令，计算完毕会把data强制刷新到主内存里，其他线程通过<strong>对总线的嗅探</strong>，让工作内存的data值失效，之后读取data值时因为工作内存data值失效，所以从缓存中获取。保证了可见性</p><blockquote><p>lock前缀指令 + MESI缓存一致性协议</p></blockquote><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+      
+      
+      <categories>
+          
+          <category> 并发编程灵魂拷问系列 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> JMM </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>并发编程灵魂拷问系列之对AQS理解吗</title>
       <link href="/posts/interview-AQS.html"/>
       <url>/posts/interview-AQS.html</url>
