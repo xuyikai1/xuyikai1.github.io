@@ -4,8 +4,8 @@
 
 <head><link rel=manifest href=/manifest.json>
     <meta charset="utf-8">
-    <meta name="keywords" content="redis">
-    <meta name="description" content="部署技巧不可少">
+    <meta name="keywords" content="Spring">
+    <meta name="description" content="面试官问你Spring了">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +14,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="white"/>
-    <title>Redis集群搭建 | 寒暄</title>
+    <title>Spring灵魂拷问系列之Spring基础拷问 | 寒暄</title>
     <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/apple-touch-icon.png">
     <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/favicon.ico">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/awesome/css/font-awesome.min.css">
@@ -419,12 +419,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/14.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/19.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Redis集群搭建</h1>
+                    <h1 class="description center-align post-title">Spring灵魂拷问系列之Spring基础拷问</h1>
                 </div>
             </div>
         </div>
@@ -540,8 +540,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/redis-cluster/">
-                                    <span class="chip bg-color">redis cluster</span>
+                                <a href="/tags/Spring/">
+                                    <span class="chip bg-color">Spring</span>
                                 </a>
                             
                         </div>
@@ -552,8 +552,8 @@
                         <div class="post-cate">
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                                <a href="/categories/Redis/" class="post-category">
-                                    Redis
+                                <a href="/categories/Spring%E7%81%B5%E9%AD%82%E6%8B%B7%E9%97%AE%E7%B3%BB%E5%88%97/" class="post-category">
+                                    Spring灵魂拷问系列
                                 </a>
                             
                         </div>
@@ -565,28 +565,28 @@
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                        2020-09-28
+                        2021-01-23
                     </div>
                 
 
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
-                        2020-09-28
+                        2021-01-23
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        626
+                        2.2k
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        2 分
+                        8 分
                     </div>
                 
 
@@ -601,93 +601,117 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="Redis集群搭建"><a href="#Redis集群搭建" class="headerlink" title="Redis集群搭建"></a>Redis集群搭建</h1><h2 id="1-配置"><a href="#1-配置" class="headerlink" title="1. 配置"></a>1. 配置</h2><table>
-<thead>
-<tr>
-<th align="center">实例</th>
-<th align="center">角色</th>
-<th align="center">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">192.168.10.139</td>
-<td align="center">Master</td>
-<td align="center">主节点</td>
-</tr>
-<tr>
-<td align="center">192.168.10.142</td>
-<td align="center">Slave</td>
-<td align="center">从节点,对应139</td>
-</tr>
-<tr>
-<td align="center">192.168.10.140</td>
-<td align="center">Master</td>
-<td align="center">主节点</td>
-</tr>
-<tr>
-<td align="center">192.168.10.143</td>
-<td align="center">Slave</td>
-<td align="center">从节点,对应140</td>
-</tr>
-<tr>
-<td align="center">192.168.10.141</td>
-<td align="center">Master</td>
-<td align="center">主节点</td>
-</tr>
-<tr>
-<td align="center">192.168.10.144</td>
-<td align="center">Slave</td>
-<td align="center">从节点,对应141</td>
-</tr>
-</tbody></table>
-<p>每个redis节点的配置(redis.conf)：</p>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token number">1</span><span class="token punctuation">.</span>conf文件中搜索cluster
-
-# <span class="token number">2</span><span class="token punctuation">.</span>开启集群
-cluster<span class="token operator">-</span>enabled yes
-
-# <span class="token number">3</span><span class="token punctuation">.</span>每个节点之间的关系<span class="token punctuation">,</span>注释开放即可
-cluster<span class="token operator">-</span>config<span class="token operator">-</span>file nodes<span class="token operator">-</span><span class="token number">6379</span><span class="token punctuation">.</span>conf
-
-# <span class="token number">4</span><span class="token punctuation">.</span>节点超时切换
-cluster<span class="token operator">-</span>node<span class="token operator">-</span>timeout <span class="token number">5000</span>
-
-# <span class="token number">5</span><span class="token punctuation">.</span>默认关闭<span class="token punctuation">,</span>yes开启AOF
-appendonly yes
-
-# <span class="token number">6</span><span class="token punctuation">.</span>进入working目录<span class="token punctuation">,</span>删除rdb和aof备份文件<span class="token punctuation">,</span>否则搭建集群会报错
-
-# <span class="token number">7</span><span class="token punctuation">.</span>其中如果master有设置密码，则节点配置都需要加上
-masterauth password
-# PS：一般不需要密码，生产环境上端口一般配置为不对外开放的<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="2-构建集群"><a href="#2-构建集群" class="headerlink" title="2. 构建集群"></a>2. 构建集群</h2><pre class="line-numbers language-java"><code class="language-java">redis<span class="token operator">-</span>cli <span class="token operator">-</span>a pwd <span class="token operator">--</span>cluster create ip1<span class="token operator">:</span>port1  ip2<span class="token operator">:</span>port2  ip3<span class="token operator">:</span>port3  ip4<span class="token operator">:</span>port4  ip5<span class="token operator">:</span>port5  ip6<span class="token operator">:</span>port6 <span class="token operator">--</span>cluster<span class="token operator">-</span>replicas <span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h2 id="3-验证集群"><a href="#3-验证集群" class="headerlink" title="3. 验证集群"></a>3. 验证集群</h2><h3 id="1-随机登陆一台redis客户端"><a href="#1-随机登陆一台redis客户端" class="headerlink" title="(1) 随机登陆一台redis客户端"></a>(1) 随机登陆一台redis客户端</h3><pre class="line-numbers language-java"><code class="language-java">redis<span class="token operator">-</span>cli <span class="token operator">-</span>c <span class="token operator">-</span>a <span class="token number">123456</span> <span class="token operator">-</span>h <span class="token number">192.168</span><span class="token punctuation">.</span><span class="token number">10.140</span> <span class="token operator">-</span>p <span class="token number">6379</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+                <h1 id="Spring灵魂拷问系列之Spring基础拷问"><a href="#Spring灵魂拷问系列之Spring基础拷问" class="headerlink" title="Spring灵魂拷问系列之Spring基础拷问"></a>Spring灵魂拷问系列之Spring基础拷问</h1><h2 id="0-面试连环炮"><a href="#0-面试连环炮" class="headerlink" title="0.面试连环炮"></a>0.面试连环炮</h2><p>Spring IOC和AOP的理解 -&gt; 动态代理 -&gt; JDK/Cglib动态代理 -&gt; Spring Bean线程安全 -&gt; Spring事务实现原理和事务传播机制</p>
+<h2 id="1-说说对Spring-IOC的理解"><a href="#1-说说对Spring-IOC的理解" class="headerlink" title="1.说说对Spring IOC的理解"></a>1.说说对Spring IOC的理解</h2><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/interview-old-process.jpg" alt=""></p>
+<p>以前的一套系统：<br>web服务器：绑定地址端口，负责接收请求<br>servlet：引入serviceImpl类来处理请求（doPost、doGet）</p>
+<p>像这样每个servlet都新建一个serviceImpl服务类实例，导致耦合度很高，当需要换一个服务实现类时，每个地方都需要修改成新的类，导致改动、测试成本巨大</p>
+<p>Spring IOC：<strong>控制反转，依赖注入，让系统的类与类之间解耦</strong></p>
+<p>Tomcat启动Spring容器，扫描指定路径的包路径，所有加了Spring注解的类会被Spring容器初始和实例化Bean并且交给Spring容器管理，当某个地方使用到时，Spring容器会自动注入实例</p>
 <blockquote>
-<p>-c：表示采用集群模式<br>-h：表示host<br>-p：端口</p>
+<p>Spring MVC：核心Servlet、Filter，负责用户请求的转发，转发给对应的Controller，之后调用相应的服务类进行处理</p>
 </blockquote>
-<h3 id="2-查看集群"><a href="#2-查看集群" class="headerlink" title="(2) 查看集群"></a>(2) 查看集群</h3><pre class="line-numbers language-java"><code class="language-java">cluster info：集群信息
-cluster nodes：集群节点信息<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/cluster%20info.png" alt="cluster-info"></p>
-<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/cluster%20nodes.png" alt="cluster-nodes"></p>
-<h3 id="3-故障转移"><a href="#3-故障转移" class="headerlink" title="(3) 故障转移"></a>(3) 故障转移</h3><p>使用kill命令强制关闭一个redis master节点进程,此时集群状态<br>依旧为ok，在经过n秒(conf配置参数cluster-node-timeout)，<br>此宕机master节点的从节点会升级为master节点。之后原master节点恢复会自动降为slave节点</p>
-<h2 id="4-redis-manager搭建"><a href="#4-redis-manager搭建" class="headerlink" title="4. redis-manager搭建"></a>4. redis-manager搭建</h2><p><a href="https://github.com/ngbdf/redis-manager/wiki/2.x-%E5%BF%AB%E9%80%9F%E5%90%AF%E5%8A%A8">redis-manager搭建</a></p>
-<h3 id="搭建说明"><a href="#搭建说明" class="headerlink" title="搭建说明"></a>搭建说明</h3><h4 id="1-创建项目所需目录"><a href="#1-创建项目所需目录" class="headerlink" title="(1) 创建项目所需目录"></a>(1) 创建项目所需目录</h4><pre class="line-numbers language-java"><code class="language-java">mkdir <span class="token operator">-</span>p <span class="token operator">/</span>opt<span class="token operator">/</span>tool<span class="token operator">/</span>redis<span class="token operator">-</span>manager<span class="token operator">/</span>data<span class="token operator">/</span>avatar
-mkdir <span class="token operator">-</span>p <span class="token operator">/</span>opt<span class="token operator">/</span>tool<span class="token operator">/</span>redis<span class="token operator">-</span>manager<span class="token operator">/</span>data<span class="token operator">/</span>conf
-mkdir <span class="token operator">-</span>p <span class="token operator">/</span>opt<span class="token operator">/</span>tool<span class="token operator">/</span>redis<span class="token operator">-</span>manager<span class="token operator">/</span>data<span class="token operator">/</span>machine<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<h4 id="2-添加到开机自启动"><a href="#2-添加到开机自启动" class="headerlink" title="(2) 添加到开机自启动"></a>(2) 添加到开机自启动</h4><pre class="line-numbers language-java"><code class="language-java"># <span class="token number">1</span><span class="token punctuation">.</span>编辑rc<span class="token punctuation">.</span>local文件
-vim <span class="token operator">/</span>etc<span class="token operator">/</span>rc<span class="token punctuation">.</span>d<span class="token operator">/</span>rc<span class="token punctuation">.</span>local
+<p>底层：通过反射来动态的构建对象实例</p>
+<p>当改成Spring IOC解耦时，只需要修改service的实现类即可。这样的话，在具体请求过来时，Spring会根据反射动态生成实现类来处理请求了</p>
+<h2 id="2-说说对Spring-AOP的理解"><a href="#2-说说对Spring-AOP的理解" class="headerlink" title="2.说说对Spring AOP的理解"></a>2.说说对Spring AOP的理解</h2><p><strong>核心技术：动态代理</strong></p>
+<blockquote>
+<p>不关心底层代码的实现逻辑，在此实现逻辑前后做一些公共的处理，例如事务处理、统计方法耗时等</p>
+</blockquote>
+<p>把代码公共/重复的代码抽取出来，比如日志、事务、通知等业务，做一个切面</p>
+<h2 id="3-cglib动态代理和jdk动态代理的区别"><a href="#3-cglib动态代理和jdk动态代理的区别" class="headerlink" title="3.cglib动态代理和jdk动态代理的区别"></a>3.cglib动态代理和jdk动态代理的区别</h2><p>动态代理，动态的创建一个代理类和他的实例对象出来，在里面引用真正需要调用的类，代理类在此做一些增强（事务、日志等）</p>
+<p>两者区别在于 <strong>生成动态代理类的方式</strong></p>
+<p>Spring AOP使用的 <strong>JDK动态代理</strong> ，生成实现同个接口代理类，构造实例出来。当需要代理的类没有接口时，Spring AOP会改用 <strong>Cglib动态代理</strong> ，生成该类的子类（动态生成字节码），覆盖目标类的方法，在覆盖方法中进行增强</p>
+<ol>
+<li><strong>JDK动态代理</strong>：代理类实现 <strong>InvocationHandler</strong> 接口， <strong>Proxy</strong> 生成代理对象，当调用接口方法时，真正会调用的是代理类的 <strong>invoke</strong> 方法</li>
+<li><strong>Cglib动态代理</strong>：代理类实现 <strong>MethodInterceptor</strong> 接口， <strong>Enhancer</strong> 生成代理对象，当调用类方法时，拦截器会拦截在方法前后进行增强（ <strong>intercept方法</strong> ）</li>
+</ol>
+<h2 id="4-Spring中的Bean是线程安全的吗"><a href="#4-Spring中的Bean是线程安全的吗" class="headerlink" title="4.Spring中的Bean是线程安全的吗"></a>4.Spring中的Bean是线程安全的吗</h2><p>Spring Bean的作用域：</p>
+<ul>
+<li><strong>singleton</strong>：默认，单例，只有一个实例</li>
+<li><strong>prototype</strong>：为每个bean请求都提供一个实例</li>
+<li><strong>request</strong>：为每个网络请求request创建一个实例，请求完成后被垃圾回收</li>
+<li><strong>session</strong>：为每个session创建一个实例，请求完成后被垃圾回收</li>
+<li><strong>global-session</strong>：标准的HTTP Session作用域</li>
+</ul>
+<blockquote>
+<p>基本大部分时候我们都使用默认的singleton单例作用域</p>
+</blockquote>
+<p><strong>Spring Bean是线程不安全的</strong></p>
+<blockquote>
+<p>例如，bean中存在一个变量data（未被volatile修饰），多线程并发（多个请求同时发起同个服务）时，多个线程同时调用实例A的同一方法（该方法里存在data++），基于线程的工作内存和主内存不一定同步的机制，就会发生线程安全问题<br>如果不存在实例变量，逻辑处理只操作数据库的话，一般不会有线程安全问题</p>
+</blockquote>
+<h2 id="5-Spring的事务实现原理是什么？"><a href="#5-Spring的事务实现原理是什么？" class="headerlink" title="5.Spring的事务实现原理是什么？"></a>5.Spring的事务实现原理是什么？</h2><p>日常编码中，需要对代码逻辑增加事务，使用Transactional注解，Spring会通过AOP/动态代理的机制，对方法进行增强，织入事务，方法执行前开启事务，执行成功后提交事务，异常回滚事务</p>
+<h2 id="6-能聊聊你对Spring事务的传播机制的理解吗？"><a href="#6-能聊聊你对Spring事务的传播机制的理解吗？" class="headerlink" title="6.能聊聊你对Spring事务的传播机制的理解吗？"></a>6.能聊聊你对Spring事务的传播机制的理解吗？</h2><p><strong>事务传播机制级别 - 最常用的是前4个</strong></p>
+<ul>
+<li><strong>REQUIRED</strong>：如果父方法没有事务，则新创建一个事务，存在事务则加入事务</li>
+<li><strong>SUPPORTS</strong>：如果父方法存在事务则加入事务，当前没有事务，则不开启事务执行</li>
+<li><strong>REQUIRES_NEW</strong>：无论当前父方法有没有事务，都新建一个事务，父方法存在事务时，两者事务是隔离开的</li>
+<li><strong>NESTED</strong>：父方法存在事务，则嵌套事务执行（外层代码出错内层代码一起回滚，内层代码出错只有内层回滚），如果没有事务，按照REQUIRED属性执行</li>
+<li><strong>MONDATORY</strong>：如果当前父方法存在事务则加入事务，当前没有事务，则抛异常</li>
+<li><strong>NOT_SUPPORTED</strong>：强制要求非事务运行，如果父方法存在事务则挂起</li>
+<li><strong>NEVER</strong>：非事务方式执行，如果存在事务会报错</li>
+</ul>
+<p><strong>方法A调用方法B，希望方法A出错只回滚方法A自己，不回滚方法B，该怎么办</strong></p>
+<blockquote>
+<p>选择事务传播机制的REQUIRES_NEW</p>
+</blockquote>
+<p><strong>方法A调用方法B，方法B只能回滚自己，方法A可以带着方法B一起回滚</strong></p>
+<blockquote>
+<p>NESTED嵌套事务</p>
+</blockquote>
+<h2 id="7-谈谈Spring-Boot的核心架构"><a href="#7-谈谈Spring-Boot的核心架构" class="headerlink" title="7.谈谈Spring Boot的核心架构"></a>7.谈谈Spring Boot的核心架构</h2><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/interview-SpringBoot-structure.jpg" alt=""></p>
+<p>在早期java web开发时，我们使用SSM框架那一套，需要打包部署到线上的tomcat上，请求到来，根据Spring MVC框架流程，来一一调用controller、service、dao层等。</p>
+<p>早期开发时，我们也需要根据业务引入比较多的中间件技术，例如redis、elasticsearch、rabbitmq等，引入时配置比较繁琐复杂，例如引入jar包，编写xml配置文件，定义bean等</p>
+<p><strong>SpringBoot</strong></p>
+<ol>
+<li>内嵌了tomcat，上线时可以直接部署启动；</li>
+<li>通过 <strong>自动装配</strong> 的特性，在整合第三方组件时，只要引入相关的starter依赖，会自动做一些配置、定义生成对应bean等操作，只要配置必要的相关地址等配置，一定程度上降低了原先整合的成本，详细可看<a href="http://xuyk.top/posts/SpringBoot-autoConfiguration.html">SpringBoot之自动配置原理</a></li>
+</ol>
+<h2 id="8-Spring-Bean的生命周期"><a href="#8-Spring-Bean的生命周期" class="headerlink" title="8.Spring Bean的生命周期"></a>8.Spring Bean的生命周期</h2><p><strong>Spring Bean大致的生命周期</strong></p>
+<p>实例化 -&gt; 初始化 -&gt; Spring容器管理下长期存活 -&gt; 销毁</p>
+<h3 id="1-实例化Bean"><a href="#1-实例化Bean" class="headerlink" title="1.实例化Bean"></a>1.实例化Bean</h3><p>如果需要使用bean，需要先实例化</p>
+<ul>
+<li>对于 BeanFactory 容器，通过 createBean 进行实例化</li>
+<li>对于 ApplicationContext 容器，通过 BeanDefinition 进行实例化</li>
+</ul>
+<h3 id="2-依赖注入"><a href="#2-依赖注入" class="headerlink" title="2.依赖注入"></a>2.依赖注入</h3><p>当需要使用的bean依赖其他的bean，也需要把依赖的bean创建并且注入进来，注入的方式有两种</p>
+<ul>
+<li><strong>构造器注入</strong></li>
+<li><strong>setter注入</strong></li>
+</ul>
+<h3 id="3-处理Aware接口"><a href="#3-处理Aware接口" class="headerlink" title="3.处理Aware接口"></a>3.处理Aware接口</h3><p>如果bean实现了 ApplicationContextAware 接口，Spring容器就会通过 <code>setApplicationContext(ApplicationContext)</code> 方法，把Spring容器传递给这个bean</p>
+<h3 id="4-BeanPostProcessor"><a href="#4-BeanPostProcessor" class="headerlink" title="4.BeanPostProcessor"></a>4.BeanPostProcessor</h3><p>bean实例化完成之后，如果想对Bean进行一些自定义的处理，那么可以让Bean实现 BeanPostProcessor 接口，将会调用<code>postProcessBeforeInitialization(Object obj,String s)</code>方法</p>
+<blockquote>
+<p>初始化之前</p>
+</blockquote>
+<h3 id="5-初始化initializingBean与init-method"><a href="#5-初始化initializingBean与init-method" class="headerlink" title="5.初始化initializingBean与init-method"></a>5.初始化initializingBean与init-method</h3><p>对bean进行初始化</p>
+<h3 id="6-BeanPostProcessor"><a href="#6-BeanPostProcessor" class="headerlink" title="6.BeanPostProcessor"></a>6.BeanPostProcessor</h3><p>如果Bean实现 BeanPostProcessor 接口，将会调用<code>postProcessAfterInitialization(Object obj,String s)</code>方法</p>
+<blockquote>
+<p>由于发生在初始化完成之后，所以经常用于内存或者缓存的操作</p>
+</blockquote>
+<h3 id="7-DisposableBean"><a href="#7-DisposableBean" class="headerlink" title="7.DisposableBean"></a>7.DisposableBean</h3><p>当Bean不再被需要时，如果Bean实现了DisposableBean接口，会调用他的<code>destory()</code>方法</p>
+<h3 id="8-destroy-method"><a href="#8-destroy-method" class="headerlink" title="8.destroy-method"></a>8.destroy-method</h3><p>如果bean配置的destroy-method属性，会自动调用配置的销毁方法</p>
+<h2 id="9-能说说Spring中使用了哪些设计模式吗"><a href="#9-能说说Spring中使用了哪些设计模式吗" class="headerlink" title="9.能说说Spring中使用了哪些设计模式吗"></a>9.能说说Spring中使用了哪些设计模式吗</h2><h3 id="1-工厂模式"><a href="#1-工厂模式" class="headerlink" title="1.工厂模式"></a>1.工厂模式</h3><p>Spring IOC自己就是一个大工厂，把所有bean实例都放在Spring容器中，需要使用就直接从Spring容器中拿</p>
+<h3 id="2-单例模式"><a href="#2-单例模式" class="headerlink" title="2.单例模式"></a>2.单例模式</h3><p>Spring Bean默认使用单例，保证类在运行期间只有一个实例对象，最常见的就是懒汉式</p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SingletonTest</span> <span class="token punctuation">{</span>
 
-# <span class="token number">2</span><span class="token punctuation">.</span>加入需要执行的脚本命令
-sh <span class="token operator">/</span>usr<span class="token operator">/</span>local<span class="token operator">/</span>redis<span class="token operator">-</span>manager<span class="token operator">/</span>bin<span class="token operator">/</span>start<span class="token punctuation">.</span>sh
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">volatile</span> SingletonTest singletonTest<span class="token punctuation">;</span>
 
-# <span class="token number">3</span><span class="token punctuation">.</span>设置rc<span class="token punctuation">.</span>local可执行权限<span class="token punctuation">(</span>centos7下rc<span class="token punctuation">.</span>local的权限被降低，需要手动为其赋予可执行权限<span class="token punctuation">)</span>
-chmod u<span class="token operator">+</span>x <span class="token operator">/</span>etc<span class="token operator">/</span>rc<span class="token punctuation">.</span>d<span class="token operator">/</span>rc<span class="token punctuation">.</span>local
+    <span class="token keyword">public</span> <span class="token keyword">static</span> SingletonTest <span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>singletonTest <span class="token operator">==</span> null<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">synchronized</span> <span class="token punctuation">(</span>SingletonTest<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>singletonTest <span class="token operator">==</span> null<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                    singletonTest <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SingletonTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> singletonTest<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-# <span class="token number">4</span><span class="token punctuation">.</span>重启服务器查看效果
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="3-redis-manager添加集群"><a href="#3-redis-manager添加集群" class="headerlink" title="(3) redis-manager添加集群"></a>(3) redis-manager添加集群</h4><p>1.通过<a href="http://192.168.10.139:8182"></a><a href="http://192.168.10.139:8182">http://192.168.10.139:8182</a>访问redis-manager管理端(ip为部署该项目的ip，默认端口为8182)，用户名密码默认皆为admin</p>
-<p>2.Import Cluster导入已部署的集群<br><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/import%20cluster.png" alt="import cluster"></p>
-<p>3.查看集群状态信息<br><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/rediss-manager%20cluster%20info.png" alt="rediss-manager cluster info"></p>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p>使用双重检查 + synchronized关键字保证只生成一个实例，volatile保证不发生指令重排</p>
+</blockquote>
+<h3 id="3-代理模式"><a href="#3-代理模式" class="headerlink" title="3.代理模式"></a>3.代理模式</h3><p>主要涉及到的就是Spirng AOP，例如XXXAware那些某个增强类，创建动态代理对象实例，在调用被代理对象的方法时，会先执行代理类的增强代码，再执行方法代码，例如Spring Bean生命周期中，实现 ApplicationContextAware 接口后，Spring容器会把 ApplicationContext 注入到bean中</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -719,8 +743,8 @@ chmod u<span class="token operator">+</span>x <span class="token operator">/</sp
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/redis-cluster/">
-                                    <span class="chip bg-color">redis cluster</span>
+                                <a href="/tags/Spring/">
+                                    <span class="chip bg-color">Spring</span>
                                 </a>
                             
                         </div>
@@ -1030,46 +1054,48 @@ chmod u<span class="token operator">+</span>x <span class="token operator">/</sp
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-            <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
                 <div class="article-badge left-badge text-color">
-                    <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                    <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+                </div>
                 <div class="card">
-                    <a href="/posts/ribbon-load-balance.html">
+                    <a href="/posts/interview-spring-base.html">
                         <div class="card-image">
                             
                                 
-                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/13.jpg" class="responsive-img" alt="Ribbon负载均衡策略总结">
+                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/19.jpg" class="responsive-img" alt="Spring灵魂拷问系列之Spring基础拷问">
                             
-                            <span class="card-title">Ribbon负载均衡策略总结</span>
+                            <span class="card-title">Spring灵魂拷问系列之Spring基础拷问</span>
                         </div>
                     </a>
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                硬核技术点
+                                面试官问你Spring了
                             
                         </div>
                         <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-10-02
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-01-23
+                            </span>
                             <span class="publish-author">
                                 
                                     <i class="fa fa-bookmark fa-fw icon-category"></i>
                                     
-                                        <a href="/categories/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/" class="post-category">
-                                    负载均衡
+                                        <a href="/categories/Spring%E7%81%B5%E9%AD%82%E6%8B%B7%E9%97%AE%E7%B3%BB%E5%88%97/" class="post-category">
+                                    Spring灵魂拷问系列
                                 </a>
                                     
                                 
                             </span>
                         </div>
                     </div>
+
                     
                         <div class="card-action article-tags">
                             
-                                <a href="/tags/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/">
-                                    <span class="chip bg-color">负载均衡</span>
+                                <a href="/tags/Spring/">
+                                    <span class="chip bg-color">Spring</span>
                                 </a>
                             
                         </div>
@@ -1083,31 +1109,31 @@ chmod u<span class="token operator">+</span>x <span class="token operator">/</sp
                     下一篇&nbsp;<i class="fa fa-chevron-right"></i>
                 </div>
                 <div class="card">
-                    <a href="/posts/mysql-configure.html">
+                    <a href="/posts/interview-JMM.html">
                         <div class="card-image">
                             
                                 
-                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/19.jpg" class="responsive-img" alt="Mysql主从配置">
+                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/21.jpg" class="responsive-img" alt="并发编程灵魂拷问系列之Java内存模型">
                             
-                            <span class="card-title">Mysql主从配置</span>
+                            <span class="card-title">并发编程灵魂拷问系列之Java内存模型</span>
                         </div>
                     </a>
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                其实很简单
+                                JMM到底是什么
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-09-15
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-01-17
                             </span>
                             <span class="publish-author">
                                 
                                     <i class="fa fa-bookmark fa-fw icon-category"></i>
                                     
-                                        <a href="/categories/MySQL/" class="post-category">
-                                    MySQL
+                                        <a href="/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E7%81%B5%E9%AD%82%E6%8B%B7%E9%97%AE%E7%B3%BB%E5%88%97/" class="post-category">
+                                    并发编程灵魂拷问系列
                                 </a>
                                     
                                 
@@ -1117,8 +1143,8 @@ chmod u<span class="token operator">+</span>x <span class="token operator">/</sp
                     
                         <div class="card-action article-tags">
                             
-                                <a href="/tags/configure/">
-                                    <span class="chip bg-color">configure</span>
+                                <a href="/tags/JMM/">
+                                    <span class="chip bg-color">JMM</span>
                                 </a>
                             
                         </div>
