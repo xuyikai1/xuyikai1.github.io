@@ -34,19 +34,19 @@ var precacheUrls = [];
 
   precacheUrls.push('/posts/redis-cluster.html');
 
-  precacheUrls.push('/posts/redisson.html');
-
   precacheUrls.push('/posts/ribbon-load-balance.html');
-
-  precacheUrls.push('/posts/SpringBoot-autoConfiguration.html');
 
   precacheUrls.push('/posts/shutdownHook.html');
 
+  precacheUrls.push('/posts/redisson.html');
+
+  precacheUrls.push('/posts/SpringBoot-autoConfiguration.html');
+
   precacheUrls.push('/posts/spring-event.html');
 
-  precacheUrls.push('/posts/xxl-job.html');
+  precacheUrls.push('/posts/spring-annotation.html');
 
-  precacheUrls.push('/posts/interview-spring-base.html');
+  precacheUrls.push('/posts/xxl-job.html');
 
 toolbox.precache(precacheUrls);
 toolbox.options = {"networkTimeoutSeconds":30};

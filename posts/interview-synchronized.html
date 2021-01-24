@@ -572,7 +572,7 @@
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
-                        2021-01-10
+                        2021-01-24
                     </div>
                 
 
@@ -601,12 +601,13 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="并发编程灵魂拷问系列之说说synchronized"><a href="#并发编程灵魂拷问系列之说说synchronized" class="headerlink" title="并发编程灵魂拷问系列之说说synchronized"></a>并发编程灵魂拷问系列之说说synchronized</h1><h2 id="1-什么是synchronized，JDK1-6前后变化？"><a href="#1-什么是synchronized，JDK1-6前后变化？" class="headerlink" title="1.什么是synchronized，JDK1.6前后变化？"></a>1.什么是synchronized，JDK1.6前后变化？</h2><p>我们可以知道，并发问题一般都是因为 <strong>多个线程同时操作同一个共享数据</strong> 所造成的，解决办法就是加锁，例如 <strong>synchronized加锁</strong></p>
+                <h1 id="并发编程灵魂拷问系列之synchronized"><a href="#并发编程灵魂拷问系列之synchronized" class="headerlink" title="并发编程灵魂拷问系列之synchronized"></a>并发编程灵魂拷问系列之synchronized</h1><h2 id="1-什么是synchronized，JDK1-6前后变化？"><a href="#1-什么是synchronized，JDK1-6前后变化？" class="headerlink" title="1.什么是synchronized，JDK1.6前后变化？"></a>1.什么是synchronized，JDK1.6前后变化？</h2><p>我们可以知道，并发问题一般都是因为 <strong>多个线程同时操作同一个共享数据</strong> 所造成的，解决办法就是加锁，例如 <strong>synchronized加锁</strong></p>
 <ul>
-<li>JDK1.6之前：synchronized使用的是操作系统的互斥锁，因为需要在用户态和内核态进行切换，开销很大，导致并发激烈时性能很差</li>
+<li>JDK1.6之前：synchronized使用的是操作系统的互斥锁（底层操作系统的mutex相关指令），因为需要在用户态和内核态进行切换，开销很大，导致并发激烈时性能很差</li>
 <li>JDK1.6之后：进行了锁优化，比如锁升/分级、锁消除、锁粗化等，性能大幅提高，推荐使用</li>
 </ul>
-<h2 id="2-那synchronized底层原理是什么呢？"><a href="#2-那synchronized底层原理是什么呢？" class="headerlink" title="2.那synchronized底层原理是什么呢？"></a>2.那synchronized底层原理是什么呢？</h2><p>当一个线程试图访问同步代码块时，它首先必须得到锁，退出或抛出异常时必须释放锁。</p>
+<h2 id="2-那synchronized底层原理是什么呢？"><a href="#2-那synchronized底层原理是什么呢？" class="headerlink" title="2.那synchronized底层原理是什么呢？"></a>2.那synchronized底层原理是什么呢？</h2><p>synchronized属于 <strong>非公平锁</strong></p>
+<p>当一个线程试图访问同步代码块时，它首先必须得到锁，退出或抛出异常时必须释放锁。</p>
 <p>synchronized是基于Monitor来实现同步的，每一个对象都有对应着一个Monitor，如果需要加锁，则必须获取monitor的lock锁。</p>
 <p>monitor锁是可重入锁，有一个计数器，当进入同步代码块时，执行monitorenter指令，计数器+1，退出一个同步代码块时，执行monitorexit指令，计数器-1；当发生对同一对象多次加锁时，计数器加减多次</p>
 <ol>
@@ -619,7 +620,7 @@
 </blockquote>
 <p>这个可以从对象入手分析，对象在 <strong>堆</strong> 的存储中存有对象头，对象头中的 <strong>Mark Word</strong> 存储着对象的运行时数据，包括对象的hashcode、对象持有的锁等，当中锁从状态进行了分类：</p>
 <p><strong>无锁、偏向锁、轻量级锁、重量级锁</strong>。</p>
-<p>线程获取锁，会根据锁竞争激烈程度进行锁升级来提高性能，锁可以升级但是不能降级。</p>
+<p>线程获取锁，会根据锁竞争激烈程度进行锁升级来提高性能，<strong>锁可以升级但是不能降级</strong>。</p>
 <p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/synchronized-lock-update1.png" alt=""></p>
 <p><strong>总结：</strong></p>
 <ol>
@@ -630,6 +631,12 @@
 <li><p><strong>重量级锁</strong>：当线程Y自旋超过一定时间或者次数，锁会升级为重量级锁，防止CPU空转（自旋过久）。升级为重量级锁后，线程Y不在主动获取锁，而是线程X释放锁之后通知线程Y去获取锁，线程Y从自旋变为阻塞。</p>
 </li>
 </ol>
+<p>简单来说：</p>
+<ul>
+<li><strong>偏向锁</strong>：在Mark Word 记录线程ID进行比对</li>
+<li><strong>轻量级锁</strong>：通过CAS + 自旋的方式竞争</li>
+<li><strong>重量级锁</strong>：使用monitor对象，阻塞</li>
+</ul>
 <h2 id="4-什么是锁消除？"><a href="#4-什么是锁消除？" class="headerlink" title="4.什么是锁消除？"></a>4.什么是锁消除？</h2><p>前文可知，线程安全问题条件之一是存在共享数据，但是当 <strong>synchronized</strong> 修饰的代码块中不存在共享数据时，JDK会通过逃逸分析判断这段代码不会有线程安全问题，自动消除这个锁</p>
 <p>例子：</p>
 <pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">someMethod</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -674,7 +681,7 @@
 <li>3.锁竞争激烈时，因为串行化，多个线程排队竞争锁效率不会太高</li>
 </ul>
 <blockquote>
-<p>【参考链接】：<br>1：<a href="http://note.youdao.com/s/8UtdfawQ">synchronized和锁</a><br>2：<a href="https://mp.weixin.qq.com/s/mn4eujncsYZwAgwgm8d-vg">Java中的锁原理、锁优化、CAS、AQS详解</a><br>3：<a href="https://mp.weixin.qq.com/s/e_fYFWK5Qnxjmz6Abi7uqw">由浅入深逐步了解 Synchronized</a></p>
+<p>【参考链接】：<br>1：<a href="http://note.youdao.com/s/8UtdfawQ">synchronized和锁</a><br>2：<a href="https://mp.weixin.qq.com/s/mn4eujncsYZwAgwgm8d-vg">Java中的锁原理、锁优化、CAS、AQS详解</a><br>3：<a href="https://mp.weixin.qq.com/s/e_fYFWK5Qnxjmz6Abi7uqw">由浅入深逐步了解 Synchronized</a><br>4：<a href="https://mp.weixin.qq.com/s/v1XgT2X4IuF3_WNqeUVhVA">全网最细：17张图带你秒杀synchronized关键字</a><br>5:<a href="https://mp.weixin.qq.com/s/wwGvEt_3x9oHORwuXDqX5g">【对线面试官】synchronized</a></p>
 </blockquote>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -1274,7 +1281,7 @@
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">52.5k</span>&nbsp;字
+                            class="white-color">52.6k</span>&nbsp;字
                 
                 
                 <script>
@@ -1462,7 +1469,7 @@
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1611471851562')
+  navigator.serviceWorker.register('/sw.js?t=1611472269817')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }
