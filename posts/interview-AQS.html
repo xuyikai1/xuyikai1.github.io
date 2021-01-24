@@ -572,14 +572,14 @@
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
-                        2021-01-16
+                        2021-01-24
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        429
+                        488
                     </div>
                 
 
@@ -603,7 +603,11 @@
             <div id="articleContent">
                 <h1 id="并发编程灵魂拷问系列之对AQS理解吗"><a href="#并发编程灵魂拷问系列之对AQS理解吗" class="headerlink" title="并发编程灵魂拷问系列之对AQS理解吗"></a>并发编程灵魂拷问系列之对AQS理解吗</h1><p><strong>AQS</strong> 即 AbstractQueuedSynchronizer，队列同步器。早期是因为JDK6以前的synchronized关键字使用的是重量级锁，性能不太好，所以作者编写了AQS。</p>
 <p>在JUC中 CountDownLatch、ReentrantLock、ThreadPoolExecutor、ReentrantReadWriteLock 等底层用的都是AQS，AQS几乎占据了JUC并发包里的半壁江山，如果想要获取锁可以被中断、超时获取锁、尝试获取锁那就用AQS吧。</p>
-<p>使用 <strong>state</strong> 字段来标记加锁的状态，1表示加锁成功 0未加锁<br>volatile修饰，保证可见性</p>
+<p>AQS内部维护了一个 <strong>先进先出队列</strong> 和 <strong>state状态变量</strong></p>
+<ul>
+<li>先进先出队列载体是 Node节点，节点里包含状态值，属于独占/共享模式，前驱/后继节点等信息</li>
+<li>state由 <strong>volatile</strong> 修饰，标识当前锁的状态，1表示加锁成功 0未加锁</li>
+</ul>
 <p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/AQS-first.png" alt=""></p>
 <ol>
 <li>当线程1操作CAS加锁成功，AQS中的加锁线程变为线程1，state设置为1。</li>
@@ -620,7 +624,7 @@
 <li>非公平锁：后来的线程可能会率先获取到锁，非公平锁性能优于公平锁</li>
 </ul>
 <blockquote>
-<p>【参考链接】：<br>1：<a href="https://mp.weixin.qq.com/s/k8s-B1ZsEQylba4NWjehEA">由浅入深逐步讲解Java并发的半壁江山AQS</a><br>2：<a href="https://mp.weixin.qq.com/s/mn4eujncsYZwAgwgm8d-vg">Java中的锁原理、锁优化、CAS、AQS详解</a><br>3：<a href="https://mp.weixin.qq.com/s/ZNURbYIdYqDNXLtRAvDxBQ">1.5w字，30图带你彻底掌握 AQS</a></p>
+<p>【参考链接】：<br>1：<a href="https://mp.weixin.qq.com/s/k8s-B1ZsEQylba4NWjehEA">由浅入深逐步讲解Java并发的半壁江山AQS</a><br>2：<a href="https://mp.weixin.qq.com/s/mn4eujncsYZwAgwgm8d-vg">Java中的锁原理、锁优化、CAS、AQS详解</a><br>3：<a href="https://mp.weixin.qq.com/s/ZNURbYIdYqDNXLtRAvDxBQ">1.5w字，30图带你彻底掌握 AQS</a><br>4：<a href="https://mp.weixin.qq.com/s/-OEOk5NNgyjI8aYBm9Sspg">【对线面试官】AQS&amp;&amp;ReentrantLock</a></p>
 </blockquote>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -1220,7 +1224,7 @@
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">52.4k</span>&nbsp;字
+                            class="white-color">52.5k</span>&nbsp;字
                 
                 
                 <script>
@@ -1408,7 +1412,7 @@
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1611471330775')
+  navigator.serviceWorker.register('/sw.js?t=1611471851562')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }

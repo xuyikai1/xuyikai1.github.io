@@ -40,13 +40,13 @@ var precacheUrls = [];
 
   precacheUrls.push('/posts/SpringBoot-autoConfiguration.html');
 
-  precacheUrls.push('/posts/spring-annotation.html');
+  precacheUrls.push('/posts/shutdownHook.html');
 
   precacheUrls.push('/posts/spring-event.html');
 
-  precacheUrls.push('/posts/interview-spring-base.html');
+  precacheUrls.push('/posts/xxl-job.html');
 
-  precacheUrls.push('/posts/shutdownHook.html');
+  precacheUrls.push('/posts/interview-spring-base.html');
 
 toolbox.precache(precacheUrls);
 toolbox.options = {"networkTimeoutSeconds":30};
