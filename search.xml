@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Spring灵魂拷问系列之一个请求怎么在SpringCloud中遨游</title>
+      <link href="/posts/interview-springcloud.html"/>
+      <url>/posts/interview-springcloud.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="Spring灵魂拷问系列之一个请求怎么在SpringCloud中遨游"><a href="#Spring灵魂拷问系列之一个请求怎么在SpringCloud中遨游" class="headerlink" title="Spring灵魂拷问系列之一个请求怎么在SpringCloud中遨游"></a>Spring灵魂拷问系列之一个请求怎么在SpringCloud中遨游</h1><p><strong>SpringCloud组件</strong></p><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/interview-SpringCloud-component.png" alt=""></p><p><strong>一个请求怎么在SpringCloud中遨游</strong></p><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/interview-SpringCloud-structure.jpg" alt=""></p><ol><li>在Spring Cloud中，每个服务和组件都需要在 <strong>Eureka注册中心</strong> 注册，注册成功后，Eureka也会主动发起 <strong>心跳检测来进行健康检查和信息同步</strong></li><li>服务启动时，会根据环境从配置中心中拉取对应配置来启动</li><li>浏览器发起请求，到达网关层，网关层根据 <strong>路由转发</strong> 到指定服务A（网关层还可起到限流、鉴权、负载均衡等作用）</li><li>如果服务A需要需要依赖服务B，则会通过 <strong>ribbon负载均衡策略</strong> 找到某一台服务B的实例，再通过 <strong>feign调用</strong> 实例服务，其中使用 <strong>hystrix</strong> 进行服务 <strong>降级/熔断</strong> </li><li>A服务执行业务完毕，返回数据给网关，网关返回浏览器/前端工程</li></ol><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+      
+      
+      <categories>
+          
+          <category> Spring灵魂拷问系列 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> SpringCloud </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Spring灵魂拷问系列之简单理一下SpringMVC流程</title>
       <link href="/posts/interview-springmvc.html"/>
       <url>/posts/interview-springmvc.html</url>
