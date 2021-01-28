@@ -4,31 +4,6 @@
   
     
     <entry>
-      <title>Spring灵魂拷问系列之简单理一下SpringMVC流程</title>
-      <link href="/posts/interview-springmvc.html"/>
-      <url>/posts/interview-springmvc.html</url>
-      
-        <content type="html"><![CDATA[<h1 id="Spring灵魂拷问系列之简单理一下SpringMVC流程"><a href="#Spring灵魂拷问系列之简单理一下SpringMVC流程" class="headerlink" title="Spring灵魂拷问系列之简单理一下SpringMVC流程"></a>Spring灵魂拷问系列之简单理一下SpringMVC流程</h1><p> <img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/interview-SpringMVC-structure.jpg" alt=""></p><p>SpringMVC大体流程：</p><ol><li>tomcat工作线程将请求转发给Spring MVC框架的<strong>中央控制器DispatcherServlet</strong></li><li>中央控制器根据请求信息做相关的<strong>适配</strong>和<strong>映射</strong>，将请求转发到对应Controller</li><li>根据<code>@RequestMapping</code>来<strong>定位</strong>和<strong>调用</strong>到http请求对应的处理方法（处理器映射器、处理器适配器、处理器）</li><li>业务执行完毕后会有一个返回值。（1）以前：会通过JSP/模版引擎，将前端页面存放在后端工程中，返回值这里就是页面模版的名字，Spring MVC根据返回的数据对象对html页面进行渲染；（2）如今，前后端分离，返回值为json字符串，前端会根据返回的json数据，对html页面进行渲染</li><li>将渲染后的html页面返回给浏览器进行显示</li></ol><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
-      
-      
-      <categories>
-          
-          <category> Spring灵魂拷问系列 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> SpringMVC </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Spring灵魂拷问系列之一个请求怎么在SpringCloud中遨游</title>
       <link href="/posts/interview-springcloud.html"/>
       <url>/posts/interview-springcloud.html</url>
@@ -46,6 +21,31 @@
         <tags>
             
             <tag> SpringCloud </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Spring灵魂拷问系列之简单理一下SpringMVC流程</title>
+      <link href="/posts/interview-springmvc.html"/>
+      <url>/posts/interview-springmvc.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="Spring灵魂拷问系列之简单理一下SpringMVC流程"><a href="#Spring灵魂拷问系列之简单理一下SpringMVC流程" class="headerlink" title="Spring灵魂拷问系列之简单理一下SpringMVC流程"></a>Spring灵魂拷问系列之简单理一下SpringMVC流程</h1><p> <img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/interview-SpringMVC-structure.jpg" alt=""></p><p>SpringMVC大体流程：</p><ol><li>tomcat工作线程将请求转发给Spring MVC框架的<strong>中央控制器DispatcherServlet</strong></li><li>中央控制器根据请求信息做相关的<strong>适配</strong>和<strong>映射</strong>，将请求转发到对应Controller</li><li>根据<code>@RequestMapping</code>来<strong>定位</strong>和<strong>调用</strong>到http请求对应的处理方法（处理器映射器、处理器适配器、处理器）</li><li>业务执行完毕后会有一个返回值。（1）以前：会通过JSP/模版引擎，将前端页面存放在后端工程中，返回值这里就是页面模版的名字，Spring MVC根据返回的数据对象对html页面进行渲染；（2）如今，前后端分离，返回值为json字符串，前端会根据返回的json数据，对html页面进行渲染</li><li>将渲染后的html页面返回给浏览器进行显示</li></ol><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+      
+      
+      <categories>
+          
+          <category> Spring灵魂拷问系列 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> SpringMVC </tag>
             
         </tags>
       
