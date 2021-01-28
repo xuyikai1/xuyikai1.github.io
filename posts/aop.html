@@ -576,7 +576,7 @@
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
-                        2021-01-05
+                        2021-01-28
                     </div>
                 
 
@@ -871,24 +871,27 @@ redisson<span class="token operator">:</span>
         HttpServletRequest request <span class="token operator">=</span> requestAttributes<span class="token punctuation">.</span><span class="token function">getRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token comment" spellcheck="true">// 请求路径</span>
         String servletPath <span class="token operator">=</span> request<span class="token punctuation">.</span><span class="token function">getServletPath</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment" spellcheck="true">// 用户ID 应该从token或者threadLocal中获取</span>
-        String userId <span class="token operator">=</span> request<span class="token punctuation">.</span><span class="token function">getParameter</span><span class="token punctuation">(</span><span class="token string">"userId"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment" spellcheck="true">// 锁命名的密度可以根据具体业务再次细分 这里只根据用户和请求路径进行加锁处理</span>
+        <span class="token comment" spellcheck="true">// 用户ID</span>
+        Long userId <span class="token operator">=</span> MapUtil<span class="token punctuation">.</span><span class="token function">getLong</span><span class="token punctuation">(</span>ApiReqContextHolder<span class="token punctuation">.</span><span class="token function">getContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getSession</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">"userId"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         String lockKey <span class="token operator">=</span> userId <span class="token operator">+</span> <span class="token string">" | "</span> <span class="token operator">+</span> servletPath<span class="token punctuation">;</span>
 
         RLock lock <span class="token operator">=</span> redissonClient<span class="token punctuation">.</span><span class="token function">getLock</span><span class="token punctuation">(</span>lockKey<span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token keyword">long</span> waitTime <span class="token operator">=</span> distributedLock<span class="token punctuation">.</span><span class="token function">waitTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token keyword">long</span> leaseTime <span class="token operator">=</span> distributedLock<span class="token punctuation">.</span><span class="token function">leaseTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>lock<span class="token punctuation">.</span><span class="token function">isLocked</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            log<span class="token punctuation">.</span><span class="token function">warn</span><span class="token punctuation">(</span><span class="token string">"lockKey = {}，重复提交！"</span><span class="token punctuation">,</span>lockKey<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ServiceException</span><span class="token punctuation">(</span><span class="token number">201</span><span class="token punctuation">,</span><span class="token string">"访问太多次啦"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
         <span class="token keyword">try</span><span class="token punctuation">{</span>
             <span class="token comment" spellcheck="true">// 尝试加锁，最多等待lockTime毫秒，上锁以后leaseTime毫秒自动解锁</span>
             <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>lock<span class="token punctuation">.</span><span class="token function">tryLock</span><span class="token punctuation">(</span>waitTime<span class="token punctuation">,</span>leaseTime<span class="token punctuation">,</span> TimeUnit<span class="token punctuation">.</span>MILLISECONDS<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-                log<span class="token punctuation">.</span><span class="token function">warn</span><span class="token punctuation">(</span><span class="token string">"lockKey = {}，重复提交！"</span><span class="token punctuation">,</span>lockKey<span class="token punctuation">)</span><span class="token punctuation">;</span>
-                <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ServiceException</span><span class="token punctuation">(</span><span class="token number">201</span><span class="token punctuation">,</span><span class="token string">"请勿重复提交！"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                log<span class="token punctuation">.</span><span class="token function">warn</span><span class="token punctuation">(</span><span class="token string">"lockKey = {}，正在处理中！"</span><span class="token punctuation">,</span>lockKey<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ServiceException</span><span class="token punctuation">(</span><span class="token number">201</span><span class="token punctuation">,</span><span class="token string">"正在处理中，请稍后再试！"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
             <span class="token punctuation">}</span>
             <span class="token comment" spellcheck="true">// 真正执行的方法</span>
             <span class="token keyword">return</span> pjp<span class="token punctuation">.</span><span class="token function">proceed</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token punctuation">}</span><span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            log<span class="token punctuation">.</span><span class="token function">warn</span><span class="token punctuation">(</span><span class="token string">"lockKey = {} ,  重复提交！"</span><span class="token punctuation">,</span>lockKey<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            log<span class="token punctuation">.</span><span class="token function">warn</span><span class="token punctuation">(</span><span class="token string">"lockKey = {}，重复提交！"</span><span class="token punctuation">,</span>lockKey<span class="token punctuation">)</span><span class="token punctuation">;</span>
             <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ServiceException</span><span class="token punctuation">(</span><span class="token number">201</span><span class="token punctuation">,</span> <span class="token string">"请勿重复提交！"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token punctuation">}</span><span class="token keyword">finally</span> <span class="token punctuation">{</span>
             <span class="token comment" spellcheck="true">// 解锁(当前线程持有该锁才可进行解锁操作)</span>
@@ -899,7 +902,7 @@ redisson<span class="token operator">:</span>
         <span class="token punctuation">}</span>
     <span class="token punctuation">}</span>
 
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
 <p><strong>解锁时的注意事项</strong>：<br>lock.isHeldByCurrentThread()表示锁是否被当前线程所持有<br>如果少了lock.isHeldByCurrentThread()这一判断，在有异步操作时会出现下面这样的异常，提示当前线程并不持有我们需要解的锁，无法尝试去解锁</p>
 </blockquote>
@@ -1848,7 +1851,7 @@ redisson<span class="token operator">:</span>
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1611798458778')
+  navigator.serviceWorker.register('/sw.js?t=1611805726768')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }
