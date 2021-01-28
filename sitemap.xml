@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://xuyk.top/posts/interview-HashMap.html</loc>
+    <loc>http://xuyk.top/posts/interview-xxx.html</loc>
     
-    <lastmod>2021-01-27T08:43:50.247Z</lastmod>
+    <lastmod>2021-01-28T01:05:32.030Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xuyk.top/posts/xxx.html</loc>
+    
+    <lastmod>2021-01-28T01:05:16.142Z</lastmod>
     
   </url>
   
@@ -163,13 +170,6 @@
   </url>
   
   <url>
-    <loc>http://xuyk.top/posts/HashMap.html</loc>
-    
-    <lastmod>2021-01-05T03:22:52.946Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://xuyk.top/posts/SpringBoot-autoConfiguration.html</loc>
     
     <lastmod>2021-01-05T01:15:24.607Z</lastmod>
@@ -212,13 +212,6 @@
   </url>
   
   <url>
-    <loc>http://xuyk.top/categories/index.html</loc>
-    
-    <lastmod>2020-06-14T11:18:47.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://xuyk.top/about/index.html</loc>
     
     <lastmod>2020-06-14T11:18:47.000Z</lastmod>
@@ -234,6 +227,13 @@
   
   <url>
     <loc>http://xuyk.top/archives/index.html</loc>
+    
+    <lastmod>2020-06-14T11:18:47.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xuyk.top/categories/index.html</loc>
     
     <lastmod>2020-06-14T11:18:47.000Z</lastmod>
     

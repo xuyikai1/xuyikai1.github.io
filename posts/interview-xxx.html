@@ -4,8 +4,8 @@
 
 <head><link rel=manifest href=/manifest.json>
     <meta charset="utf-8">
-    <meta name="keywords" content="HashMap 数据结构 链表散列">
-    <meta name="description" content="熟识面试常客">
+    <meta name="keywords" content="HashMap">
+    <meta name="description" content="HashMap面试可能这么问">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +14,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="white"/>
-    <title>HashMap-链表散列 | 寒暄</title>
+    <title>并发编程灵魂拷问系列之HashMap | 寒暄</title>
     <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/apple-touch-icon.png">
     <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/favicon.ico">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/awesome/css/font-awesome.min.css">
@@ -34,9 +34,9 @@
         
     </style>
     <script src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/jquery/jquery.min.js"></script>
-<meta name="generator" content="Hexo 4.1.1"><link rel="alternate" href="/atom.xml" title="寒暄" type="application/atom+xml">
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+<meta name="generator" content="Hexo 4.1.1"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"><link rel="alternate" href="/atom.xml" title="寒暄" type="application/atom+xml">
+</head>
 
 
 <body>
@@ -419,12 +419,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/1.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/10.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">HashMap-链表散列</h1>
+                    <h1 class="description center-align post-title">并发编程灵魂拷问系列之HashMap</h1>
                 </div>
             </div>
         </div>
@@ -552,8 +552,8 @@
                         <div class="post-cate">
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                                <a href="/categories/Java%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" class="post-category">
-                                    Java并发编程
+                                <a href="/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E7%81%B5%E9%AD%82%E6%8B%B7%E9%97%AE%E7%B3%BB%E5%88%97/" class="post-category">
+                                    并发编程灵魂拷问系列
                                 </a>
                             
                         </div>
@@ -565,28 +565,28 @@
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                        2020-09-09
+                        2021-01-06
                     </div>
                 
 
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
-                        2021-01-05
+                        2021-01-28
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        2.7k
+                        1.6k
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        10 分
+                        5 分
                     </div>
                 
 
@@ -601,130 +601,92 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="HashMap-链表散列"><a href="#HashMap-链表散列" class="headerlink" title="HashMap-链表散列"></a>HashMap-链表散列</h1><h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1.引言"></a>1.引言</h2><p>  大家在码代码或者面试的过程中，或多或少都肯定用过HashMap或者被问到过。事实上，大部分人包括笔者自己都会把他当作临时内存存储一些对象使用，方便快捷。那么，在这个简单易用的HashMap背后又是什么牛鬼蛇神呢？让我们一探究竟。</p>
-<p>  我们来一个问题抛砖引玉：在刚接触Java的时候，不管是刚学习还是面试题中，都会有这个问题：数组和单链表的特点和不同点有哪些？在这里笔者才疏学浅地脱口而出：</p>
-<ul>
-<li><strong>数组</strong>：连续的内存。根据游标（index）查询快，时间复杂度O(1)；增删慢，时间复杂度O(n)</li>
-<li><strong>单链表</strong>：查询慢，时间复杂度O(n)；增删快，时间复杂度O(1)</li>
-<li>两者查询指定内容的时间复杂度为O(n)</li>
-</ul>
-<p>他们的特点也是由他们本身的数据结构息息相关的，如下图：</p>
-<h3 id="1-1-数组"><a href="#1-1-数组" class="headerlink" title="1.1 数组"></a>1.1 数组</h3><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/%E6%95%B0%E7%BB%84.png" alt="1"></p>
-<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/%E6%95%B0%E7%BB%84%E6%8F%92%E5%85%A51.png" alt="2"></p>
-<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/%E6%95%B0%E7%BB%84%E6%8F%92%E5%85%A52.png" alt="3"></p>
-<p>如图：<br>（1）<strong>说明</strong>：数组是一段连续的内存，创建时必须定义好长度，创建后无法修改<br>（2）<strong>查询</strong>：在这个Int array[8]的数组中，如果想要查询下标为1的数据，则直接可以使用array[1]来获取<br>（3）<strong>插入</strong>：270需要插入到268和289中，先让289和320向后移动一位，然后插入。由此看出插入过程繁杂</p>
-<h3 id="1-2-单链表"><a href="#1-2-单链表" class="headerlink" title="1.2 单链表"></a>1.2 单链表</h3><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/%E9%93%BE%E8%A1%A8%E4%B8%AD%E9%97%B4%E6%8F%92%E5%85%A5%E8%8A%82%E7%82%B9.png" alt="单链表"></p>
-<p>如图：<br>（1）<strong>说明</strong>：单链表只存储头结点和尾结点的信息，链表中的每个节点都保存了一个指向下一个节点的指针<br>（2）<strong>查询</strong>：从头结点根据指针向下遍历查询，过程繁杂<br>（3）<strong>插入</strong>：上图可看出，270插入到268和289之间，只需要两步：a.270的指针指向289 b.268的指针指向270</p>
-<h2 id="2-数据结构"><a href="#2-数据结构" class="headerlink" title="2. 数据结构"></a>2. 数据结构</h2><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/hashmap%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.jpg" alt="数据结构"></p>
+                <h1 id="并发编程灵魂拷问系列之HashMap"><a href="#并发编程灵魂拷问系列之HashMap" class="headerlink" title="并发编程灵魂拷问系列之HashMap"></a>并发编程灵魂拷问系列之HashMap</h1><h2 id="1-你知道hashmap底层的数据结构是什么"><a href="#1-你知道hashmap底层的数据结构是什么" class="headerlink" title="1.你知道hashmap底层的数据结构是什么"></a>1.你知道hashmap底层的数据结构是什么</h2><ol>
+<li>JDK1.8之前：数组 + 链表</li>
+<li>JDK1.8之后：数组 + 链表 + 红黑树</li>
+</ol>
+<h2 id="2-hashmap在JDK1-8前后有什么区别"><a href="#2-hashmap在JDK1-8前后有什么区别" class="headerlink" title="2.hashmap在JDK1.8前后有什么区别"></a>2.hashmap在JDK1.8前后有什么区别</h2><ol>
+<li>JDK1.8之前数据结构为数组+链表，JDK1.8+采用数组+链表+红黑树</li>
+</ol>
 <blockquote>
-<p>备注：当<strong>链表长度大于8</strong> 并且 <strong>数组长度大于64时</strong> 链表才转换为红黑树</p>
+<p>红黑树查询速度更快，最坏情况的时间复杂度为O(logn)</p>
 </blockquote>
-<p>  HashMap 主要用来存放键值对，它基于哈希表的Map接口实现，是常用的Java集合之一。<br>  <strong>HashMap融合了数组与单链表，数组用来定位键（key）存储的位置</strong>（单链表，jdk1.8后优化增加红黑树），<strong>如果有其他键值对存储在这个位置上，则从单链表/红黑树中遍历插入进去</strong>（jdk1.7采用头插法，1.8优化为尾插法）</p>
-<h2 id="3-属性说明"><a href="#3-属性说明" class="headerlink" title="3. 属性说明"></a>3. 属性说明</h2><h3 id="3-1-默认初始容量"><a href="#3-1-默认初始容量" class="headerlink" title="3.1 默认初始容量"></a>3.1 默认初始容量</h3><p>HashMap的数组初始容量（DEFAULT_INITIAL_CAPACITY）为16，当我们使用Map map = new HashMap();时，如果指定了初始容量A，则HashMap内部会初始化为该容量<strong>最近的2的幂方的值（大于等于A）</strong>，例如我们初始化容量为10，则HashMap会为我们新建一个容量为16的数组</p>
-<h3 id="3-2-最大容量"><a href="#3-2-最大容量" class="headerlink" title="3.2 最大容量"></a>3.2 最大容量</h3><p>HashMap的数组最大容量（MAXIMUM_CAPACITY）为 1&lt;&lt; 30，也就是1073741824，当我们创建时指定容量比此值大时，HashMap则会使用此值为容量</p>
-<h3 id="3-3-负载因子"><a href="#3-3-负载因子" class="headerlink" title="3.3 负载因子"></a>3.3 负载因子</h3><p>HashMap的负载因子（DEFAULT_LOAD_FACTOR）默认值为0.75，标识数组存放数据的疏密程度。loadFactor越趋近于1，那么 数组中存放的数据(entry)也就越多，也就越密，也就是会让链表的长度增加，反之就越稀疏</p>
-<p>loadFactor太大导致查找元素效率低，太小导致数组的利用率低，存放的数据会很分散。<strong>loadFactor的默认值为0.75f是官方给出的一个比较好的临界值。</strong></p>
-<p>给定的默认容量为 16，负载因子为 0.75。Map 在使用过程中不断的往里面存放数据，<strong>当数量达到了 16 * 0.75 = 12 就需要将当前 16 的容量进行扩容</strong>，而扩容这个过程涉及到 rehash、复制数据等操作，所以非常消耗性能。</p>
-<h3 id="3-4-转换阈值"><a href="#3-4-转换阈值" class="headerlink" title="3.4 转换阈值"></a>3.4 转换阈值</h3><ul>
-<li>链表转换红黑树时，链表长度的阈值（TREEIFY_THRESHOLD）：8</li>
-<li>链表转换红黑树时，数组长度的阈值（MIN_TREEIFY_CAPACITY）：64</li>
-<li>红黑树恢复成链表的阈值（UNTREEIFY_THRESHOLD）：6</li>
-</ul>
-<p>对应HashMap数据插入或者删除时会有以下三种情况（<strong>jdk1.8版本</strong>）：<br>（1）插入数据后，单链表长度&gt;=8，数组长度小于64，则调用resize方法进行数组扩容<br>（2）插入数据后，单链表长度&gt;=8，数组长度大于等于64，则单链表转换为红黑树<br>（3）删除数据后，单链表长度&lt;=6，当前红黑树恢复回单链表</p>
-<h2 id="4-核心方法"><a href="#4-核心方法" class="headerlink" title="4. 核心方法"></a>4. 核心方法</h2><h3 id="4-1-构造函数"><a href="#4-1-构造函数" class="headerlink" title="4.1 构造函数"></a>4.1 构造函数</h3><p>（1）默认构造函数：只初始化了负载因子</p>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token function">HashMap</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">this</span><span class="token punctuation">.</span>loadFactor <span class="token operator">=</span> DEFAULT_LOAD_FACTOR<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 0.75</span>
- <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>（2）带参构造函数：</p>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token function">HashMap</span><span class="token punctuation">(</span>Map<span class="token operator">&lt;</span><span class="token operator">?</span> <span class="token keyword">extends</span> <span class="token class-name">K</span><span class="token punctuation">,</span> <span class="token operator">?</span> <span class="token keyword">extends</span> <span class="token class-name">V</span><span class="token operator">></span> m<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-   <span class="token keyword">this</span><span class="token punctuation">.</span>loadFactor <span class="token operator">=</span> DEFAULT_LOAD_FACTOR<span class="token punctuation">;</span>
-   <span class="token function">putMapEntries</span><span class="token punctuation">(</span>m<span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">putMapEntries</span><span class="token punctuation">(</span>Map<span class="token operator">&lt;</span><span class="token operator">?</span> <span class="token keyword">extends</span> <span class="token class-name">K</span><span class="token punctuation">,</span> <span class="token operator">?</span> <span class="token keyword">extends</span> <span class="token class-name">V</span><span class="token operator">></span> m<span class="token punctuation">,</span> <span class="token keyword">boolean</span> evict<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">int</span> s <span class="token operator">=</span> m<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>s <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token comment" spellcheck="true">// 判断table是否已经初始化</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>table <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">// pre-size</span>
-            <span class="token comment" spellcheck="true">// 未初始化，s为m的实际元素个数</span>
-            <span class="token keyword">float</span> ft <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">float</span><span class="token punctuation">)</span>s <span class="token operator">/</span> loadFactor<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1.0F</span><span class="token punctuation">;</span>
-            <span class="token keyword">int</span> t <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>ft <span class="token operator">&lt;</span> <span class="token punctuation">(</span><span class="token keyword">float</span><span class="token punctuation">)</span>MAXIMUM_CAPACITY<span class="token punctuation">)</span> <span class="token operator">?</span>
-                    <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span>ft <span class="token operator">:</span> MAXIMUM_CAPACITY<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token comment" spellcheck="true">// 计算得到的t大于阈值，则初始化阈值</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>t <span class="token operator">></span> threshold<span class="token punctuation">)</span>
-                threshold <span class="token operator">=</span> <span class="token function">tableSizeFor</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token comment" spellcheck="true">// 已初始化，并且m元素个数大于阈值，进行扩容处理</span>
-        <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>s <span class="token operator">></span> threshold<span class="token punctuation">)</span>
-            <span class="token function">resize</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment" spellcheck="true">// 将m中的所有元素添加至HashMap中</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span>Map<span class="token punctuation">.</span>Entry<span class="token operator">&lt;</span><span class="token operator">?</span> <span class="token keyword">extends</span> <span class="token class-name">K</span><span class="token punctuation">,</span> <span class="token operator">?</span> <span class="token keyword">extends</span> <span class="token class-name">V</span><span class="token operator">></span> e <span class="token operator">:</span> m<span class="token punctuation">.</span><span class="token function">entrySet</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            K key <span class="token operator">=</span> e<span class="token punctuation">.</span><span class="token function">getKey</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            V value <span class="token operator">=</span> e<span class="token punctuation">.</span><span class="token function">getValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token function">putVal</span><span class="token punctuation">(</span><span class="token function">hash</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">,</span> key<span class="token punctuation">,</span> value<span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">,</span> evict<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>（3）指定容量的构造函数：</p>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token function">HashMap</span><span class="token punctuation">(</span><span class="token keyword">int</span> initialCapacity<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-   <span class="token keyword">this</span><span class="token punctuation">(</span>initialCapacity<span class="token punctuation">,</span> DEFAULT_LOAD_FACTOR<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>（4）指定容量和负载因子的构造函数：</p>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token function">HashMap</span><span class="token punctuation">(</span><span class="token keyword">int</span> initialCapacity<span class="token punctuation">,</span> <span class="token keyword">float</span> loadFactor<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-   <span class="token keyword">if</span> <span class="token punctuation">(</span>initialCapacity <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span>
-       <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">IllegalArgumentException</span><span class="token punctuation">(</span><span class="token string">"Illegal initial capacity: "</span> <span class="token operator">+</span> initialCapacity<span class="token punctuation">)</span><span class="token punctuation">;</span>
-   <span class="token keyword">if</span> <span class="token punctuation">(</span>initialCapacity <span class="token operator">></span> MAXIMUM_CAPACITY<span class="token punctuation">)</span>
-       initialCapacity <span class="token operator">=</span> MAXIMUM_CAPACITY<span class="token punctuation">;</span>
-   <span class="token keyword">if</span> <span class="token punctuation">(</span>loadFactor <span class="token operator">&lt;=</span> <span class="token number">0</span> <span class="token operator">||</span> Float<span class="token punctuation">.</span><span class="token function">isNaN</span><span class="token punctuation">(</span>loadFactor<span class="token punctuation">)</span><span class="token punctuation">)</span>
-       <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">IllegalArgumentException</span><span class="token punctuation">(</span><span class="token string">"Illegal load factor: "</span> <span class="token operator">+</span> loadFactor<span class="token punctuation">)</span><span class="token punctuation">;</span>
-   <span class="token keyword">this</span><span class="token punctuation">.</span>loadFactor <span class="token operator">=</span> loadFactor<span class="token punctuation">;</span>
-   <span class="token keyword">this</span><span class="token punctuation">.</span>threshold <span class="token operator">=</span> <span class="token function">tableSizeFor</span><span class="token punctuation">(</span>initialCapacity<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="4-2-扩容机制"><a href="#4-2-扩容机制" class="headerlink" title="4.2 扩容机制"></a>4.2 扩容机制</h3><p>  HashMap在使用过程中不断的往里面存放数据，当数量达到了 16 * 0.75 = 12 就需要将当前 16 的容量进行扩容。</p>
-<p>  扩容(resize)就是重新计算容量，向HashMap对象里不停的添加元素，而HashMap对象内部的数组无法装载更多的元素时，对象就需要扩大数组的长度，以便能装入更多的元素。当然Java里的数组是无法自动扩容的，<strong>方法是使用一个新的数组代替已有的容量小的数组</strong>，就像我们用一个小桶装水，如果想装更多的水，就得换大水桶。</p>
-<p>  进行扩容，会伴随着一次<strong>重新hash分配（rehash）</strong>，并且会遍历hash表中所有的元素，是非常耗时的。<strong>我们在编写程序中，要尽量避免resize</strong>。</p>
-<h3 id="4-3-扰动函数（hash方法）"><a href="#4-3-扰动函数（hash方法）" class="headerlink" title="4.3 扰动函数（hash方法）"></a>4.3 扰动函数（hash方法）</h3><pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> <span class="token function">hash</span><span class="token punctuation">(</span>Object key<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">int</span> h<span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token punctuation">(</span>key <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token number">0</span> <span class="token operator">:</span> <span class="token punctuation">(</span>h <span class="token operator">=</span> key<span class="token punctuation">.</span><span class="token function">hashCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">^</span> <span class="token punctuation">(</span>h <span class="token operator">>>></span> <span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>作用：<br>1.尽可能降低hash碰撞，通俗来说就是减少通过hash方法之后得到相同值也就是定位到同个位置的可能性<br>2.高效，因为属于高频操作，使用位运算使得性能更高</p>
+<ol start="2">
+<li>JDK1.8之前向链表插入数据时采用头插法，JDK1.8+采用尾插法</li>
+</ol>
 <blockquote>
-<p>问：jdk 1.7做了四次移位和四次异或，为什么jdk 1.8只用一次异或？<br>答：做1次扰动效率更高，并且两者实际效果差距不大</p>
+<p>因为头插法在多线程环境下，在扩容时resize，也就是节点重新分配位置，有可能会发生A-&gt;B-&gt;A这样的环形链表，导致下次取值时会发生无限循环。尾插法则不会</p>
 </blockquote>
-<h3 id="4-4-插入方法"><a href="#4-4-插入方法" class="headerlink" title="4.4 插入方法"></a>4.4 插入方法</h3><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/HashMap-put.png" alt="插入原理"></p>
-<ul>
-<li>（1）对key做hash操作（扰动函数）：如果key为null则返回0，不为null时，key的hashCode对自身无符号向右移后的hashCode做^操作，也就是按位异或，返回值假设为i</li>
-<li>（2）判断键值对数组table是否为空或为null，否则执行resize()进行扩容（对应前方的无参构造函数）；</li>
-<li>（3）查找数组i位置上是否存在节点（table[i] == null），不存在则直接新增此节点直接到（7）</li>
-<li>（4）如果存在（table[i] != null），判断当前key和节点key是否相同，相同则覆盖原来的value</li>
-<li>（5）两者key不相同，则判断当前结构是否已转换为红黑树，已转换则直接在插入到树中</li>
-<li>（6）当前结构不为红黑树为链表时，遍历链表插入节点，然后判断当前长度是否大于等于8时，链表转换为红黑树；否则进行链表的插入操作；遍历过程中若发现key已经存在直接覆盖value即可；</li>
-<li>（7）插入成功后，判断实际存在的键值对数量size是否超多了最大容量threshold，如果超过，进行扩容。</li>
-</ul>
+<ol start="3">
+<li>JDK1.8之前计算hash值做了四次移位和四次异或，JDK1.8+只用一次异或来提升效率</li>
+</ol>
 <blockquote>
-<p>【问】：为什么从jdk 1.7的数组+单链表 -&gt; jdk 1.8 数组+单链表/红黑树？<br>【答】：单链表查询的时间复杂度为O(n)，而红黑树的时间复杂度为O(logn)，提升效率</p>
+<p>可能觉得一次扰动就足够了，多了边际作用不大</p>
 </blockquote>
+<ol start="4">
+<li>JDK1.8之前扩容的时候需要对原数组中的元素进行重新hash定位在新数组的位置，JDK1.8+采用更简单的判断逻辑，位置不变或索引+旧容量大小</li>
+</ol>
 <blockquote>
-<p>【问】：为什么jdk 1.7插入链表采用头插法，而jdk 1.8采用尾插法？<br>【答】：<br>jdk 1.7：作者认为最新插入的往往是查询中最希望被找到的<br>jdk 1.8：在1.7版本中，多线程环境下，A、B线程同时插入，A线程插入后，B线程扩容后重新hash，导致形成环</p>
+<p>扩容为原来数组的两倍，在计算数组位置的二进制掩码中只是高位多了个1，效果等于加上旧数组的长度</p>
 </blockquote>
-<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/HashMap%E5%A4%B4%E6%8F%92%E6%B3%95%E5%BC%8A%E7%AB%AF.jpg" alt="环"></p>
-<h2 id="5-线程安全性"><a href="#5-线程安全性" class="headerlink" title="5. 线程安全性"></a>5. 线程安全性</h2><p>  HashMap是<strong>线程不安全</strong>的，举个数据覆盖的例子：当A线程判断index位置为空后正好挂起，B线程开始往index位置的写入节点数据，这时A线程恢复现场，执行赋值操作，就把A线程的数据给覆盖了；还有++size这个地方也会造成多线程同时扩容等问题。</p>
-<p>  可以使用<strong>ConcurrentHashMap</strong>保证线程安全性（分段锁）</p>
+<h2 id="3-jdk1-8后hashmap链表和红黑树如何切换"><a href="#3-jdk1-8后hashmap链表和红黑树如何切换" class="headerlink" title="3.jdk1.8后hashmap链表和红黑树如何切换"></a>3.jdk1.8后hashmap链表和红黑树如何切换</h2><ol>
+<li>链表 -&gt; 红黑树： 插入数据时，当链表长度大于等于8，并且数组长度大于等于64，该链表转化为红黑树</li>
+<li>红黑树 -&gt; 链表：长度小于等于6，该红黑树转化成链表</li>
+</ol>
+<h2 id="4-hashmap插入链表是怎么插入的"><a href="#4-hashmap插入链表是怎么插入的" class="headerlink" title="4.hashmap插入链表是怎么插入的"></a>4.hashmap插入链表是怎么插入的</h2><ol>
+<li>JDK1.8之前：头插法，因为当时作者认为新插入的元素往往更可能被查找</li>
+<li>JDK1.8之后：尾插法</li>
+</ol>
 <blockquote>
-<p>ConcurrentHashMap成员变量使用volatile 修饰，免除了指令重排序，同时保证内存可见性，另外使用CAS操作和synchronized结合实现赋值操作，多线程操作只会锁住当前操作索引的节点。</p>
+<p>【追问】那为什么要改成尾插法呢？</p>
 </blockquote>
-<h2 id="6-使用常识与小结"><a href="#6-使用常识与小结" class="headerlink" title="6. 使用常识与小结"></a>6. 使用常识与小结</h2><p>（1）创建HashMap时尽可能预估存储容量，从而调用指定容量的构造参数方法，尽量减少扩容（扩容涉及到rehash、复制数据等，小号性能）</p>
-<p>（2）HashMap的key可传null，但是只能存储1个，value则不限制</p>
-<p>（3）存取遍历HashMap时，优先使用entrySet()方法，可以同时获取到Key和对应的Value；而使用keySet()方法再map.get(key)的话，内部会进行两次遍历，消耗性能</p>
-<pre class="line-numbers language-java"><code class="language-java"> Set<span class="token operator">&lt;</span>java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Map<span class="token punctuation">.</span>Entry<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token operator">>></span> entrys <span class="token operator">=</span> map<span class="token punctuation">.</span><span class="token function">entrySet</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">for</span> <span class="token punctuation">(</span>java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Map<span class="token punctuation">.</span>Entry<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token operator">></span> entry <span class="token operator">:</span> entrys<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>entry<span class="token punctuation">.</span><span class="token function">getKey</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"--"</span> <span class="token operator">+</span> entry<span class="token punctuation">.</span><span class="token function">getValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>（4）负载因子是可以修改的，也可以大于1，但是建议不要轻易修改，除非情况非常特殊。</p>
-<p>（5）HashMap是线程不安全的，不要在并发的环境中同时操作HashMap，建议使用ConcurrentHashMap。</p>
-<p>（6）JDK1.8引入红黑树大程度优化了HashMap的性能。</p>
+<p>因为头插法在多线程环境下，在扩容时resize，也就是节点重新分配位置，有可能会发生A-&gt;B-&gt;A这样的环形链表，导致下次取值时会发生无限循环。</p>
+<p>尾插法在扩容时会保持链表原本的顺序，就不会出现环的问题</p>
 <blockquote>
-<p>【参考链接】<br>1：<a href="https://github.com/Snailclimb/JavaGuide/blob/master/docs/java/collection/HashMap.md">JavaGuide HashMap</a><br>2：<a href="https://zhuanlan.zhihu.com/p/125628540">一个HashMap跟面试官扯了半个小时</a><br>3：<a href="https://zhuanlan.zhihu.com/p/21673805">Java 8系列之重新认识HashMap</a></p>
+<p>【那么hashmap在JDK1.8之后还线程安全吗】</p>
+</blockquote>
+<p>不安全，例如多线程情况下的put操作，就无法保证上一秒put的值，与下一秒get的还是原值（里面就有很多某属性++，这些都有线程安全问题）</p>
+<blockquote>
+<p>【那有什么办法解决这个线程安全的问题】</p>
+</blockquote>
+<ol>
+<li>可以使用 hashtable ，但是因为直接在方法上锁，导致性能低下所以不考虑</li>
+<li>可以使用 concurrentHashMap </li>
+</ol>
+<h2 id="5-jdk1-8对hash算法和寻址算法是如何优化的？"><a href="#5-jdk1-8对hash算法和寻址算法是如何优化的？" class="headerlink" title="5.jdk1.8对hash算法和寻址算法是如何优化的？"></a>5.jdk1.8对hash算法和寻址算法是如何优化的？</h2><p>我们在put一个kv时，会进行(h = key.hashCode()) ^ (h &gt;&gt;&gt; 16)运算（key为null则取0），也就是<strong>拿key的hash值高16位和低16位做异或运算</strong>；</p>
+<p>【优化】：通过对key的hashcode和hashcode右移16位做<strong>异或运算</strong>，也就是把key的hashcode的高16位和低16位做异或运算，通过这样算出的值会<strong>保留高低16位的特征</strong>，尽可能让结果的低16位值不一样，</p>
+<blockquote>
+<p>【hash算法优化】：hash值高低16为进行异或计算，可以同时保留高低16位的特征，减少hash冲突</p>
+</blockquote>
+<p>接着对异或结果进行 “取模运算” ，定位到数组中具体的某个位置上</p>
+<p>【优化】：因为取模运算性能比较差，所以使用 <strong>(n-1) &amp; hash</strong> 来代替取模运算，这里的&amp;运算一般来讲就都是低16位的运算（因为n是数组长度，一般n-1都很小，换算成32位前16位基本为0），所以要保证hash算法后算出来的hash值要尽可能不一样</p>
+<blockquote>
+<p>【寻址算法优化】：同样效果，则使用性能更高的与运算也就是 (n-1)&amp;hash 来进行寻址</p>
+</blockquote>
+<h2 id="6-HashMap如何解决hash碰撞问题的？"><a href="#6-HashMap如何解决hash碰撞问题的？" class="headerlink" title="6.HashMap如何解决hash碰撞问题的？"></a>6.HashMap如何解决hash碰撞问题的？</h2><p>先说一下发生场景：</p>
+<p>在put\get操作中，当两个key-value键值对通过hash算法异或和取模运算之后，定位到的数组位置还是一样时，我们称之为发生了hash碰撞\hash冲突</p>
+<p>【解决方法】<br>hashmap通过在该数组位置挂上链表+红黑树的方式来解决hash碰撞的问题。当发生hash碰撞时，后面的kv会在定位到链表的下个空置节点</p>
+<p>但是如果链表长度过长，极端情况下查询某个值的时间复杂度就为O(n)，性能比较差，所以hashmap在链表达到8（同时数组长度大于64）后会把链表转换成红黑树（时间复杂度为O(logn)），性能会好一些</p>
+<blockquote>
+<p>红黑树长度达到6或6以下后，会由红黑树转为链表</p>
+</blockquote>
+<h2 id="7-hashmap是如何扩容的"><a href="#7-hashmap是如何扩容的" class="headerlink" title="7.hashmap是如何扩容的"></a>7.hashmap是如何扩容的</h2><ol>
+<li>当hashmap数组长度达到 负载因子（默认0.75）* 当前数组容量时，会进行扩容，扩容到原来的2倍，扩容过程涉及到rehash、复制数据等</li>
+<li>当某一链表长度达到8但是数组长度小于64时，会进行扩容</li>
+</ol>
+<p>具体扩容：创建新的数组，将原数组重新hash并且分散到新数组中，可能 位置不变 或 索引+旧容量大小</p>
+<blockquote>
+<p>数组长度变化，取模（与运算）后的结果也相应发生改变。rehash过程中使用 (n-1) &amp; hash(key) 代替取模操作，提高了性能</p>
+</blockquote>
+<h2 id="8-HashMap的主要参数都有哪些？"><a href="#8-HashMap的主要参数都有哪些？" class="headerlink" title="8. HashMap的主要参数都有哪些？"></a>8. HashMap的主要参数都有哪些？</h2><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/HashMap-params.jpg" alt=""></p>
+<blockquote>
+<p>摘自公众号【Java3y】</p>
+</blockquote>
+<h2 id="9-阐述一下HashMap在JDK7的环产生原理"><a href="#9-阐述一下HashMap在JDK7的环产生原理" class="headerlink" title="9.阐述一下HashMap在JDK7的环产生原理"></a>9.阐述一下HashMap在JDK7的环产生原理</h2><p>因为1.7头插法扩容时，头插法会使链表发生反转，多线程环境下会产生环；</p>
+<p>A线程在插入节点B，B线程也在插入，遇到容量不够开始扩容，重新hash，放置元素，采用头插法，后遍历到的B节点放入了头部，这样形成了环，如下图所示：</p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/HashMap-ring.jpg" alt=""></p>
+<blockquote>
+<p>【参考链接】：<br>1：<a href="https:\mp.weixin.qq.com\s\0Gf2DzuzgEx0i3mHVvhKNQ">《吊打面试官》系列-HashMap</a><br>2：<a href="https:\mp.weixin.qq.com\s\ubwe-2U19Y7GQsIByYTWng">HashMap就是这么简单【源码剖析】</a><br>3：<a href="http:\xuyk.top\posts\hashmap.html">HashMap-链表散列</a><br>4：<a href="https:\zhuanlan.zhihu.com\p\125628540">一个HashMap跟面试官扯了半个小时</a></p>
 </blockquote>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -1072,31 +1034,31 @@
                 <div class="article-badge left-badge text-color">
                     <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
                 <div class="card">
-                    <a href="/posts/mysql-configure.html">
+                    <a href="/posts/interview-synchronized.html">
                         <div class="card-image">
                             
                                 
-                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/19.jpg" class="responsive-img" alt="Mysql主从配置">
+                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/3.jpg" class="responsive-img" alt="并发编程灵魂拷问系列之说说synchronized">
                             
-                            <span class="card-title">Mysql主从配置</span>
+                            <span class="card-title">并发编程灵魂拷问系列之说说synchronized</span>
                         </div>
                     </a>
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                其实很简单
+                                心里盘算一下synchronized
                             
                         </div>
                         <div class="publish-info">
                         <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-09-15
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2021-01-10
                         </span>
                             <span class="publish-author">
                                 
                                     <i class="fa fa-bookmark fa-fw icon-category"></i>
                                     
-                                        <a href="/categories/MySQL/" class="post-category">
-                                    MySQL
+                                        <a href="/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E7%81%B5%E9%AD%82%E6%8B%B7%E9%97%AE%E7%B3%BB%E5%88%97/" class="post-category">
+                                    并发编程灵魂拷问系列
                                 </a>
                                     
                                 
@@ -1106,8 +1068,8 @@
                     
                         <div class="card-action article-tags">
                             
-                                <a href="/tags/configure/">
-                                    <span class="chip bg-color">configure</span>
+                                <a href="/tags/synchronized/">
+                                    <span class="chip bg-color">synchronized</span>
                                 </a>
                             
                         </div>
@@ -1121,31 +1083,31 @@
                     下一篇&nbsp;<i class="fa fa-chevron-right"></i>
                 </div>
                 <div class="card">
-                    <a href="/posts/operation.html">
+                    <a href="/posts/x-rpc.html">
                         <div class="card-image">
                             
                                 
-                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/6.jpg" class="responsive-img" alt="初涉自动化部署">
+                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/14.jpg" class="responsive-img" alt="一款自定义RPC框架 x-rpc">
                             
-                            <span class="card-title">初涉自动化部署</span>
+                            <span class="card-title">一款自定义RPC框架 x-rpc</span>
                         </div>
                     </a>
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                简化Javaer的繁琐日常
+                                基于Netty+protostuff+Zookeeper
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-08-03
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-01-05
                             </span>
                             <span class="publish-author">
                                 
                                     <i class="fa fa-bookmark fa-fw icon-category"></i>
                                     
-                                        <a href="/categories/%E8%BF%90%E7%BB%B4%E9%83%A8%E7%BD%B2/" class="post-category">
-                                    运维部署
+                                        <a href="/categories/rpc/" class="post-category">
+                                    rpc
                                 </a>
                                     
                                 
@@ -1155,8 +1117,20 @@
                     
                         <div class="card-action article-tags">
                             
-                                <a href="/tags/operation/">
-                                    <span class="chip bg-color">operation</span>
+                                <a href="/tags/rpc/">
+                                    <span class="chip bg-color">rpc</span>
+                                </a>
+                            
+                                <a href="/tags/netty/">
+                                    <span class="chip bg-color">netty</span>
+                                </a>
+                            
+                                <a href="/tags/protostuff/">
+                                    <span class="chip bg-color">protostuff</span>
+                                </a>
+                            
+                                <a href="/tags/zookeeper/">
+                                    <span class="chip bg-color">zookeeper</span>
                                 </a>
                             
                         </div>
@@ -1324,7 +1298,7 @@
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">51.6k</span>&nbsp;字
+                            class="white-color">53.1k</span>&nbsp;字
                 
                 
                 <script>
@@ -1512,7 +1486,7 @@
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1611737073045')
+  navigator.serviceWorker.register('/sw.js?t=1611796082315')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }
