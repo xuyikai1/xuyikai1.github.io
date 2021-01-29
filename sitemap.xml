@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://xuyk.top/posts/interview-jvm-model.html</loc>
+    
+    <lastmod>2021-01-29T07:21:19.392Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://xuyk.top/posts/aop.html</loc>
     
-    <lastmod>2021-01-28T03:47:49.253Z</lastmod>
+    <lastmod>2021-01-28T08:30:16.995Z</lastmod>
     
   </url>
   
@@ -212,14 +219,14 @@
   </url>
   
   <url>
-    <loc>http://xuyk.top/contact/index.html</loc>
+    <loc>http://xuyk.top/about/index.html</loc>
     
     <lastmod>2020-06-14T11:18:47.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://xuyk.top/about/index.html</loc>
+    <loc>http://xuyk.top/contact/index.html</loc>
     
     <lastmod>2020-06-14T11:18:47.000Z</lastmod>
     

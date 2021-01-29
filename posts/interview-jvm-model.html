@@ -4,8 +4,8 @@
 
 <head><link rel=manifest href=/manifest.json>
     <meta charset="utf-8">
-    <meta name="keywords" content="友链, Java">
-    <meta name="description" content="友链 | 寒暄">
+    <meta name="keywords" content="JVM">
+    <meta name="description" content="面试官问你Spring了">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +14,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="white"/>
-    <title>友链 | 寒暄</title>
+    <title>JVM灵魂拷问系列之JVM内存模型知多少 | 寒暄</title>
     <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/apple-touch-icon.png">
     <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/favicon.ico">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/awesome/css/font-awesome.min.css">
@@ -402,314 +402,265 @@
     </nav>
 
 </header>
-<div class="bg-cover pd-header about-cover">
-    <div class="container">
-        <div class="row">
-    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
-        <div class="brand">
-            <div class="title center-align">
-                
-                    寒暄
-                
-            </div>
 
-            <div class="description center-align">
-                
-                    <span id="subtitle"></span>
-                    <script src="https://cdn.jsdelivr.net/npm/typed.js"></script>
-                    <script>
-                        var typed = new Typed("#subtitle", {
-                            strings: ['Java的日常',''],
-                            startDelay: 300,
-                            typeSpeed: 100,
-                            loop: true,
-                            backSpeed: 50,
-                            showCursor: true
-                        });
-                    </script>
-                
+    <script src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/cryptojs/crypto-js.min.js"></script>
+    <script>
+        (function () {
+            let pwd = '';
+            if (pwd && pwd.length > 0) {
+                if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                    alert('密码错误，将返回主页！');
+                    location.href = '/';
+                }
+            }
+        })();
+    </script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/17.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">JVM灵魂拷问系列之JVM内存模型知多少</h1>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 
-    <script>
-        // 每天切换 banner 图.  Switch banner image every day.
-        $('.bg-cover').css('background-image', 'url(https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/banner/5.jpg)');
-    </script>
 
-    </div>
-</div>
+<main class="post-container content">
+
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/tocbot/tocbot.css">
 <style>
-    .friends-container {
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
         margin-top: -100px;
-        margin-bottom: 30px;
+        visibility: hidden;
     }
 
-    .friends-container .tag-title {
-        margin-bottom: 10px;
-        color: #3C4858;
-        font-size: 1.75rem;
-        font-weight: 400;
+    #articleContent :focus {
+        outline: none;
     }
 
-    .frind-ship img {
-        border-radius: 50%;
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
     }
 
-    /* 以下是按钮样式 */
-
-    .frind-ship {
-        padding: 10px 20px;
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
     }
 
-    .frind-ship .title {
-        display: flex;
-        align-items: center;
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
     }
 
-    .frind-ship .title div {
-        color: #fff;
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
         padding-left: 10px;
     }
 
-    .frind-ship .title img {
-        width: 100px;
-        height: 100px;
-        flex-shrink: 0;
+    #toc-content ol li {
+        padding-left: 10px;
     }
 
-    .frind-ship .title h1 {
-        padding-bottom: 5px;
-        border-bottom: 2px solid #fff;
-        position: relative;
-        top: -15px;
-        left: 3px;
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
     }
 
-    .friend-button {
-        display: flex;
-        justify-content: center;
-        margin-bottom: -27px;
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
     }
 
-    .friend-button a {
-        border-radius: 40px;
+    #toc-content .is-active-link {
+        color: #42b983;
     }
 
-    .friend-all .tag-post {
-        margin-bottom: 30px;
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
     }
 
-    .button-caution {
-        background-color: #FF4351;
-        border-color: #FF4351;
-        color: #FFF;
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
     }
 
-    .button {
-        font-weight: 300;
-        font-size: 16px;
-        font-family: "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-        text-decoration: none;
-        text-align: center;
-        line-height: 40px;
-        height: 40px;
-        padding: 0 40px;
-        margin: 0;
-        display: inline-block;
-        appearance: none;
-        cursor: pointer;
-        border: none;
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
-        -webkit-transition-property: all;
-        transition-property: all;
-        -webkit-transition-duration: .3s;
-        transition-duration: .3s;
-    }
-
-    .title {
-        margin-bottom: 0rem !important;
-    }
-
-    .card {
-        margin: 3rem 0 1rem 0 !important;
-    }
-
-    .button-glow.button-caution {
-        -webkit-animation-name: glowing-caution;
-        animation-name: glowing-caution;
-    }
-
-    @-webkit-keyframes glowing-caution {
-        from {
-            -webkit-box-shadow: 0 0 0 rgba(255, 67, 81, 0.3);
-            box-shadow: 0 0 0 rgba(255, 67, 81, 0.3);
-        }
-
-        50% {
-            -webkit-box-shadow: 0 0 20px rgba(255, 67, 81, 0.8);
-            box-shadow: 0 0 20px rgba(255, 67, 81, 0.8);
-        }
-
-        to {
-            -webkit-box-shadow: 0 0 0 rgba(255, 67, 81, 0.3);
-            box-shadow: 0 0 0 rgba(255, 67, 81, 0.3);
-        }
-    }
-
-    @keyframes glowing-caution {
-        from {
-            -webkit-box-shadow: 0 0 0 rgba(255, 67, 81, 0.3);
-            box-shadow: 0 0 0 rgba(255, 67, 81, 0.3);
-        }
-
-        50% {
-            -webkit-box-shadow: 0 0 20px rgba(255, 67, 81, 0.8);
-            box-shadow: 0 0 20px rgba(255, 67, 81, 0.8);
-        }
-
-        to {
-            -webkit-box-shadow: 0 0 0 rgba(255, 67, 81, 0.3);
-            box-shadow: 0 0 0 rgba(255, 67, 81, 0.3);
-        }
-    }
-
-    .button-caution:hover {
-        background-color: #ff7680;
-        border-color: #ff7680;
-        color: #FFF;
-        text-decoration: none;
-    }
-
-    .frind-card1 {
-        background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
-    }
-
-    .frind-card2 {
-        background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    }
-
-    .frind-card3 {
-        background-image: linear-gradient(to right, #b8cbb8 0%, #b8cbb8 0%, #b465da 0%, #cf6cc9 33%, #ee609c 66%, #ee609c 100%);
-    }
-
-    .frind-card4 {
-        background-image: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
-    }
-
-    .frind-card5 {
-        background-image: linear-gradient(to top, #c471f5 0%, #fa71cd 100%);
-    }
-
-    .frind-card6 {
-        background-image: linear-gradient(to top, #48c6ef 0%, #6f86d6 100%);
-    }
-
-    .frind-card7 {
-        background-image: linear-gradient(to top, #0ba360 0%, #3cba92 100%);
-    }
-
-    .frind-card8 {
-        background-image: linear-gradient(to top, #0c3483 0%, #a2b6df 100%, #6b8cce 100%, #a2b6df 100%);
-    }
-
-    .frind-card9 {
-        background-image: linear-gradient(to right, #ff758c 0%, #ff7eb3 100%);
-    }
-
-    .frind-card10 {
-        background-image: linear-gradient(to top, #f77062 0%, #fe5196 100%);
-    }
-
-    article .card {
-        overflow: visible !important;
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
     }
 </style>
-
-<main class="content">
-    <div class="container friends-container">
-        <div class="card">
-            <div class="card-content">
-                <div class="tag-title center-align">
-                    <i class="fa fa-address-book"></i>&nbsp;&nbsp;友链
-                </div>
-                <article id="friends-link">
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
                     
-                        
-                        <div class="row tags-posts friend-all">
+                        <div class="article-tag">
                             
-                                
-                                <div class="col s12 m6 l4 friend-div" data-aos="zoom-in-up">
-                                    <div class="card frind-card1">
-                                        <div class="frind-ship">
-                                            <div class="title">
-                                                <img src="https://sitoi.cn/medias/avatars/avatar.jpg" alt="img">
-                                                <div>
-                                                    <h1 class="friend-name">Sitoi</h1>
-                                                    <p style="position: relative;top: -35px;">活到老，学到老</p>
-                                                </div>
-                                            </div>
-                                            <div class="friend-button">
-                                                <a href="https://sitoi.cn/" target="_blank"
-                                                   class="button button-glow button-rounded button-caution">
-                                                    访问博客
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            
-                                
-                                <div class="col s12 m6 l4 friend-div" data-aos="zoom-in-up">
-                                    <div class="card frind-card2">
-                                        <div class="frind-ship">
-                                            <div class="title">
-                                                <img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/IT-OldYogurt.bmp" alt="img">
-                                                <div>
-                                                    <h1 class="friend-name">IT老酸奶</h1>
-                                                    <p style="position: relative;top: -35px;">记录精彩的程序人生</p>
-                                                </div>
-                                            </div>
-                                            <div class="friend-button">
-                                                <a href="/www.huangjian-ln.cn" target="_blank"
-                                                   class="button button-glow button-rounded button-caution">
-                                                    访问博客
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <a href="/tags/JVM/">
+                                    <span class="chip bg-color">JVM</span>
+                                </a>
                             
                         </div>
                     
-                </article>
+                </div>
+                <div class="col s5 right-align">
+                    
+                        <div class="post-cate">
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                                <a href="/categories/JVM%E7%81%B5%E9%AD%82%E6%8B%B7%E9%97%AE%E7%B3%BB%E5%88%97/" class="post-category">
+                                    JVM灵魂拷问系列
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                    <div class="post-date info-break-policy">
+                        <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                        2021-01-29
+                    </div>
+                
+
+                
+                    <div class="post-date info-break-policy">
+                        <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
+                        2021-01-29
+                    </div>
+                
+
+                
+                    <div class="info-break-policy">
+                        <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                        1.3k
+                    </div>
+                
+
+                
+                    <div class="info-break-policy">
+                        <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                        4 分
+                    </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+                
             </div>
         </div>
-        <div class="card">
-            <div class="card-content">
-                <h3 id="感谢在建站中给我提供帮助的各位大大！"><a href="#感谢在建站中给我提供帮助的各位大大！" class="headerlink" title="感谢在建站中给我提供帮助的各位大大！"></a>感谢在建站中给我提供帮助的各位大大！</h3><h3 id="也欢迎各位大神交换友链！"><a href="#也欢迎各位大神交换友链！" class="headerlink" title="也欢迎各位大神交换友链！"></a>也欢迎各位大神交换友链！</h3><br>
-
-<p><strong>友链格式①：</strong></p>
-<pre class="line-numbers language-json"><code class="language-json"><span class="token punctuation">{</span>
-    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Xuyk"</span><span class="token punctuation">,</span>
-    <span class="token property">"avatar"</span><span class="token operator">:</span> <span class="token string">"https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/my-picture.jpg"</span><span class="token punctuation">,</span>
-    <span class="token property">"url"</span><span class="token operator">:</span> <span class="token string">"http://xuyk.top/"</span><span class="token punctuation">,</span>
-    <span class="token property">"introduction"</span><span class="token operator">:</span> <span class="token string">"Java的日常"</span><span class="token punctuation">,</span>
-    <span class="token property">"title"</span><span class="token operator">:</span> <span class="token string">"访问主页"</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<br>
-
-<p><strong>友链格式②：</strong></p>
-<pre class="line-numbers language-text"><code class="language-text">博客名字： Xuyk
-博客地址： http://xuyk.top/
-博客头像： https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/my-picture.jpg
-博客简介： Java的日常<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="JVM灵魂拷问系列之JVM内存模型知多少"><a href="#JVM灵魂拷问系列之JVM内存模型知多少" class="headerlink" title="JVM灵魂拷问系列之JVM内存模型知多少"></a>JVM灵魂拷问系列之JVM内存模型知多少</h1><h2 id="1-JVM中有几块内存区域？JDK8之后对内存分代做了什么改进？"><a href="#1-JVM中有几块内存区域？JDK8之后对内存分代做了什么改进？" class="headerlink" title="1.JVM中有几块内存区域？JDK8之后对内存分代做了什么改进？"></a>1.JVM中有几块内存区域？JDK8之后对内存分代做了什么改进？</h2><blockquote>
+<p>前提流程分析：我们在部署项目时，无论是旧项目（SSH、SSM）还是新项目（SpringBoot内置tomcat），都会放在tomcat中的目录中部署运行的。<br>tomcat由java编写，本质上是一个JVM进程，当请求到来时，jvm通过编译后的项目字节码来执行我们的业务代码响应请求</p>
+</blockquote>
+<p>众所周知，不讲tomcat自带的线程池，我们平时使用的框架或者自定义的线程池都说明了一点，系统中运行着多个线程，这些线程既有自己独有的空间（栈内存），也有共同分享的空间（堆内存）</p>
+<h3 id="1-1-堆内存（线程共享）"><a href="#1-1-堆内存（线程共享）" class="headerlink" title="1.1 堆内存（线程共享）"></a>1.1 堆内存（线程共享）</h3><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/interview-JVM-heap.png" alt=""></p>
+<p>由图可知，堆分为三个部分：<strong>新生代、老年代和持久代/元空间</strong></p>
 <blockquote>
-<p>注：如果需要交换友链，请在下面留言</p>
+<p>元空间不存放在堆中而是存放在在本地内存中，这里用作比较之用</p>
+</blockquote>
+<p>JVM在启动过程中，线程会创建很多对象，这些对象一般优先存放在 <strong>新生代的Eden伊甸园区域</strong> ，如果对象大于一定程度，则存放在 <strong>老年代</strong> 中</p>
+<p>java语言的特点：一处编译，处处运行。说的就是我们写的项目代码会通过编译器编译成字节码文件，由不同系统的java虚拟机来运行他们。而这些 <strong>字节码文件（类信息等）</strong> 也是需要一个地方进行存放的，JDK8之前，存放地为 <strong>永久代</strong> ，JDK8之后为 <strong>元空间</strong></p>
+<p>JDK8前后分代改进：</p>
+<ul>
+<li>JDK8以前：在 <strong>永久代</strong> 存放常量池和类信息</li>
+<li>JDK8以后：在 <strong>metaspace元空间</strong> 存放类信息</li>
+</ul>
+<p><strong>为什么 JDK1.8 把永久代干掉</strong></p>
+<ol>
+<li>oracle收购两家公司，其中一家公司JDK1.8以前没有永久代，干脆干掉了再新增一个元空间</li>
+<li>永久代存放一系列常量，类、方法的相关信息，但是这些都没办法确定，但是 <strong>永久代空间固定，可能导致内存溢出</strong>（内存不足以存放信息-OutOfMemoryError：PermGen）</li>
+<li>元空间本质是本地内存，理论上 <strong>取决于操作系统可以分配的内存大小，可以解决内存不足的情况</strong></li>
+</ol>
+<h3 id="1-2-栈内存-虚拟机栈（线程独享）"><a href="#1-2-栈内存-虚拟机栈（线程独享）" class="headerlink" title="1.2 栈内存/虚拟机栈（线程独享）"></a>1.2 栈内存/虚拟机栈（线程独享）</h3><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/interview-JVM-stack.png" alt=""></p>
+<p>当线程创建时，会创建一个由多个栈帧组成的虚拟机栈，存放着例如 <strong>局部变量、对象引用</strong> 等</p>
+<h3 id="1-3-本地方法栈（线程独享）"><a href="#1-3-本地方法栈（线程独享）" class="headerlink" title="1.3 本地方法栈（线程独享）"></a>1.3 本地方法栈（线程独享）</h3><p>存放一些由 <strong>C语言编写的native方法</strong> ，例如我们常用到的 <strong>Unsafe（CAS）</strong> </p>
+<h3 id="1-4-程序计数器（线程独享）"><a href="#1-4-程序计数器（线程独享）" class="headerlink" title="1.4 程序计数器（线程独享）"></a>1.4 程序计数器（线程独享）</h3><p>用来 <strong>记录线程执行字节码的地址</strong> ，也就是对执行到哪一行代码做一个标记。当线程被挂起，再恢复时，方便及时定位到继续执行的位置</p>
+<h3 id="1-5-方法区（线程共享）"><a href="#1-5-方法区（线程共享）" class="headerlink" title="1.5 方法区（线程共享）"></a>1.5 方法区（线程共享）</h3><p>方法区是 <strong>逻辑层面</strong> 上的划分，如图</p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/interview-JVM-methodArea.png" alt=""></p>
+<p>方法区在 <strong>堆</strong> 中存储着 <strong>静态变量 和 字符串常量</strong><br>方法区在 <strong>元空间</strong> 中存储着 <strong>类相关信息 和 运行时常量</strong></p>
+<blockquote>
+<p>【静态常量池】：属于<strong>堆</strong>，存放着 <strong>文本常量</strong> 或者 <strong>被final修饰的常量</strong>，也存放着一些 <strong>类名、方法名</strong> 等<br>【运行时常量池】：属于<strong>元空间/本地内存</strong>，当类被加载到内存中，JVM会把静态常量池中的内容存放到运行时常量池中。<br>【字符串常量池】：属于<strong>堆</strong>，运行时常量池分出来的一部分，类加载到内存中时，字符串会存放在字符串常量池中</p>
+</blockquote>
+<h2 id="2-你知道JVM是如何运行起来的吗？对象是如何分配的？"><a href="#2-你知道JVM是如何运行起来的吗？对象是如何分配的？" class="headerlink" title="2.你知道JVM是如何运行起来的吗？对象是如何分配的？"></a>2.你知道JVM是如何运行起来的吗？对象是如何分配的？</h2><p>举个例子🌰：</p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyController</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> String PREFIX <span class="token operator">=</span> <span class="token string">"名称前缀"</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">doRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        MyService myService <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MyService</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        myService<span class="token punctuation">.</span><span class="token function">printName</span><span class="token punctuation">(</span><span class="token string">"testName"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">class</span> <span class="token class-name">MyService</span><span class="token punctuation">{</span>
+
+        <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">printName</span><span class="token punctuation">(</span>String name<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>PREFIX <span class="token operator">+</span> name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/interview-JVM-demoDesc.jpg" alt=""></p>
+<ol>
+<li>java代码通过编译器编译成JVM可读懂的class字节码文件。项目启动，JVM调用main方法，或者存在Spring容器实例化必需类时，都会通过 <strong>类加载机制</strong> 把MyController.class文件加载到内存中，在堆内存中创建MyController实例，将MyController类相关信息存放在元空间中，在堆内存的静态常量池中创建静态常量</li>
+<li>当请求到来时，线程执行<code>doRequest()</code>方法，会在 <strong>堆内存</strong> 中创建一个MyService对象实例，同时在栈内存中创建一个栈帧，存放方法信息和局部引用变量myService，指向堆内存中的示例。静态常量池的”名称前缀”也会存入运行时常量池</li>
+<li>当myService执行<code>printName()</code>方法时，会创建<code>printName()</code>方法对应的栈帧，字符串常量池创建”testName”，局部变量name也存在栈帧中，指向”testName”</li>
+<li>当<code>printName()</code>方法执行完毕，对应栈帧销毁，而后<code>doRequest()</code>执行完毕，对应栈帧销毁。因栈帧中的引用销毁了，堆内存相关的数据没有引用，下一次会被垃圾回收</li>
+</ol>
+<blockquote>
+<p>【参考链接】：<br>1：<a href="http://note.youdao.com/s/BLcJm5xG">JVM内存结构个人笔记</a></p>
 </blockquote>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -731,19 +682,54 @@
           });
       </script>
             </div>
+            <hr/>
+
+            
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/JVM/">
+                                    <span class="chip bg-color">JVM</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share"
+                     style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/share/css/share.min.css">
+<div id="article-share">
+    
+        <div class="social-share" data-sites="wechat,qq,weibo,twitter,facebook,linkedin"
+             data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+        <script src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
         </div>
-        <div class="card">
+    </div>
 
-            
+    
 
-            
+    
 
-            
+    
 
-            
+    
 
-            
-                <style>
+    
+        <style>
     .valine-card {
         margin: 1.5rem auto;
     }
@@ -1009,12 +995,118 @@
         placeholder: 'just go go'
     });
 </script>
-            
+    
 
-            
-        </div>
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+            <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+                <div class="article-badge left-badge text-color">
+                    <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+                </div>
+                <div class="card">
+                    <a href="/posts/interview-jvm-model.html">
+                        <div class="card-image">
+                            
+                                
+                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/17.jpg" class="responsive-img" alt="JVM灵魂拷问系列之JVM内存模型知多少">
+                            
+                            <span class="card-title">JVM灵魂拷问系列之JVM内存模型知多少</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                面试官问你Spring了
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-01-29
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/categories/JVM%E7%81%B5%E9%AD%82%E6%8B%B7%E9%97%AE%E7%B3%BB%E5%88%97/" class="post-category">
+                                    JVM灵魂拷问系列
+                                </a>
+                                    
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                        <div class="card-action article-tags">
+                            
+                                <a href="/tags/JVM/">
+                                    <span class="chip bg-color">JVM</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+            </div>
+        
+        
+            <div class="article col s12 m6" data-aos="fade-up">
+                <div class="article-badge right-badge text-color">
+                    下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+                </div>
+                <div class="card">
+                    <a href="/posts/interview-springcloud.html">
+                        <div class="card-image">
+                            
+                                
+                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/14.jpg" class="responsive-img" alt="Spring灵魂拷问系列之一个请求怎么在SpringCloud中遨游">
+                            
+                            <span class="card-title">Spring灵魂拷问系列之一个请求怎么在SpringCloud中遨游</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                宏观SpringCloud组件
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-01-25
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/categories/Spring%E7%81%B5%E9%AD%82%E6%8B%B7%E9%97%AE%E7%B3%BB%E5%88%97/" class="post-category">
+                                    Spring灵魂拷问系列
+                                </a>
+                                    
+                                
+                            </span>
+                        </div>
+                    </div>
+                    
+                        <div class="card-action article-tags">
+                            
+                                <a href="/tags/SpringCloud/">
+                                    <span class="chip bg-color">SpringCloud</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+            </div>
+        
     </div>
-</main>
+</article>
+</div>
+
+
 
 
 <!-- 代码块功能依赖 -->
@@ -1041,20 +1133,110 @@
         }
     </style>
 
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
 
+<!-- TOC 悬浮按钮. -->
+
+    <div id="floating-toc-btn" class="hide-on-med-and-down">
+        <a class="btn-floating btn-large bg-color">
+            <i class="fa fa-list"></i>
+        </a>
+    </div>
+
+
+<script src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/tocbot/tocbot.min.js"></script>
 <script>
     $(function () {
-        $('#friends-link').masonry({
-            itemSelector: '.friend-div'
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4, h5'
         });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4, h5').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换 TOC 目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
     });
 </script>
+    
+
+</main>
+
+
 <footer class="page-footer bg-color">
     <div class="container row center-align">
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             <span id="year">2020</span>
-            <a href="/about" rel="external nofollow noreferrer">Xuyk</a>
+            <a href="/about" rel="external nofollow noreferrer">xuyk</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
