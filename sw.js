@@ -24,29 +24,29 @@ var precacheUrls = [];
 
   precacheUrls.push('/');
 
-  precacheUrls.push('/posts/interview-jvm-model.html');
-
   precacheUrls.push('/posts/aop.html');
 
-  precacheUrls.push('/posts/redisson.html');
-
-  precacheUrls.push('/posts/hmap.html');
+  precacheUrls.push('/posts/interview-jvm-model.html');
 
   precacheUrls.push('/posts/rabbitmq.html');
 
-  precacheUrls.push('/posts/mysql-configure.html');
-
   precacheUrls.push('/posts/shutdownHook.html');
 
-  precacheUrls.push('/posts/interview-spring-base.html');
+  precacheUrls.push('/posts/hmap.html');
 
   precacheUrls.push('/posts/SpringBoot-autoConfiguration.html');
 
-  precacheUrls.push('/posts/redis-cluster.html');
+  precacheUrls.push('/posts/redisson.html');
+
+  precacheUrls.push('/posts/mysql-configure.html');
 
   precacheUrls.push('/posts/ribbon-load-balance.html');
 
+  precacheUrls.push('/posts/spring-event.html');
+
   precacheUrls.push('/posts/spring-annotation.html');
+
+  precacheUrls.push('/posts/interview-spring-base.html');
 
 toolbox.precache(precacheUrls);
 toolbox.options = {"networkTimeoutSeconds":30};
