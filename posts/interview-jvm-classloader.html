@@ -4,8 +4,8 @@
 
 <head><link rel=manifest href=/manifest.json>
     <meta charset="utf-8">
-    <meta name="keywords" content="rpc netty 序列化 zookeeper protostuff">
-    <meta name="description" content="基于Netty+protostuff+Zookeeper">
+    <meta name="keywords" content="JVM">
+    <meta name="description" content="面试官问你Spring了">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +14,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="white"/>
-    <title>一款自定义RPC框架 x-rpc | 寒暄</title>
+    <title>JVM灵魂拷问系列之问点类加载机制吧 | 寒暄</title>
     <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/apple-touch-icon.png">
     <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/favicon.ico">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/awesome/css/font-awesome.min.css">
@@ -419,12 +419,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/14.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/13.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">一款自定义RPC框架 x-rpc</h1>
+                    <h1 class="description center-align post-title">JVM灵魂拷问系列之问点类加载机制吧</h1>
                 </div>
             </div>
         </div>
@@ -540,20 +540,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/rpc/">
-                                    <span class="chip bg-color">rpc</span>
-                                </a>
-                            
-                                <a href="/tags/netty/">
-                                    <span class="chip bg-color">netty</span>
-                                </a>
-                            
-                                <a href="/tags/protostuff/">
-                                    <span class="chip bg-color">protostuff</span>
-                                </a>
-                            
-                                <a href="/tags/zookeeper/">
-                                    <span class="chip bg-color">zookeeper</span>
+                                <a href="/tags/JVM/">
+                                    <span class="chip bg-color">JVM</span>
                                 </a>
                             
                         </div>
@@ -564,8 +552,8 @@
                         <div class="post-cate">
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                                <a href="/categories/rpc/" class="post-category">
-                                    rpc
+                                <a href="/categories/JVM%E7%81%B5%E9%AD%82%E6%8B%B7%E9%97%AE%E7%B3%BB%E5%88%97/" class="post-category">
+                                    JVM灵魂拷问系列
                                 </a>
                             
                         </div>
@@ -577,28 +565,28 @@
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                        2021-01-05
+                        2021-01-31
                     </div>
                 
 
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
-                        2021-01-05
+                        2021-01-31
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        1.4k
+                        609
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        5 分
+                        2 分
                     </div>
                 
 
@@ -613,81 +601,33 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="x-rpc"><a href="#x-rpc" class="headerlink" title="x-rpc"></a>x-rpc</h1><h2 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1.介绍"></a>1.介绍</h2><p>在微服务大行其道的2021，说到服务之间的通信，大家都会马上想到RPC（Remote Procedure Call Protocol）远程方法调用，也就是可以让我们调用远程第三方服务时能像调用本地方法一样简单快捷省事儿。其中被大家所熟知的就有SpringCloud中的Feign、Alibaba的Dubbo和谷歌的gRpc等。为了对这些框架有更深刻的了解，笔者自己尝试造了个轮子，也就是x-rpc。</p>
-<p>x-rpc是一款基于 Netty+protostuff+Zookeeper 实现的 RPC 框架，框架大体结构参考的是dubbo：</p>
-<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/dubbo-architure.jpg" alt=""></p>
-<blockquote>
-<p>服务提供方（服务端）启动，向注册中心注册所要发布的服务列表；消费端（客户端）启动，向注册中心订阅/拉取所关心的服务，也就是进行服务发现；消费端发起请求，服务端响应。</p>
-</blockquote>
-<p>简单说明一下x-rpc的设计思路：</p>
-<ol>
-<li><strong>网络传输</strong> ：netty作为<strong>底层通信</strong>框架，能够在简化网络编程的同时压榨cpu，充分提高应用的性能，是网络通信框架的不二之选。</li>
-<li><strong>注册中心</strong> ：天生就用来作为分布式系统下的注册中心、统一配置管理中心、命名服务中心等功能的zookeeper毋庸置疑承担了<strong>服务发现</strong>和<strong>服务注册</strong>的角色</li>
-<li><strong>序列化</strong> ：因为JDK自带的序列化效率很低并且有安全问题，所有这里采用谷歌的protostuff负责<strong>数据包的序列化和反序列化</strong>，当然kryo、Marshalling也是不错的选择</li>
-<li><strong>动态代理</strong> ： 使用动态代理可以屏蔽远程方法调用的细节比如网络传输。也就是说当你调用远程方法的时候，实际会通过代理对象来传输网络请求。</li>
-<li><strong>负载均衡</strong>：这里采用的是客户端负载均衡，通过轮询对服务的每个服务端节点进行依次请求，避免单机压力过大，达到负载均衡效果。</li>
+                <h1 id="JVM灵魂拷问系列之问点类加载机制吧"><a href="#JVM灵魂拷问系列之问点类加载机制吧" class="headerlink" title="JVM灵魂拷问系列之问点类加载机制吧"></a>JVM灵魂拷问系列之问点类加载机制吧</h1><h2 id="1-你知道java文件是如何被运行的吗？"><a href="#1-你知道java文件是如何被运行的吗？" class="headerlink" title="1. 你知道java文件是如何被运行的吗？"></a>1. 你知道java文件是如何被运行的吗？</h2><ol>
+<li>Java文件经过编译后变成 <strong>.class字节码文件</strong></li>
+<li>字节码文件通过 <strong>类加载器</strong> 被搬运加载到 JVM 虚拟机中 </li>
 </ol>
-<h2 id="2-计划列表"><a href="#2-计划列表" class="headerlink" title="2.计划列表"></a>2.计划列表</h2><p><strong>已优化列表</strong></p>
-<ul>
-<li><input checked="" disabled="" type="checkbox"> 重用 Channel 避免重复连接服务端</li>
-<li><input checked="" disabled="" type="checkbox"> 使用 zookeeper 进行服务发现与注册</li>
-<li><input checked="" disabled="" type="checkbox"> 心跳链路检测</li>
-<li><input checked="" disabled="" type="checkbox"> 使用 CompletableFuture 包装接收服务端返回结果</li>
-<li><input checked="" disabled="" type="checkbox"> 客户端调用远程服务进行负载均衡，x-rpc默认使用<strong>轮询</strong>进行负载均衡</li>
-<li><input checked="" disabled="" type="checkbox"> 集成spring</li>
-</ul>
-<p><strong>代办列表</strong></p>
-<ul>
-<li><input disabled="" type="checkbox"> 数据传输时的数据包重新设计：加入魔数（识别之用）、采用序列化方式编号等</li>
-<li><input disabled="" type="checkbox"> 对数据包进行压缩，例如gzip压缩</li>
-<li><input disabled="" type="checkbox"> SPI 机制<br>…</li>
-</ul>
-<h2 id="3-图解说明"><a href="#3-图解说明" class="headerlink" title="3.图解说明"></a>3.图解说明</h2><p>下面是整个x-rpc的代码架构，基于maven构建</p>
-<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/x-rpc-projects-desc.png" alt=""></p>
-<p>正常在使用过程中，遵循如下顺序：</p>
-<p>1.服务端启动 -&gt; 2.客户端启动 -&gt; 3.客户端服务端整个请求流程（包括客户端发送请求 -&gt; 服务端响应请求 -&gt; 客户端处理响应数据）</p>
-<p>我们就来一一剖析，进一步理解rpc底层大概都干了啥</p>
-<h3 id="3-1-服务端启动"><a href="#3-1-服务端启动" class="headerlink" title="3.1 服务端启动"></a>3.1 服务端启动</h3><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/x-rpc-serverStartup.jpg" alt=""></p>
+<h2 id="2-那你说说类加载器的流程吧，从类被加载到释放内存"><a href="#2-那你说说类加载器的流程吧，从类被加载到释放内存" class="headerlink" title="2. 那你说说类加载器的流程吧，从类被加载到释放内存"></a>2. 那你说说类加载器的流程吧，从类被加载到释放内存</h2><p>总共有七个步骤：加载，验证，准备，解析，初始化，使用，卸载。其中 <strong>验证，准备，解析三个部分统称为连接</strong> </p>
 <ol>
-<li>【具体操作】：通过rpc自定义注解@RpcService（@RpcScan属性basePackages范围内）找到所要发布的服务列表，通过扫描注册的方式将服务实例注入到spring bean中</li>
-<li>【具体操作】：在服务实例初始化前，每个注册在spring的实例都会通过zookeeper客户端Curator创建持久节点注册服务，保存服务名和服务端地址，并对该节点进行监听，发生变化时</li>
-<li>【具体操作】：使用ConcurrentHashMap和Set缓存已注册的服务列表，用于后续客户端获取服务列表使用</li>
-<li>【具体操作】：创建启动Netty服务端，异步监控启动结果，添加shutdownHook用于应用关闭释放资源，服务端pipeline用于请求/响应信息的编解码、客户端请求处理等</li>
+<li><strong>加载</strong>：将class文件加载进内存中</li>
+<li><strong>连接</strong>：（1）验证，做一个安全检查，保证字节码符合JVM相关规则与规范；（2）准备：设置静态变量初始值等（3）解析：将常量池的引用替换为真实地址引用</li>
+<li><strong>初始化</strong>：赋值的过程</li>
+<li><strong>卸载</strong>：GC释放无用对象的内存</li>
 </ol>
-<h3 id="3-2-客户端启动"><a href="#3-2-客户端启动" class="headerlink" title="3.2 客户端启动"></a>3.2 客户端启动</h3><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/x-rpc-clientStartup.jpg" alt=""></p>
+<h2 id="3-类加载器是怎么加载一个class的（双亲委派机制）？"><a href="#3-类加载器是怎么加载一个class的（双亲委派机制）？" class="headerlink" title="3. 类加载器是怎么加载一个class的（双亲委派机制）？"></a>3. 类加载器是怎么加载一个class的（双亲委派机制）？</h2><p><strong>双亲委派加载机制</strong></p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/interview-JVM-classLoader-pic.png" alt=""></p>
+<p>当一个ClassLoader实例需要加载某个类时，它会试图亲自搜索某个类之前，先把这个任务委托给它的父类加载器，这个过程是由上至下依次检查的。</p>
 <ol>
-<li>【具体操作】：通过@RpcScan属性basePackages，把该范围内的标识spring注解的类注入至spring bean；在bean初始化后，为标识了@RpcReference的属性添加proxy代理实例，之后调用该属性方法时会调用代理类的invoke方法</li>
-<li>pipeline用于请求/响应信息的编解码、服务端响应结果处理等</li>
+<li>首先由最顶层的类加载器 <strong>Bootstrap ClassLoader</strong> 试图加载</li>
+<li>如果没加载到，则把任务转交给 <strong>Extension ClassLoader</strong> 试图加载</li>
+<li>如果也没加载到，则转交给 <strong>App ClassLoader</strong> 进行加载</li>
+<li>如果它也没有加载得到的话，则返回给 <strong>委托的发起者</strong>，由它到指定的文件系统或网络等URL中加载该类。</li>
+<li>如果它们都没有加载到这个类时，则抛出 <strong>ClassNotFoundException</strong> 异常。</li>
 </ol>
-<h3 id="3-3-整个调用流程"><a href="#3-3-整个调用流程" class="headerlink" title="3.3 整个调用流程"></a>3.3 整个调用流程</h3><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/x-rpc-wholeRequestProcess.jpg" alt=""></p>
+<p><strong>那为什么要这么做呢？</strong></p>
+<p>比如加载位于rt.jar包中的类时不管是哪个加载器加载，最终都会委托到 <strong>BootStrap ClassLoader</strong> 进行加载，这样保证了使用不同的类加载器得到的都是同一个结果。</p>
+<p>例子🌰：如果我们自己写了String类，其实是会报错的，因为在加载的过程中，会先找到 <strong>rt.jar</strong> 中的String.class。</p>
 <blockquote>
-<p>【server/client pipeline】：netty中的调用链，用到了设计模式中的责任链模式</p>
+<p>【参考链接】<br>1：<a href="https://mp.weixin.qq.com/s/Llps6z99cpPMN2ekeQljrA">Jar 包依赖冲突排查思路和解决方法</a><br>2：<a href="https://juejin.cn/post/6844904048013869064">大白话带你认识JVM</a></p>
 </blockquote>
-<h2 id="4-运行项目"><a href="#4-运行项目" class="headerlink" title="4.运行项目"></a>4.运行项目</h2><h3 id="4-1-将项目-clone-至本地"><a href="#4-1-将项目-clone-至本地" class="headerlink" title="4.1 将项目 clone 至本地"></a>4.1 将项目 clone 至本地</h3><pre class="line-numbers language-java"><code class="language-java">git clone https<span class="token operator">:</span><span class="token operator">/</span><span class="token operator">/</span>github<span class="token punctuation">.</span>com<span class="token operator">/</span>xuyikai1<span class="token operator">/</span>x<span class="token operator">-</span>rpc<span class="token punctuation">.</span>git<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h3 id="4-2-部署运行zookeeper-3-5-8，推荐使用docker"><a href="#4-2-部署运行zookeeper-3-5-8，推荐使用docker" class="headerlink" title="4.2 部署运行zookeeper 3.5.8，推荐使用docker"></a>4.2 部署运行zookeeper 3.5.8，推荐使用docker</h3><p>下载：</p>
-<pre class="line-numbers language-java"><code class="language-java">docker pull zookeeper<span class="token operator">:</span><span class="token number">3.5</span><span class="token punctuation">.</span><span class="token number">8</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>运行：</p>
-<pre class="line-numbers language-java"><code class="language-java">docker run <span class="token operator">-</span>d <span class="token operator">--</span>name zookeeper <span class="token operator">-</span>p <span class="token number">2181</span><span class="token operator">:</span><span class="token number">2181</span> <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>zookeeper:3.5.8</p>
-<h3 id="4-3-使用-maven-命令-install-整个x-rpc项目"><a href="#4-3-使用-maven-命令-install-整个x-rpc项目" class="headerlink" title="4.3 使用 maven 命令 install 整个x-rpc项目"></a>4.3 使用 maven 命令 install 整个x-rpc项目</h3><p>这里使用IDEA进行操作：</p>
-<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/x-rpc-mavenInstall.png" alt=""></p>
-<h3 id="4-4-启动服务端"><a href="#4-4-启动服务端" class="headerlink" title="4.4 启动服务端"></a>4.4 启动服务端</h3><p>运行 rpc-example-server 中的 RpcServerTest1的<code>main()</code>方法启动服务端</p>
-<p>服务端启动成功如图：</p>
-<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/x-rpc-serverStartupSuccess.png" alt=""></p>
-<p>zookeeper节点情况：</p>
-<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/x-rpc-prettyZoo.png" alt=""></p>
-<blockquote>
-<p>zookeeper client使用的是 <a href="https://github.com/vran-dev/PrettyZoo">prettyZoo</a></p>
-</blockquote>
-<h3 id="4-5-启动客户端-发送请求"><a href="#4-5-启动客户端-发送请求" class="headerlink" title="4.5 启动客户端/发送请求"></a>4.5 启动客户端/发送请求</h3><p>运行 rpc-example-client 中的 RpcServerTest1的<code>main()</code>方法启动服务端</p>
-<p>客户端启动/发送数据情况：</p>
-<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/x-rpc-clientStartupSuccess.png" alt=""></p>
-<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/x-rpc-serverReceiveRequestSuccess.png" alt=""></p>
-<blockquote>
-<p>这里测试demo中客户端发送了两次请求</p>
-</blockquote>
-<h2 id="5-源码"><a href="#5-源码" class="headerlink" title="5.源码"></a>5.源码</h2><p><a href="https://github.com/xuyikai1/x-rpc">GitHub - xuyikai1/x-rpc</a></p>
-<h2 id="6-感谢"><a href="#6-感谢" class="headerlink" title="6.感谢"></a>6.感谢</h2><p>项目很多细节都是参考 javaGuide 的<a href="https://github.com/Snailclimb/guide-rpc-framework">guide-rpc-framework</a>，在这里表示感谢</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -719,20 +659,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/rpc/">
-                                    <span class="chip bg-color">rpc</span>
-                                </a>
-                            
-                                <a href="/tags/netty/">
-                                    <span class="chip bg-color">netty</span>
-                                </a>
-                            
-                                <a href="/tags/protostuff/">
-                                    <span class="chip bg-color">protostuff</span>
-                                </a>
-                            
-                                <a href="/tags/zookeeper/">
-                                    <span class="chip bg-color">zookeeper</span>
+                                <a href="/tags/JVM/">
+                                    <span class="chip bg-color">JVM</span>
                                 </a>
                             
                         </div>
@@ -1042,46 +970,48 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-            <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
                 <div class="article-badge left-badge text-color">
-                    <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                    <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+                </div>
                 <div class="card">
-                    <a href="/posts/interview-hmap.html">
+                    <a href="/posts/interview-jvm-classloader.html">
                         <div class="card-image">
                             
                                 
-                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/10.jpg" class="responsive-img" alt="并发编程灵魂拷问系列之HashMap">
+                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/13.jpg" class="responsive-img" alt="JVM灵魂拷问系列之问点类加载机制吧">
                             
-                            <span class="card-title">并发编程灵魂拷问系列之HashMap</span>
+                            <span class="card-title">JVM灵魂拷问系列之问点类加载机制吧</span>
                         </div>
                     </a>
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                HashMap面试可能这么问
+                                面试官问你Spring了
                             
                         </div>
                         <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2021-01-06
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-01-31
+                            </span>
                             <span class="publish-author">
                                 
                                     <i class="fa fa-bookmark fa-fw icon-category"></i>
                                     
-                                        <a href="/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E7%81%B5%E9%AD%82%E6%8B%B7%E9%97%AE%E7%B3%BB%E5%88%97/" class="post-category">
-                                    并发编程灵魂拷问系列
+                                        <a href="/categories/JVM%E7%81%B5%E9%AD%82%E6%8B%B7%E9%97%AE%E7%B3%BB%E5%88%97/" class="post-category">
+                                    JVM灵魂拷问系列
                                 </a>
                                     
                                 
                             </span>
                         </div>
                     </div>
+
                     
                         <div class="card-action article-tags">
                             
-                                <a href="/tags/HashMap/">
-                                    <span class="chip bg-color">HashMap</span>
+                                <a href="/tags/JVM/">
+                                    <span class="chip bg-color">JVM</span>
                                 </a>
                             
                         </div>
@@ -1095,31 +1025,31 @@
                     下一篇&nbsp;<i class="fa fa-chevron-right"></i>
                 </div>
                 <div class="card">
-                    <a href="/posts/shutdownHook.html">
+                    <a href="/posts/interview-jvm-GarbageCollection.html">
                         <div class="card-image">
                             
                                 
-                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/14.jpg" class="responsive-img" alt="ShutdownHook钩子">
+                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/15.jpg" class="responsive-img" alt="JVM灵魂拷问系列之垃圾回收">
                             
-                            <span class="card-title">ShutdownHook钩子</span>
+                            <span class="card-title">JVM灵魂拷问系列之垃圾回收</span>
                         </div>
                     </a>
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                应用关闭优雅释放资源
+                                面试官问你Spring了
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-01-01
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-01-30
                             </span>
                             <span class="publish-author">
                                 
                                     <i class="fa fa-bookmark fa-fw icon-category"></i>
                                     
-                                        <a href="/categories/%E6%97%A5%E5%B8%B8%E5%B7%A5%E4%BD%9C%E5%BA%94%E7%94%A8/" class="post-category">
-                                    日常工作应用
+                                        <a href="/categories/JVM%E7%81%B5%E9%AD%82%E6%8B%B7%E9%97%AE%E7%B3%BB%E5%88%97/" class="post-category">
+                                    JVM灵魂拷问系列
                                 </a>
                                     
                                 
@@ -1129,8 +1059,8 @@
                     
                         <div class="card-action article-tags">
                             
-                                <a href="/tags/shutdownHook/">
-                                    <span class="chip bg-color">shutdownHook</span>
+                                <a href="/tags/JVM/">
+                                    <span class="chip bg-color">JVM</span>
                                 </a>
                             
                         </div>
