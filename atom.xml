@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://xuyk.top/"/>
-  <updated>2021-01-31T13:24:59.200Z</updated>
+  <updated>2021-01-31T13:36:11.074Z</updated>
   <id>http://xuyk.top/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>JVM灵魂拷问系列之问点类加载机制吧</title>
+    <title>JVM灵魂拷问系列之整点类加载机制吧</title>
     <link href="http://xuyk.top/posts/interview-jvm-classloader.html"/>
     <id>http://xuyk.top/posts/interview-jvm-classloader.html</id>
     <published>2021-01-31T13:24:00.000Z</published>
-    <updated>2021-01-31T13:24:59.200Z</updated>
+    <updated>2021-01-31T13:36:11.074Z</updated>
     
     <content type="html"><![CDATA[<h1 id="JVM灵魂拷问系列之问点类加载机制吧"><a href="#JVM灵魂拷问系列之问点类加载机制吧" class="headerlink" title="JVM灵魂拷问系列之问点类加载机制吧"></a>JVM灵魂拷问系列之问点类加载机制吧</h1><h2 id="1-你知道java文件是如何被运行的吗？"><a href="#1-你知道java文件是如何被运行的吗？" class="headerlink" title="1. 你知道java文件是如何被运行的吗？"></a>1. 你知道java文件是如何被运行的吗？</h2><ol><li>Java文件经过编译后变成 <strong>.class字节码文件</strong></li><li>字节码文件通过 <strong>类加载器</strong> 被搬运加载到 JVM 虚拟机中 </li></ol><h2 id="2-那你说说类加载器的流程吧，从类被加载到释放内存"><a href="#2-那你说说类加载器的流程吧，从类被加载到释放内存" class="headerlink" title="2. 那你说说类加载器的流程吧，从类被加载到释放内存"></a>2. 那你说说类加载器的流程吧，从类被加载到释放内存</h2><p>总共有七个步骤：加载，验证，准备，解析，初始化，使用，卸载。其中 <strong>验证，准备，解析三个部分统称为连接</strong> </p><ol><li><strong>加载</strong>：将class文件加载进内存中</li><li><strong>连接</strong>：（1）验证，做一个安全检查，保证字节码符合JVM相关规则与规范；（2）准备：设置静态变量初始值等（3）解析：将常量池的引用替换为真实地址引用</li><li><strong>初始化</strong>：赋值的过程</li><li><strong>卸载</strong>：GC释放无用对象的内存</li></ol><h2 id="3-类加载器是怎么加载一个class的（双亲委派机制）？"><a href="#3-类加载器是怎么加载一个class的（双亲委派机制）？" class="headerlink" title="3. 类加载器是怎么加载一个class的（双亲委派机制）？"></a>3. 类加载器是怎么加载一个class的（双亲委派机制）？</h2><p><strong>双亲委派加载机制</strong></p><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/interview-JVM-classLoader-pic.png" alt=""></p><p>当一个ClassLoader实例需要加载某个类时，它会试图亲自搜索某个类之前，先把这个任务委托给它的父类加载器，这个过程是由上至下依次检查的。</p><ol><li>首先由最顶层的类加载器 <strong>Bootstrap ClassLoader</strong> 试图加载</li><li>如果没加载到，则把任务转交给 <strong>Extension ClassLoader</strong> 试图加载</li><li>如果也没加载到，则转交给 <strong>App ClassLoader</strong> 进行加载</li><li>如果它也没有加载得到的话，则返回给 <strong>委托的发起者</strong>，由它到指定的文件系统或网络等URL中加载该类。</li><li>如果它们都没有加载到这个类时，则抛出 <strong>ClassNotFoundException</strong> 异常。</li></ol><p><strong>那为什么要这么做呢？</strong></p><p>比如加载位于rt.jar包中的类时不管是哪个加载器加载，最终都会委托到 <strong>BootStrap ClassLoader</strong> 进行加载，这样保证了使用不同的类加载器得到的都是同一个结果。</p><p>例子🌰：如果我们自己写了String类，其实是会报错的，因为在加载的过程中，会先找到 <strong>rt.jar</strong> 中的String.class。</p><blockquote><p>【参考链接】<br>1：<a href="https://mp.weixin.qq.com/s/Llps6z99cpPMN2ekeQljrA">Jar 包依赖冲突排查思路和解决方法</a><br>2：<a href="https://juejin.cn/post/6844904048013869064">大白话带你认识JVM</a></p></blockquote><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
     
