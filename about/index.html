@@ -443,7 +443,7 @@
 
     <script>
         // 每天切换 banner 图.  Switch banner image every day.
-        $('.bg-cover').css('background-image', 'url(https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/banner/0.jpg)');
+        $('.bg-cover').css('background-image', 'url(https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/banner/3.jpg)');
     </script>
 
     </div>
@@ -458,7 +458,7 @@
                     <div class="post-statis col l4 hide-on-med-and-down" data-aos="zoom-in-right">
                         
     <div class="statis">
-        <span class="count"><a href="/">31</a></span>
+        <span class="count"><a href="/">32</a></span>
         <span class="name">文章</span>
     </div>
 
@@ -472,7 +472,7 @@
 
 
     <div class="statis">
-        <span class="count"><a href="/tags">34</a></span>
+        <span class="count"><a href="/tags">35</a></span>
         <span class="name">标签</span>
     </div>
 
@@ -488,7 +488,7 @@
                                 <div class="post-statis hide-on-large-only" data-aos="zoom-in-right">
                                     
     <div class="statis">
-        <span class="count"><a href="/">31</a></span>
+        <span class="count"><a href="/">32</a></span>
         <span class="name">文章</span>
     </div>
 
@@ -502,7 +502,7 @@
 
 
     <div class="statis">
-        <span class="count"><a href="/tags">34</a></span>
+        <span class="count"><a href="/tags">35</a></span>
         <span class="name">标签</span>
     </div>
 
@@ -664,7 +664,7 @@
         },
         xAxis: {
             type: 'category',
-            data: ["2020-01","2020-02","2020-03","2020-04","2020-05","2020-06","2020-07","2020-08","2020-09","2020-10","2020-11","2020-12","2021-01"]
+            data: ["2020-02","2020-03","2020-04","2020-05","2020-06","2020-07","2020-08","2020-09","2020-10","2020-11","2020-12","2021-01","2021-02"]
         },
         yAxis: {
             type: 'value',
@@ -674,7 +674,7 @@
                 name: '文章篇数',
                 type: 'line',
                 color: ['#6772e5'],
-                data: [0,0,0,0,1,3,4,1,3,2,2,1,14],
+                data: [0,0,0,1,3,4,1,3,2,2,1,14,1],
                 markPoint: {
                     symbolSize: 45,
                     color: ['#fa755a', '#3ecf8e', '#82d3f4'],
@@ -716,7 +716,7 @@
                 type: 'pie',
                 radius: '50%',
                 color: ['#6772e5', '#ff9e0f', '#fa755a', '#3ecf8e', '#82d3f4', '#ab47bc', '#525f7f', '#f51c47', '#26A69A'],
-                data: [{"name":"Java并发编程","value":3},{"name":"JVM灵魂拷问系列","value":3},{"name":"日常工作应用","value":4},{"name":"MySQL","value":1},{"name":"消息队列","value":1},{"name":"Redis","value":2},{"name":"负载均衡","value":1},{"name":"SpringBoot","value":1},{"name":"Spring灵魂拷问系列","value":3},{"name":"Spring","value":1},{"name":"分布式任务调度","value":1},{"name":"rpc","value":1},{"name":"运维部署","value":1},{"name":"数据结构","value":1},{"name":"并发编程灵魂拷问系列","value":6},{"name":"设计模式","value":1}],
+                data: [{"name":"日常工作应用","value":5},{"name":"JVM灵魂拷问系列","value":3},{"name":"MySQL","value":1},{"name":"Java并发编程","value":3},{"name":"Redis","value":2},{"name":"消息队列","value":1},{"name":"负载均衡","value":1},{"name":"SpringBoot","value":1},{"name":"Spring灵魂拷问系列","value":3},{"name":"Spring","value":1},{"name":"rpc","value":1},{"name":"分布式任务调度","value":1},{"name":"运维部署","value":1},{"name":"数据结构","value":1},{"name":"并发编程灵魂拷问系列","value":6},{"name":"设计模式","value":1}],
                 itemStyle: {
                     emphasis: {
                         shadowBlur: 10,
@@ -740,7 +740,7 @@
         xAxis: [
             {
                 type: 'category',
-                data: ["JVM","HashMap","设计模式","aop","自定义注解","configure","消息队列","RabbitMQ","Redis","Redisson"]
+                data: ["JVM","HashMap","设计模式","aop","自定义注解","configure","Redis","Redisson","消息队列","RabbitMQ"]
             }
         ],
         yAxis: [
@@ -886,18 +886,6 @@
             <div class="tag-chips center-align">
                 
                     
-                        <a href="/tags/HashMap/">
-                            <span class="chip center-align waves-effect waves-light chip-default">HashMap</span>
-                        </a>
-                    
-                
-                    
-                        <a href="/tags/JVM/">
-                            <span class="chip center-align waves-effect waves-light chip-default">JVM</span>
-                        </a>
-                    
-                
-                    
                         <a href="/tags/aop/">
                             <span class="chip center-align waves-effect waves-light chip-default">aop</span>
                         </a>
@@ -910,8 +898,28 @@
                     
                 
                     
+                        <a href="/tags/JVM/">
+                            <span class="chip center-align waves-effect waves-light chip-default">JVM</span>
+                        </a>
+                    
+                
+                    
                         <a href="/tags/configure/">
                             <span class="chip center-align waves-effect waves-light chip-default">configure</span>
+                        </a>
+                    
+                
+                    
+                        <a href="/tags/HashMap/">
+                            <span class="chip center-align waves-effect waves-light chip-default">HashMap</span>
+                        </a>
+                    
+                
+                    
+                
+                    
+                        <a href="/tags/Redisson/">
+                            <span class="chip center-align waves-effect waves-light chip-default">Redisson</span>
                         </a>
                     
                 
@@ -928,14 +936,6 @@
                     
                 
                     
-                
-                    
-                        <a href="/tags/Redisson/">
-                            <span class="chip center-align waves-effect waves-light chip-default">Redisson</span>
-                        </a>
-                    
-                
-                    
                         <a href="/tags/redis-cluster/">
                             <span class="chip center-align waves-effect waves-light chip-default">redis cluster</span>
                         </a>
@@ -948,14 +948,14 @@
                     
                 
                     
-                        <a href="/tags/SpringBoot/">
-                            <span class="chip center-align waves-effect waves-light chip-default">SpringBoot</span>
+                        <a href="/tags/shutdownHook/">
+                            <span class="chip center-align waves-effect waves-light chip-default">shutdownHook</span>
                         </a>
                     
                 
                     
-                        <a href="/tags/shutdownHook/">
-                            <span class="chip center-align waves-effect waves-light chip-default">shutdownHook</span>
+                        <a href="/tags/SpringBoot/">
+                            <span class="chip center-align waves-effect waves-light chip-default">SpringBoot</span>
                         </a>
                     
                 
@@ -984,20 +984,14 @@
                     
                 
                     
-                        <a href="/tags/SpringMVC/">
-                            <span class="chip center-align waves-effect waves-light chip-default">SpringMVC</span>
-                        </a>
-                    
-                
-                    
                         <a href="/tags/Spring%E6%B3%A8%E8%A7%A3/">
                             <span class="chip center-align waves-effect waves-light chip-default">Spring注解</span>
                         </a>
                     
                 
                     
-                        <a href="/tags/distributed-task/">
-                            <span class="chip center-align waves-effect waves-light chip-default">distributed task</span>
+                        <a href="/tags/%E7%BA%BF%E7%A8%8B%E6%B1%A0/">
+                            <span class="chip center-align waves-effect waves-light chip-default">线程池</span>
                         </a>
                     
                 
@@ -1026,8 +1020,14 @@
                     
                 
                     
-                        <a href="/tags/%E7%BA%BF%E7%A8%8B%E6%B1%A0/">
-                            <span class="chip center-align waves-effect waves-light chip-default">线程池</span>
+                        <a href="/tags/SpringMVC/">
+                            <span class="chip center-align waves-effect waves-light chip-default">SpringMVC</span>
+                        </a>
+                    
+                
+                    
+                        <a href="/tags/distributed-task/">
+                            <span class="chip center-align waves-effect waves-light chip-default">distributed task</span>
                         </a>
                     
                 
@@ -1038,14 +1038,14 @@
                     
                 
                     
-                        <a href="/tags/async/">
-                            <span class="chip center-align waves-effect waves-light chip-default">async</span>
+                        <a href="/tags/bloomFilter/">
+                            <span class="chip center-align waves-effect waves-light chip-default">bloomFilter</span>
                         </a>
                     
                 
                     
-                        <a href="/tags/bloomFilter/">
-                            <span class="chip center-align waves-effect waves-light chip-default">bloomFilter</span>
+                        <a href="/tags/async/">
+                            <span class="chip center-align waves-effect waves-light chip-default">async</span>
                         </a>
                     
                 
@@ -1056,14 +1056,26 @@
                     
                 
                     
-                        <a href="/tags/CAS/">
-                            <span class="chip center-align waves-effect waves-light chip-default">CAS</span>
+                        <a href="/tags/%E7%BA%BF%E4%B8%8A%E9%97%AE%E9%A2%98/">
+                            <span class="chip center-align waves-effect waves-light chip-default">线上问题</span>
                         </a>
                     
                 
                     
                         <a href="/tags/JMM/">
                             <span class="chip center-align waves-effect waves-light chip-default">JMM</span>
+                        </a>
+                    
+                
+                    
+                        <a href="/tags/CAS/">
+                            <span class="chip center-align waves-effect waves-light chip-default">CAS</span>
+                        </a>
+                    
+                
+                    
+                        <a href="/tags/AQS/">
+                            <span class="chip center-align waves-effect waves-light chip-default">AQS</span>
                         </a>
                     
                 
@@ -1076,12 +1088,6 @@
                     
                         <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
                             <span class="chip center-align waves-effect waves-light chip-default">设计模式</span>
-                        </a>
-                    
-                
-                    
-                        <a href="/tags/AQS/">
-                            <span class="chip center-align waves-effect waves-light chip-default">AQS</span>
                         </a>
                     
                 
@@ -1126,7 +1132,7 @@
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">56.7k</span>&nbsp;字
+                            class="white-color">58k</span>&nbsp;字
                 
                 
                 <script>
@@ -1314,7 +1320,7 @@
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1612100219797')
+  navigator.serviceWorker.register('/sw.js?t=1612332634556')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }
