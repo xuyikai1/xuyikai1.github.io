@@ -24,25 +24,25 @@ var precacheUrls = [];
 
   precacheUrls.push('/');
 
-  precacheUrls.push('/posts/aop.html');
-
   precacheUrls.push('/posts/interview-jvm-classloader.html');
 
-  precacheUrls.push('/posts/mysql-configure.html');
+  precacheUrls.push('/posts/interview-MySQL-common.html');
 
-  precacheUrls.push('/posts/interview-jvm-GarbageCollection.html');
+  precacheUrls.push('/posts/aop.html');
 
   precacheUrls.push('/posts/interview-jvm-model.html');
 
+  precacheUrls.push('/posts/interview-jvm-GarbageCollection.html');
+
   precacheUrls.push('/posts/hmap.html');
 
-  precacheUrls.push('/posts/redisson.html');
+  precacheUrls.push('/posts/mysql-configure.html');
 
   precacheUrls.push('/posts/rabbitmq.html');
 
-  precacheUrls.push('/posts/redis-cluster.html');
+  precacheUrls.push('/posts/redisson.html');
 
-  precacheUrls.push('/posts/ribbon-load-balance.html');
+  precacheUrls.push('/posts/redis-cluster.html');
 
   precacheUrls.push('/posts/shutdownHook.html');
 

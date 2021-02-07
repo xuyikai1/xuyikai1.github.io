@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>MySQL灵魂拷问系列之MySQL基础拷问</title>
+      <link href="/posts/interview-MySQL-common.html"/>
+      <url>/posts/interview-MySQL-common.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="MySQL灵魂拷问系列之MySQL基础拷问"><a href="#MySQL灵魂拷问系列之MySQL基础拷问" class="headerlink" title="MySQL灵魂拷问系列之MySQL基础拷问"></a>MySQL灵魂拷问系列之MySQL基础拷问</h1><h2 id="1-MySQL有哪些存储引擎，有什么区别"><a href="#1-MySQL有哪些存储引擎，有什么区别" class="headerlink" title="1.MySQL有哪些存储引擎，有什么区别"></a>1.MySQL有哪些存储引擎，有什么区别</h2><p>mysql我们耳熟能详的就是两种存储引擎：<strong>Innodb、Myisam</strong></p><h3 id="1-1-Myisam"><a href="#1-1-Myisam" class="headerlink" title="1.1 Myisam"></a>1.1 Myisam</h3><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/interview-mysql-myisam.png" alt=""></p><ol><li><strong>不支持事务、外键</strong></li><li>从 <strong>物理存储角度</strong> 上看，Myisam属于 <strong>非聚簇索引</strong>，数据存在叶子结点（没有孩子的节点）上，叶子节点的data为数据的物理地址引用（索引文件和数据文件分开存储），，通过物理地址引用来找到具体的数据行。</li><li>适用于 <strong>少量插入、大量查询</strong> 的场景，以前做 <strong>大数据报表系统</strong> 的时候会用到，一次性大批量插入，接下来只是纯查询.不过现在基本已经不用myisam了（mysql扛不住，单表一般控制在500w）</li></ol><h3 id="1-2-Innodb"><a href="#1-2-Innodb" class="headerlink" title="1.2 Innodb"></a>1.2 Innodb</h3><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/interview-mysql-innodb.png" alt=""></p><ol><li>支持事务、外键</li><li>从 <strong>物理存储角度</strong> 上看，Innodb属于 <strong>聚簇索引</strong>，数据存在叶子结点（没有孩子的节点）上。如果是二级索引，则叶子结点存储的是主键，如果不止查询索引列，则需要再根据主键回表查询一次</li><li>目前来说，适用于大多数业务场景，无脑选即可</li></ol><blockquote><p>二级索引查找流程：先到二级索引的B+ Tree中根据name找到具体的叶子节点的data，data中存储的主键，根据主键再到聚簇索引（主键索引）中找到具体的数据行</p></blockquote><h3 id="1-3-Myisam和Innodb汇总比对图"><a href="#1-3-Myisam和Innodb汇总比对图" class="headerlink" title="1.3 Myisam和Innodb汇总比对图"></a>1.3 Myisam和Innodb汇总比对图</h3><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/interview-mysql-InnodbAndMyisam.png" alt=""></p><blockquote><p>Innodb二级索引叶子结点存储的是 <strong>索引和主键</strong>，需要查询到主键后，去主键索引查询数据</p></blockquote><h2 id="2-为什么MySQL的索引要使用B-树而不是其它树形结构-比如B树？"><a href="#2-为什么MySQL的索引要使用B-树而不是其它树形结构-比如B树？" class="headerlink" title="2.为什么MySQL的索引要使用B+树而不是其它树形结构?比如B树？"></a>2.为什么MySQL的索引要使用B+树而不是其它树形结构?比如B树？</h2><blockquote><p>具体细节参考：<br><a href="https://mp.weixin.qq.com/s/IZqjGK58mRUN4YFXO_QyHw">面试官：为什么MySQL的索引要使用B+树，而不是其它树？比如B树？</a></p></blockquote><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/interview-mysq-b-tree.png" alt=""></p><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/interview-mysql-baddtree.png" alt=""></p><p>都属于多路搜索树</p><p>因为B树不管叶子节点还是非叶子节点，都会保存数据，如果要保存大量数据，只能增加树的高度，导致IO操作变多，查询性能变低</p><p>而B+树只有在叶子节点存储数据，非叶子节点只保存索引值</p><p>数据库对B+ Tree还进行了优化，让每个叶子节点末尾有一个 <strong>next指针</strong> 指向下一个叶子节点的数据，使得在做范围查询的时候效率更高</p><h2 id="3-MySQL索引的使用规则"><a href="#3-MySQL索引的使用规则" class="headerlink" title="3.MySQL索引的使用规则"></a>3.MySQL索引的使用规则</h2><p>最左前缀匹配原则</p><p>假设表中只有A,B,C这三列的联合索引（A，B，C）</p><ol><li>全列匹配</li></ol><blockquote><p>select * from table where A = 1 and B = 2 and C = 3<br>说明：完美地走这个联合索引</p></blockquote><ol start="2"><li>最左前缀匹配</li></ol><blockquote><p>select * from table where A = 1 and B = 2<br>说明：走联合索引</p></blockquote><ol start="3"><li>最左匹配了，中间的值未匹配</li></ol><blockquote><p>select * from table where A = 1 and C = 3<br>说明：A走索引，C不走索引，会当作过滤条件，因为也走索引，所以在性能上也是可以接受的</p></blockquote><ol start="4"><li>未匹配最左匹配原则</li></ol><blockquote><p>select * from table where C = 3<br>说明：全表扫描，性能低，需要优化</p></blockquote><ol start="5"><li>前缀匹配</li></ol><blockquote><p>select * from table where A = 1 and B like “2%”<br>说明：like关键字 左边不能加 <strong>%</strong></p></blockquote><ol start="6"><li>范围/函数查询</li></ol><blockquote><p>select * from table where A &gt;= 0 and B = 2 and 函数（C） = 3<br>说明：A走索引，B不走索引，B作为筛选条件，C不走索引</p></blockquote><p><strong>索引的注意事项</strong></p><blockquote><p><a href="http://note.youdao.com/s/ZZP28HXU">理想设置索引和伪哈希技巧</a></p></blockquote><ol><li>单表索引数量不宜过多</li><li>类似于status、isValid这样的经常性重复的字段，创建索引意义不大</li><li>类似于网站这样前缀大致相同的字段，可以新建一个字段使用 <strong>crc32</strong> 函数对相同部分做hash，再对新字段创建索引</li></ol><blockquote><p>【参考链接】<br>1：<a href="https://mp.weixin.qq.com/s/ZxE8XDKUa8szJ6wRc-w-rA">InnoDB和MyISAM两者的对比</a></p></blockquote><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+      
+      
+      <categories>
+          
+          <category> MySQL灵魂拷问系列 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> MySQL </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>线上出现问题了你有思路解决吗</title>
       <link href="/posts/interview-daily-prodProblem.html"/>
       <url>/posts/interview-daily-prodProblem.html</url>
