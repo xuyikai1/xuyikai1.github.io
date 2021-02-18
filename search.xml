@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>MySQL灵魂拷问之数据库事务说说吧</title>
+      <link href="/posts/interview-MySQL-transaction.html"/>
+      <url>/posts/interview-MySQL-transaction.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="MySQL灵魂拷问之数据库事务说说吧"><a href="#MySQL灵魂拷问之数据库事务说说吧" class="headerlink" title="MySQL灵魂拷问之数据库事务说说吧"></a>MySQL灵魂拷问之数据库事务说说吧</h1><h2 id="1-事务的四大特性是什么-ACID"><a href="#1-事务的四大特性是什么-ACID" class="headerlink" title="1. 事务的四大特性是什么-ACID"></a>1. 事务的四大特性是什么-ACID</h2><ul><li><strong>原子性</strong>：一个事务作为一个整体，要么一起成功要么一起失败</li><li><strong>一致性</strong>：说的是数据一致性。事务执行前后，数据的执行是对的，不能存在某操作未执行的情况</li><li><strong>隔离性</strong>：各个事务之间互不干扰</li><li><strong>持久性</strong>：事务执行成功，对数据的操作是永久有效的</li></ul><h2 id="2-事务的隔离级别有哪些"><a href="#2-事务的隔离级别有哪些" class="headerlink" title="2. 事务的隔离级别有哪些"></a>2. 事务的隔离级别有哪些</h2><p>MySQL默认事务隔离级别：<strong>可重复读</strong></p><p>隔离级别依次是：读未提交、读已提交、可重复读、串行化，对应的性能从左到右依次递减</p><h3 id="2-1-事务隔离级别-读未提交"><a href="#2-1-事务隔离级别-读未提交" class="headerlink" title="2.1 事务隔离级别-读未提交"></a>2.1 事务隔离级别-读未提交</h3><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/interview-mysql-ReadUncommit.png" alt=""></p><p>读未提交：事务A可以查看到事务B修改的数据（事务B还未提交），也就是存在 <strong>脏读</strong> 的问题</p><h3 id="2-2-事务隔离级别-读已提交-不可重复读"><a href="#2-2-事务隔离级别-读已提交-不可重复读" class="headerlink" title="2.2 事务隔离级别-读已提交/不可重复读"></a>2.2 事务隔离级别-读已提交/不可重复读</h3><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/interview-mysql-ReadCommitted.png" alt=""></p><p>存在 <strong>不可重复读</strong> 的问题</p><h3 id="2-3-事务隔离级别-可重复读"><a href="#2-3-事务隔离级别-可重复读" class="headerlink" title="2.3 事务隔离级别-可重复读"></a>2.3 事务隔离级别-可重复读</h3><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/interview-mysql-RepeatableRead.png" alt=""></p><p>保证事务在运行期间，同一行数据是不会变更的</p><h3 id="2-4-可重复读的问题-幻读"><a href="#2-4-可重复读的问题-幻读" class="headerlink" title="2.4 可重复读的问题-幻读"></a>2.4 可重复读的问题-幻读</h3><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/interview-mysql-IllusoryRead.png" alt=""></p><h3 id="2-5-事务隔离级别-串行化"><a href="#2-5-事务隔离级别-串行化" class="headerlink" title="2.5 事务隔离级别-串行化"></a>2.5 事务隔离级别-串行化</h3><p>MySQL事务隔离级别-串行化可以解决幻读的问题</p><p>事务A执行期间，事务B不允许执行，只能阻塞等待事务A执行完毕接着执行事务B</p><h2 id="3-MySQL是如何实现可重复读的（MVVC机制）？"><a href="#3-MySQL是如何实现可重复读的（MVVC机制）？" class="headerlink" title="3. MySQL是如何实现可重复读的（MVVC机制）？"></a>3. MySQL是如何实现可重复读的（MVVC机制）？</h2><p>使用 <strong>MVVC机制</strong>，也就是 <strong>多版本并发控制</strong>（Multi-Version Concurrency Control） 实现的可重复读</p><p>innodb对每一行都会追加两个隐藏列：<strong>创建这一行的事务id</strong>、<strong>删除这一行的事务id</strong>（事务id在MySQL中是 <strong>全局唯一并且递增</strong> 的）</p><p>核心规则： <strong>创建事务id &lt;= 当前事务id &lt; 删除事务id</strong></p><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/interview-mysql-mvvc-demo-one.png" alt=""></p><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/interview-mysql-mvvc-demo-two.png" alt=""></p><blockquote><p>并发场景下，多个事务对同一行进行修改，同一行就会存在多个版本<br>各个事务会对于这一行有一条创建事务id为自己id的快照</p></blockquote><blockquote><p>【参考链接】<br>1： <a href="https://mp.weixin.qq.com/s/XOBhxc_AiuUxvwBsB_JprQ">一文彻底读懂 MySQL 事务的四大隔离级别</a></p></blockquote><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+      
+      
+      <categories>
+          
+          <category> MySQL灵魂拷问系列 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> MySQL </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>MySQL灵魂拷问系列之MySQL基础拷问</title>
       <link href="/posts/interview-MySQL-common.html"/>
       <url>/posts/interview-MySQL-common.html</url>
