@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://xuyk.top/posts/interview-MySQL-common.html</loc>
+    
+    <lastmod>2021-02-20T08:25:59.998Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xuyk.top/posts/threadPool.html</loc>
+    
+    <lastmod>2021-02-19T06:47:25.248Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://xuyk.top/posts/interview-MySQL-transaction.html</loc>
     
     <lastmod>2021-02-18T12:17:11.291Z</lastmod>
@@ -117,13 +131,6 @@
     <loc>http://xuyk.top/posts/interview-ConcurrentHashMap.html</loc>
     
     <lastmod>2021-01-13T08:40:49.852Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xuyk.top/posts/threadPool.html</loc>
-    
-    <lastmod>2021-01-10T03:49:18.809Z</lastmod>
     
   </url>
   
@@ -261,13 +268,6 @@
   </url>
   
   <url>
-    <loc>http://xuyk.top/contact/index.html</loc>
-    
-    <lastmod>2020-06-14T11:18:47.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://xuyk.top/categories/index.html</loc>
     
     <lastmod>2020-06-14T11:18:47.000Z</lastmod>
@@ -276,6 +276,13 @@
   
   <url>
     <loc>http://xuyk.top/archives/index.html</loc>
+    
+    <lastmod>2020-06-14T11:18:47.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xuyk.top/contact/index.html</loc>
     
     <lastmod>2020-06-14T11:18:47.000Z</lastmod>
     

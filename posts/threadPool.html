@@ -572,7 +572,7 @@
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
-                        2021-01-10
+                        2021-02-19
                     </div>
                 
 
@@ -848,10 +848,10 @@
 <li>我们可以在提交任务前先进行落库处理，当宕机重启后，再拿出待处理的任务继续执行。</li>
 <li>使用消息队列</li>
 </ol>
-<h3 id="9-3-你知道如果线程池的队列满了之后会发生什么事情吗？"><a href="#9-3-你知道如果线程池的队列满了之后会发生什么事情吗？" class="headerlink" title="9.3 你知道如果线程池的队列满了之后会发生什么事情吗？"></a>9.3 你知道如果线程池的队列满了之后会发生什么事情吗？</h3><p>关键在于 <strong>线程池的队列容量</strong> 与 <strong>最大线程数</strong> 的对比</p>
+<h3 id="9-3-你知道如果线程池的队列满了之后会发生什么事情吗？"><a href="#9-3-你知道如果线程池的队列满了之后会发生什么事情吗？" class="headerlink" title="9.3 你知道如果线程池的队列满了之后会发生什么事情吗？"></a>9.3 你知道如果线程池的队列满了之后会发生什么事情吗？</h3><p>关键在于 <strong>线程池当前活跃线程数</strong> 与 <strong>最大线程数</strong> 的对比</p>
 <ol>
-<li>队列容量 &lt; 最大线程数，则线程池会抽调 池外线程（系统线程）来处理任务</li>
-<li>队列容量 &gt;= 最大线程数，会根据线程池的拒绝策略来处理任务</li>
+<li>线程池当前活跃线程数 &lt; 最大线程数，则线程池会抽调 池外线程（系统线程）来处理任务</li>
+<li>线程池当前活跃线程数 &gt;= 最大线程数，会根据线程池的拒绝策略来处理任务</li>
 </ol>
 <p><strong>保证任务100%被处理的思路</strong>： 自定义拒绝策略，把任务交给其他负载低的线程池进行处理，或者放入消息队列交给其他线程池处理 / 阻塞队列处理完毕后处理消息队列中的任务</p>
 <h2 id="10-线程池demo"><a href="#10-线程池demo" class="headerlink" title="10.线程池demo"></a>10.线程池demo</h2><p>如果想快速上手的话，可以试试我github上的demo，链接如下：<br><a href="https://github.com/xuyikai1/Java-Trivia">Java-Trivia：thread-pool-demo</a></p>
@@ -1456,7 +1456,7 @@
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">59.6k</span>&nbsp;字
+                            class="white-color">60.1k</span>&nbsp;字
                 
                 
                 <script>
@@ -1644,7 +1644,7 @@
 
 
 <script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js?t=1613650739667')
+  navigator.serviceWorker.register('/sw.js?t=1613809688965')
     .then(function () {console.log('ServiceWorker Register Successfully.')})
     .catch(function (e) {console.error(e)});
 }
