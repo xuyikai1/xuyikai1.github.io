@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>计算机网络灵魂拷问系列之谈一下TCP/IP四层模型与OSI七层模型可以吗</title>
+      <link href="/posts/interview-net-model.html"/>
+      <url>/posts/interview-net-model.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="计算机网络灵魂拷问系列之谈一下TCP-IP四层模型与OSI七层模型可以吗"><a href="#计算机网络灵魂拷问系列之谈一下TCP-IP四层模型与OSI七层模型可以吗" class="headerlink" title="计算机网络灵魂拷问系列之谈一下TCP/IP四层模型与OSI七层模型可以吗"></a>计算机网络灵魂拷问系列之谈一下TCP/IP四层模型与OSI七层模型可以吗</h1><h2 id="0-网络通信协议的意义"><a href="#0-网络通信协议的意义" class="headerlink" title="0.网络通信协议的意义"></a>0.网络通信协议的意义</h2><p>各个电脑厂商，比如联想、苹果、华硕之类的，每个品牌的电脑之间的通信，如果通信协议不同，那么就只能品牌电脑内通信，这是不可取的。所以搞了一个国际通行的协议，大家都按照协议来，使得所有电脑都可以互相通信</p><p>OSI七层网络模型：<br>应用层、表示层、会话层、传输层、网络层、数据链路层、物理层</p><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/interview-cn-osi.png" alt=""></p><ol><li><strong>物理层</strong>：以前电脑都是通过网线来联网，传输0和1的信号。属于物理上的连接</li><li><strong>数据链路层</strong>：电脑接收到0101010001这样的电路信号怎么识别和分组，从哪个电脑传输到哪个电脑。数据链路层来解决。以太网协议就是这一层来的，以太网规定每个电脑都有一个网卡，电路信号一般从电脑1网卡传输到电脑2网卡。电脑出厂时都有一个唯一的mac地址（12个16进制，前6产商编号，后6流水号，win10中ipconfig /all可查询mac物理地址）。一组电信号就是一帧，每帧分为标头和数据，标头包含了一些发送者、接收者和数据类型之类的信息。发送者会把数据通过广播发送给所有局域网里的电脑，每个电脑网卡通过比对接收者mac地址来判断是否是发送给自己</li><li><strong>网络层</strong>：数据链路层发送方通过广播发送给局域网内所有的电脑，那么他是如何判别哪些电脑是处于同一个局域网内的呢？通过网络层判别。ip协议，一般通过4个十进制数字表示，范围从0.0.0.0到255.255.255.255。每台计算机都分配一个ip地址，各自对子网掩码（一般是255.255.255.0）做二进制与运算，得到前三段（192.168.1）一致则为同一局域网。跨局域网通信：请求头填写接收方ip和路由器mac地址，经过交换机发送给路由器/网关，路由器/网关转换成目标mac地址，而后正确发送给对方电脑。ARP：局域网内个台电脑都把自己的ip地址和对应的mac地址广播给其他电脑，最后每台电脑都会知道其他电脑的地址了。【关键】网络层最关键的就是提供了ip协议，电脑A和电脑B通信，如果两者在一个局域网，则只需要在请求头填写接收方mac地址即可通信；如果不在，在请求头填写接收方ip地址和路由器的mac地址进行通信</li><li><strong>传输层</strong>：电脑上很多应用都从网卡发送和接收数据，该如何辨别是给哪个应用的呢？传输层引入了端口的概念，例如qq监听20386端口，数据包解析到发送到20386端口，就说明是给qq的。关联端口号的就是tcp协议和udp协议（udp不可靠，只管发送数据不管对方是否接收），规定了端对端的规则，例如怎么建立连接、怎么发送和读取数据。socket基于tcp协议封装，我们可以基于socket进行网络编程（ip地址+端口号）</li><li><strong>应用层</strong>：当收到基于tcp协议发送过来的数据包后，如何将数据包进行对应解析？数据包可能用于发送邮件（STMP协议）、发送HTTP请求，用了什么格式进行封装</li></ol><blockquote><p>例如我们使用java中的nio来搭建rpc通信框架，底层过程还是走了：传输层的tcp协议、网络层的ip协议、数据链路层的以太网协议和物理层的网线传递着0101的信号 </p></blockquote><p>TCP/IP四层模型常用协议：<br>数据链路层（以太网协议）、网络层（ip协议）、传输层（tcp协议）、应用层（HTTP协议）</p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+      
+      
+      <categories>
+          
+          <category> 计算机网络灵魂拷问系列 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 计算机网络模型 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>MySQL灵魂拷问系列之MySQL如何优化</title>
       <link href="/posts/interview-MySQL-optimization.html"/>
       <url>/posts/interview-MySQL-optimization.html</url>

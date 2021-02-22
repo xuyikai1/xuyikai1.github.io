@@ -4,8 +4,8 @@
 
 <head><link rel=manifest href=/manifest.json>
     <meta charset="utf-8">
-    <meta name="keywords" content="configure mysql">
-    <meta name="description" content="其实很简单">
+    <meta name="keywords" content="OSI TCP/IP">
+    <meta name="description" content="计算机网络模型">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +14,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="white"/>
-    <title>Mysql主从配置 | 寒暄</title>
+    <title>计算机网络灵魂拷问系列之谈一下TCP/IP四层模型与OSI七层模型可以吗 | 寒暄</title>
     <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/apple-touch-icon.png">
     <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/favicon.ico">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/awesome/css/font-awesome.min.css">
@@ -419,12 +419,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/19.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/24.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Mysql主从配置</h1>
+                    <h1 class="description center-align post-title">计算机网络灵魂拷问系列之谈一下TCP/IP四层模型与OSI七层模型可以吗</h1>
                 </div>
             </div>
         </div>
@@ -540,8 +540,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/configure/">
-                                    <span class="chip bg-color">configure</span>
+                                <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/">
+                                    <span class="chip bg-color">计算机网络模型</span>
                                 </a>
                             
                         </div>
@@ -552,8 +552,8 @@
                         <div class="post-cate">
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                                <a href="/categories/MySQL/" class="post-category">
-                                    MySQL
+                                <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%81%B5%E9%AD%82%E6%8B%B7%E9%97%AE%E7%B3%BB%E5%88%97/" class="post-category">
+                                    计算机网络灵魂拷问系列
                                 </a>
                             
                         </div>
@@ -565,28 +565,28 @@
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                        2020-09-15
+                        2021-02-22
                     </div>
                 
 
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
-                        2020-10-26
+                        2021-02-22
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        634
+                        1.1k
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        2 分
+                        3 分
                     </div>
                 
 
@@ -601,91 +601,20 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="Mysql配置"><a href="#Mysql配置" class="headerlink" title="Mysql配置"></a>Mysql配置</h1><h2 id="0-整体思路"><a href="#0-整体思路" class="headerlink" title="0.整体思路"></a>0.整体思路</h2><ul>
-<li>1.主节点和从节点配置my.cnf配置文件</li>
-<li>2.锁住主节点数据库，将主节点数据库转化成dumpdb文件加载入从节点数据库</li>
-<li>3.从节点设置主从配置，开启主从</li>
-<li>4.同步失效排查</li>
-</ul>
+                <h1 id="计算机网络灵魂拷问系列之谈一下TCP-IP四层模型与OSI七层模型可以吗"><a href="#计算机网络灵魂拷问系列之谈一下TCP-IP四层模型与OSI七层模型可以吗" class="headerlink" title="计算机网络灵魂拷问系列之谈一下TCP/IP四层模型与OSI七层模型可以吗"></a>计算机网络灵魂拷问系列之谈一下TCP/IP四层模型与OSI七层模型可以吗</h1><h2 id="0-网络通信协议的意义"><a href="#0-网络通信协议的意义" class="headerlink" title="0.网络通信协议的意义"></a>0.网络通信协议的意义</h2><p>各个电脑厂商，比如联想、苹果、华硕之类的，每个品牌的电脑之间的通信，如果通信协议不同，那么就只能品牌电脑内通信，这是不可取的。所以搞了一个国际通行的协议，大家都按照协议来，使得所有电脑都可以互相通信</p>
+<p>OSI七层网络模型：<br>应用层、表示层、会话层、传输层、网络层、数据链路层、物理层</p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/interview-cn-osi.png" alt=""></p>
+<ol>
+<li><strong>物理层</strong>：以前电脑都是通过网线来联网，传输0和1的信号。属于物理上的连接</li>
+<li><strong>数据链路层</strong>：电脑接收到0101010001这样的电路信号怎么识别和分组，从哪个电脑传输到哪个电脑。数据链路层来解决。以太网协议就是这一层来的，以太网规定每个电脑都有一个网卡，电路信号一般从电脑1网卡传输到电脑2网卡。电脑出厂时都有一个唯一的mac地址（12个16进制，前6产商编号，后6流水号，win10中ipconfig /all可查询mac物理地址）。一组电信号就是一帧，每帧分为标头和数据，标头包含了一些发送者、接收者和数据类型之类的信息。发送者会把数据通过广播发送给所有局域网里的电脑，每个电脑网卡通过比对接收者mac地址来判断是否是发送给自己</li>
+<li><strong>网络层</strong>：数据链路层发送方通过广播发送给局域网内所有的电脑，那么他是如何判别哪些电脑是处于同一个局域网内的呢？通过网络层判别。ip协议，一般通过4个十进制数字表示，范围从0.0.0.0到255.255.255.255。每台计算机都分配一个ip地址，各自对子网掩码（一般是255.255.255.0）做二进制与运算，得到前三段（192.168.1）一致则为同一局域网。跨局域网通信：请求头填写接收方ip和路由器mac地址，经过交换机发送给路由器/网关，路由器/网关转换成目标mac地址，而后正确发送给对方电脑。ARP：局域网内个台电脑都把自己的ip地址和对应的mac地址广播给其他电脑，最后每台电脑都会知道其他电脑的地址了。【关键】网络层最关键的就是提供了ip协议，电脑A和电脑B通信，如果两者在一个局域网，则只需要在请求头填写接收方mac地址即可通信；如果不在，在请求头填写接收方ip地址和路由器的mac地址进行通信</li>
+<li><strong>传输层</strong>：电脑上很多应用都从网卡发送和接收数据，该如何辨别是给哪个应用的呢？传输层引入了端口的概念，例如qq监听20386端口，数据包解析到发送到20386端口，就说明是给qq的。关联端口号的就是tcp协议和udp协议（udp不可靠，只管发送数据不管对方是否接收），规定了端对端的规则，例如怎么建立连接、怎么发送和读取数据。socket基于tcp协议封装，我们可以基于socket进行网络编程（ip地址+端口号）</li>
+<li><strong>应用层</strong>：当收到基于tcp协议发送过来的数据包后，如何将数据包进行对应解析？数据包可能用于发送邮件（STMP协议）、发送HTTP请求，用了什么格式进行封装</li>
+</ol>
 <blockquote>
-<p>当前Mysql版本为8.0</p>
+<p>例如我们使用java中的nio来搭建rpc通信框架，底层过程还是走了：传输层的tcp协议、网络层的ip协议、数据链路层的以太网协议和物理层的网线传递着0101的信号 </p>
 </blockquote>
-<h2 id="1-节点说明"><a href="#1-节点说明" class="headerlink" title="1.节点说明"></a>1.节点说明</h2><table>
-<thead>
-<tr>
-<th align="center">节点</th>
-<th align="center">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">192.168.10.155</td>
-<td align="center">主节点</td>
-</tr>
-<tr>
-<td align="center">192.168.10.166</td>
-<td align="center">从节点</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>MYSQL8.0安装可在我的有道云笔记中查看：<br><a href="http:\note.youdao.com\s\mHRa5u3">MYSQL8.0安装概要笔记</a></p>
-</blockquote>
-<h2 id="2-主从节点配置配置"><a href="#2-主从节点配置配置" class="headerlink" title="2.主从节点配置配置"></a>2.主从节点配置配置</h2><pre class="line-numbers language-java"><code class="language-java"><span class="token number">1.155</span>主节点编辑mysql配置文件，在<span class="token punctuation">[</span>mysqld<span class="token punctuation">]</span>标签下加入如下信息：
-
-# 编辑my<span class="token punctuation">.</span>cnf文件
-vim \etc\my<span class="token punctuation">.</span>cnf
-
-log<span class="token operator">-</span>bin<span class="token operator">=</span>my_mysql
-# server<span class="token operator">-</span>id要与从节点的server<span class="token operator">-</span>id不一致
-server<span class="token operator">-</span>id<span class="token operator">=</span><span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token number">2.156</span>从节点编辑mysql配置文件（vim \etc\my<span class="token punctuation">.</span>cnf），在<span class="token punctuation">[</span>mysqld<span class="token punctuation">]</span>标签下加入如下信息：
-
-# server<span class="token operator">-</span>id要与主节点的server<span class="token operator">-</span>id不一致
-server<span class="token operator">-</span>id<span class="token operator">=</span><span class="token number">2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token number">3.155</span>主节点进入mysql客户端新增用于主从间同步的用户并且授权<span class="token punctuation">,</span>后刷新配置
-
-# 创建user用户
-create user <span class="token string">'repl'</span>@<span class="token string">'%'</span> identified by <span class="token string">'Xyk@950807'</span><span class="token punctuation">;</span>
-# 赋予user用户权限
-grant replication slave on <span class="token operator">*</span><span class="token punctuation">.</span>* to <span class="token string">'repl'</span>@<span class="token string">'%'</span><span class="token punctuation">;</span>
-# 刷新配置
-flush privileges<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token number">4.155</span>主节点使用命令进行锁表，而后主库备份数据到从库
-
-# 锁表，无法插入数据
-flush tables with read lock<span class="token punctuation">;</span>
-# 查看当前主节点存储数据的文件File和存储位置position，并且记录下来
-show master status<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><img src="https:%5Cxuyk-picture-bed.oss-cn-beijing.aliyuncs.com%5Cmaster%20status.png" alt=""></p>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token number">5</span><span class="token punctuation">.</span>新建一个<span class="token number">155</span>的会话，输入命令将锁之前的数据下载下来
-mysqldump <span class="token operator">--</span>all<span class="token operator">-</span>databases <span class="token operator">--</span>master<span class="token operator">-</span>data <span class="token operator">></span> dbdump<span class="token punctuation">.</span>db <span class="token operator">-</span>uroot <span class="token operator">-</span>p
-
-<span class="token number">6.156</span>节点使用scp命令将<span class="token number">155</span>的文件获取过来（在<span class="token number">156</span>节点输入命令）
-scp root<span class="token annotation punctuation">@192</span><span class="token punctuation">.</span><span class="token number">168.10</span><span class="token punctuation">.</span><span class="token number">155</span><span class="token operator">:</span><span class="token operator">~</span>\dbdump<span class="token punctuation">.</span>db <span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><img src="https:%5Cxuyk-picture-bed.oss-cn-beijing.aliyuncs.com%5Cdumpdb.png" alt=""></p>
-<p><img src="https:%5Cxuyk-picture-bed.oss-cn-beijing.aliyuncs.com%5Cscp%20dumpdb.png" alt=""></p>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token number">7</span><span class="token punctuation">.</span>把dump<span class="token punctuation">.</span>db文件加载入<span class="token number">156</span>从库中（<span class="token number">156</span>从库执行）
-mysql <span class="token operator">&lt;</span> dbdump<span class="token punctuation">.</span>db <span class="token operator">-</span>uroot <span class="token operator">-</span>p
-输入密码
-
-<span class="token number">8.155</span>节点释放锁
-unlock tables<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token number">9.156</span>从节点上配置主从配置信息（mysql客户端）
-mysql<span class="token operator">></span> change master to
-    <span class="token operator">-</span><span class="token operator">></span> master_host<span class="token operator">=</span><span class="token string">'192.168.10.155'</span><span class="token punctuation">,</span>
-    <span class="token operator">-</span><span class="token operator">></span> master_user<span class="token operator">=</span><span class="token string">'repl'</span><span class="token punctuation">,</span>
-    <span class="token operator">-</span><span class="token operator">></span> master_password<span class="token operator">=</span><span class="token string">'Xyk@950807'</span><span class="token punctuation">,</span>
-    <span class="token operator">-</span><span class="token operator">></span> master_log_file<span class="token operator">=</span><span class="token string">'my_mysql.000001'</span><span class="token punctuation">,</span>
-    <span class="token operator">-</span><span class="token operator">></span> master_log_pos<span class="token operator">=</span><span class="token number">984</span><span class="token punctuation">;</span>
-
-<span class="token number">10</span><span class="token punctuation">.</span>开启主从
-start slave<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><img src="https:%5Cxuyk-picture-bed.oss-cn-beijing.aliyuncs.com%5Cchange%20master%20to.png" alt=""></p>
-<h2 id="3-同步无效思路"><a href="#3-同步无效思路" class="headerlink" title="3.同步无效思路"></a>3.同步无效思路</h2><p>1.从库mysql 命令【show slave status】</p>
-<p>查看Slave_IO_Running和Slave_SQL_Running是否两个都是yes</p>
-<p>2.有No的情况，则根据Last_IO_Errno的错误码和错误报错排查问题谷歌或者百度解决</p>
-<blockquote>
-<p>【无效参考链接】<br>1.<a href="https:\www.cnblogs.com\ryxiong-blog\p\12516875.html">[mysql] [主从同步错误] Last_IO_Errno: 2061</a><br>2.<a href="https:\blog.csdn.net\qq_42395490\article\details\107451996">Last_IO_Errno: 13114(mysql主从复制)</a></p>
-</blockquote>
+<p>TCP/IP四层模型常用协议：<br>数据链路层（以太网协议）、网络层（ip协议）、传输层（tcp协议）、应用层（HTTP协议）</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -717,8 +646,8 @@ start slave<span class="token punctuation">;</span><span aria-hidden="true" clas
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/configure/">
-                                    <span class="chip bg-color">configure</span>
+                                <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/">
+                                    <span class="chip bg-color">计算机网络模型</span>
                                 </a>
                             
                         </div>
@@ -1028,46 +957,48 @@ start slave<span class="token punctuation">;</span><span aria-hidden="true" clas
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-            <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
                 <div class="article-badge left-badge text-color">
-                    <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                    <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+                </div>
                 <div class="card">
-                    <a href="/posts/redis-cluster.html">
+                    <a href="/posts/interview-net-model.html">
                         <div class="card-image">
                             
                                 
-                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/14.jpg" class="responsive-img" alt="Redis集群搭建">
+                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/24.jpg" class="responsive-img" alt="计算机网络灵魂拷问系列之谈一下TCP/IP四层模型与OSI七层模型可以吗">
                             
-                            <span class="card-title">Redis集群搭建</span>
+                            <span class="card-title">计算机网络灵魂拷问系列之谈一下TCP/IP四层模型与OSI七层模型可以吗</span>
                         </div>
                     </a>
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                部署技巧不可少
+                                计算机网络模型
                             
                         </div>
                         <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-09-28
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-02-22
+                            </span>
                             <span class="publish-author">
                                 
                                     <i class="fa fa-bookmark fa-fw icon-category"></i>
                                     
-                                        <a href="/categories/Redis/" class="post-category">
-                                    Redis
+                                        <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%81%B5%E9%AD%82%E6%8B%B7%E9%97%AE%E7%B3%BB%E5%88%97/" class="post-category">
+                                    计算机网络灵魂拷问系列
                                 </a>
                                     
                                 
                             </span>
                         </div>
                     </div>
+
                     
                         <div class="card-action article-tags">
                             
-                                <a href="/tags/redis-cluster/">
-                                    <span class="chip bg-color">redis cluster</span>
+                                <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/">
+                                    <span class="chip bg-color">计算机网络模型</span>
                                 </a>
                             
                         </div>
@@ -1081,31 +1012,31 @@ start slave<span class="token punctuation">;</span><span aria-hidden="true" clas
                     下一篇&nbsp;<i class="fa fa-chevron-right"></i>
                 </div>
                 <div class="card">
-                    <a href="/posts/hmap.html">
+                    <a href="/posts/interview-MySQL-optimization.html">
                         <div class="card-image">
                             
                                 
-                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/1.jpg" class="responsive-img" alt="HashMap-链表散列">
+                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/9.jpg" class="responsive-img" alt="MySQL灵魂拷问系列之MySQL如何优化">
                             
-                            <span class="card-title">HashMap-链表散列</span>
+                            <span class="card-title">MySQL灵魂拷问系列之MySQL如何优化</span>
                         </div>
                     </a>
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                熟识面试常客
+                                MySQL优化小结
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-09-09
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-02-20
                             </span>
                             <span class="publish-author">
                                 
                                     <i class="fa fa-bookmark fa-fw icon-category"></i>
                                     
-                                        <a href="/categories/Java%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" class="post-category">
-                                    Java并发编程
+                                        <a href="/categories/MySQL%E7%81%B5%E9%AD%82%E6%8B%B7%E9%97%AE%E7%B3%BB%E5%88%97/" class="post-category">
+                                    MySQL灵魂拷问系列
                                 </a>
                                     
                                 
@@ -1115,8 +1046,8 @@ start slave<span class="token punctuation">;</span><span aria-hidden="true" clas
                     
                         <div class="card-action article-tags">
                             
-                                <a href="/tags/HashMap/">
-                                    <span class="chip bg-color">HashMap</span>
+                                <a href="/tags/MySQL/">
+                                    <span class="chip bg-color">MySQL</span>
                                 </a>
                             
                         </div>

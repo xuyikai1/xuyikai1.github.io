@@ -2,9 +2,51 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://xuyk.top/posts/interview-jvm-model.html</loc>
+    
+    <lastmod>2021-02-22T08:42:31.434Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xuyk.top/posts/interview-jvm-GarbageCollection.html</loc>
+    
+    <lastmod>2021-02-22T08:42:22.700Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xuyk.top/posts/interview-jvm-classloader.html</loc>
+    
+    <lastmod>2021-02-22T08:42:13.563Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xuyk.top/posts/interview-MySQL-transaction.html</loc>
+    
+    <lastmod>2021-02-22T08:42:02.602Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://xuyk.top/posts/interview-MySQL-optimization.html</loc>
     
-    <lastmod>2021-02-22T01:02:00.930Z</lastmod>
+    <lastmod>2021-02-22T08:41:50.011Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xuyk.top/posts/interview-MySQL-common.html</loc>
+    
+    <lastmod>2021-02-22T08:41:25.562Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xuyk.top/posts/interview-net-model.html</loc>
+    
+    <lastmod>2021-02-22T08:40:29.043Z</lastmod>
     
   </url>
   
@@ -16,20 +58,6 @@
   </url>
   
   <url>
-    <loc>http://xuyk.top/posts/interview-MySQL-transaction.html</loc>
-    
-    <lastmod>2021-02-18T12:17:11.291Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xuyk.top/posts/interview-MySQL-common.html</loc>
-    
-    <lastmod>2021-02-07T03:29:49.955Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://xuyk.top/posts/interview-daily-prodProblem.html</loc>
     
     <lastmod>2021-02-03T06:06:33.501Z</lastmod>
@@ -37,30 +65,9 @@
   </url>
   
   <url>
-    <loc>http://xuyk.top/posts/interview-jvm-classloader.html</loc>
-    
-    <lastmod>2021-01-31T13:36:11.074Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xuyk.top/posts/interview-jvm-GarbageCollection.html</loc>
-    
-    <lastmod>2021-01-30T08:35:56.556Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://xuyk.top/posts/interview-springcloud.html</loc>
     
     <lastmod>2021-01-29T07:47:25.073Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xuyk.top/posts/interview-jvm-model.html</loc>
-    
-    <lastmod>2021-01-29T07:21:19.392Z</lastmod>
     
   </url>
   

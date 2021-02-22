@@ -1,31 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://xuyk.top/posts/interview-jvm-model.html</loc>
+    <lastmod>2021-02-22</lastmod>
+  </url>  <url>
+    <loc>http://xuyk.top/posts/interview-jvm-GarbageCollection.html</loc>
+    <lastmod>2021-02-22</lastmod>
+  </url>  <url>
+    <loc>http://xuyk.top/posts/interview-jvm-classloader.html</loc>
+    <lastmod>2021-02-22</lastmod>
+  </url>  <url>
+    <loc>http://xuyk.top/posts/interview-MySQL-transaction.html</loc>
+    <lastmod>2021-02-22</lastmod>
+  </url>  <url>
     <loc>http://xuyk.top/posts/interview-MySQL-optimization.html</loc>
+    <lastmod>2021-02-22</lastmod>
+  </url>  <url>
+    <loc>http://xuyk.top/posts/interview-MySQL-common.html</loc>
+    <lastmod>2021-02-22</lastmod>
+  </url>  <url>
+    <loc>http://xuyk.top/posts/interview-net-model.html</loc>
     <lastmod>2021-02-22</lastmod>
   </url>  <url>
     <loc>http://xuyk.top/posts/threadPool.html</loc>
     <lastmod>2021-02-19</lastmod>
   </url>  <url>
-    <loc>http://xuyk.top/posts/interview-MySQL-transaction.html</loc>
-    <lastmod>2021-02-18</lastmod>
-  </url>  <url>
-    <loc>http://xuyk.top/posts/interview-MySQL-common.html</loc>
-    <lastmod>2021-02-07</lastmod>
-  </url>  <url>
     <loc>http://xuyk.top/posts/interview-daily-prodProblem.html</loc>
     <lastmod>2021-02-03</lastmod>
   </url>  <url>
-    <loc>http://xuyk.top/posts/interview-jvm-classloader.html</loc>
-    <lastmod>2021-01-31</lastmod>
-  </url>  <url>
-    <loc>http://xuyk.top/posts/interview-jvm-GarbageCollection.html</loc>
-    <lastmod>2021-01-30</lastmod>
-  </url>  <url>
     <loc>http://xuyk.top/posts/interview-springcloud.html</loc>
-    <lastmod>2021-01-29</lastmod>
-  </url>  <url>
-    <loc>http://xuyk.top/posts/interview-jvm-model.html</loc>
     <lastmod>2021-01-29</lastmod>
   </url>  <url>
     <loc>http://xuyk.top/posts/aop.html</loc>
