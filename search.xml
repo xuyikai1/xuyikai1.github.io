@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>redis灵魂拷问系列之如何保证数据库和缓存双写一致性</title>
+      <link href="/posts/interview-redis-database-writeConsistency.html"/>
+      <url>/posts/interview-redis-database-writeConsistency.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="redis灵魂拷问系列之如何保证数据库和缓存双写一致性"><a href="#redis灵魂拷问系列之如何保证数据库和缓存双写一致性" class="headerlink" title="redis灵魂拷问系列之如何保证数据库和缓存双写一致性"></a>redis灵魂拷问系列之如何保证数据库和缓存双写一致性</h1><h2 id="1-什么是数据库缓存双写一致性呢？"><a href="#1-什么是数据库缓存双写一致性呢？" class="headerlink" title="1.什么是数据库缓存双写一致性呢？"></a>1.什么是数据库缓存双写一致性呢？</h2><p>一般为了加快查询响应速度等，我们通过加缓存来提高接口的QPS，例如redis缓存、JVM缓存等。</p><p>数据是 <strong>缓存和数据库共享的</strong>。在 <strong>高并发场景下更新数据</strong> 时，因为数据库和缓存都要更新，就很可能会有数据一致性问题，其实也是分布式场景下数据一致性的问题</p><blockquote><p>什么时候会发生数据库缓存双写不一致的情况呢？</p></blockquote><p>例如：高并发场景下，先更新数据库，再删除缓存之后，另外一个线程把旧数据存入缓存</p><h2 id="2-选择更新缓存还是删除缓存？"><a href="#2-选择更新缓存还是删除缓存？" class="headerlink" title="2.选择更新缓存还是删除缓存？"></a>2.选择更新缓存还是删除缓存？</h2><p>这里就需要提到<strong>Cache Aside Pattern</strong>，也是我们日常编码中一般会采取的策略 </p><ol><li>读取数据时，先读缓存，缓存不存在再读数据库，然后把结果存入缓存</li><li>更新数据时，先更新数据库，再删除缓存</li></ol><p><strong>为什么是删除缓存不是更新缓存呢？</strong></p><p>假如为 <strong>更新缓存</strong></p><ul><li>如果数据更新频繁，则每一次都需要更新缓存，如果加上还是联表查询，则更新缓存的代价就很大</li><li>如果数据不会被频繁查询到（冷数据），这时候频繁更新缓存则是在浪费资源（例如数据A一分钟内被更新20次，但是只查询了一次）</li><li>还可能存在更新缓存失败的情况</li></ul><p>假如为 <strong>删除缓存</strong></p><ul><li>数据在删除后，第一次被访问时，会从数据库读取（类似懒加载方式），保证了只有被用到才去操作，减少了资源浪费</li></ul><blockquote><p>所以当之无愧，选择 <strong>删除缓存</strong></p></blockquote><h2 id="3-先更新数据库，还是先删除缓存？"><a href="#3-先更新数据库，还是先删除缓存？" class="headerlink" title="3.先更新数据库，还是先删除缓存？"></a>3.先更新数据库，还是先删除缓存？</h2><ol><li><strong>先删除缓存，删除成功后去更新数据库</strong>。会出现问题：高并发场景下，删除成功后，可能另外一个请求查询后又把旧数据存入缓存中。这时候要么采用 <strong>延迟双删</strong>，也就是睡眠一定时间后再次删除一次，要么选择下一种做法</li><li><strong>先更新数据库，再删除缓存</strong>。会出现问题：高并发下，在删除成功后，可能其他线程把旧数据再存入缓存中的问题。也会出现数据不一致的情况（影响相对较小所以可以接受）</li></ol><h2 id="4-具体落地的解决策略有哪些？"><a href="#4-具体落地的解决策略有哪些？" class="headerlink" title="4.具体落地的解决策略有哪些？"></a>4.具体落地的解决策略有哪些？</h2><p><strong>（1）延时双删策略</strong></p><ul><li>a. 删除缓存 </li><li>b. 更新数据库 </li><li>c. 睡眠一段时间，具体多长有业务决定（mysql读写分离的话还需要加上主从同步时间）</li><li>d. 再删除缓存（吞吐量降低的话使用 <strong>异步</strong>）</li></ul><p><strong>（2）更新数据库、后删缓存</strong></p><p><strong>（3）串行化思维保证两者的最终一致性</strong></p><p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/interview-redis-binlog-mq.jpg" alt=""></p><p>利用binlog天然的顺序性用来做同步操作，顺序删除缓存，删除缓存失败则使用消息队列的同步性重试删除缓存</p><p><strong>（4）强一致性</strong></p><blockquote><p>如果需要保证强一致性，那么是否还有添加缓存的必要（没有海量qps的情况下）？</p></blockquote><p>可以参考这篇文章：<a href="https://blog.kido.site/2018/12/09/db-and-cache-04/">缓存与数据库一致性系列-04 - Kido的博客 | Kido’s Blog</a></p><blockquote><p>【参考链接】<br>1：<a href="https://zhuanlan.zhihu.com/p/59167071">Redis与Mysql双写一致性方案解析</a><br>2：<a href="https://blog.kido.site/2018/12/08/db-and-cache-03/">缓存与数据库一致性系列-03</a><br>3：<a href="https://blog.kido.site/2018/12/09/db-and-cache-04/">缓存与数据库一致性系列-04</a></p></blockquote><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+      
+      
+      <categories>
+          
+          <category> Redis灵魂拷问系列 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 数据库和缓存双写一致性 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Redis灵魂拷问系列之过期策略与数据持久化</title>
       <link href="/posts/interview-redis-data-expireAndStore.html"/>
       <url>/posts/interview-redis-data-expireAndStore.html</url>

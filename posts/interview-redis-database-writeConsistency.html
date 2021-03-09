@@ -4,8 +4,8 @@
 
 <head><link rel=manifest href=/manifest.json>
     <meta charset="utf-8">
-    <meta name="keywords" content="ConcurrentHashMap">
-    <meta name="description" content="ConcurrentHashMap记录">
+    <meta name="keywords" content="数据库和缓存双写一致性 分布式应用场景">
+    <meta name="description" content="分布式应用场景下数据库和缓存如何保证数据一致">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +14,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="white"/>
-    <title>并发编程灵魂拷问系列之ConcurrentHashMap | 寒暄</title>
+    <title>redis灵魂拷问系列之如何保证数据库和缓存双写一致性 | 寒暄</title>
     <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/apple-touch-icon.png">
     <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/favicon.ico">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/libs/awesome/css/font-awesome.min.css">
@@ -419,12 +419,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/1.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/24.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">并发编程灵魂拷问系列之ConcurrentHashMap</h1>
+                    <h1 class="description center-align post-title">redis灵魂拷问系列之如何保证数据库和缓存双写一致性</h1>
                 </div>
             </div>
         </div>
@@ -540,8 +540,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/ConcurrentHashMap/">
-                                    <span class="chip bg-color">ConcurrentHashMap</span>
+                                <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%92%8C%E7%BC%93%E5%AD%98%E5%8F%8C%E5%86%99%E4%B8%80%E8%87%B4%E6%80%A7/">
+                                    <span class="chip bg-color">数据库和缓存双写一致性</span>
                                 </a>
                             
                         </div>
@@ -552,8 +552,8 @@
                         <div class="post-cate">
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                                <a href="/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E7%81%B5%E9%AD%82%E6%8B%B7%E9%97%AE%E7%B3%BB%E5%88%97/" class="post-category">
-                                    并发编程灵魂拷问系列
+                                <a href="/categories/Redis%E7%81%B5%E9%AD%82%E6%8B%B7%E9%97%AE%E7%B3%BB%E5%88%97/" class="post-category">
+                                    Redis灵魂拷问系列
                                 </a>
                             
                         </div>
@@ -565,28 +565,28 @@
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                        2021-01-13
+                        2021-03-09
                     </div>
                 
 
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
-                        2021-01-13
+                        2021-03-09
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        470
+                        954
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        1 分
+                        3 分
                     </div>
                 
 
@@ -601,19 +601,53 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="并发编程灵魂拷问系列之ConcurrentHashMap"><a href="#并发编程灵魂拷问系列之ConcurrentHashMap" class="headerlink" title="并发编程灵魂拷问系列之ConcurrentHashMap"></a>并发编程灵魂拷问系列之ConcurrentHashMap</h1><h2 id="那有什么线程安全的HashMap可以代替呢"><a href="#那有什么线程安全的HashMap可以代替呢" class="headerlink" title="那有什么线程安全的HashMap可以代替呢"></a>那有什么线程安全的HashMap可以代替呢</h2><p>一般面试连环炮会在大致问完HashMap后有此一问，<strong>既然HashMap是线程不安全的，那有什么线程安全的HashMap可以代替呢</strong>，就是为了引出ConcurrentHashMap。</p>
+                <h1 id="redis灵魂拷问系列之如何保证数据库和缓存双写一致性"><a href="#redis灵魂拷问系列之如何保证数据库和缓存双写一致性" class="headerlink" title="redis灵魂拷问系列之如何保证数据库和缓存双写一致性"></a>redis灵魂拷问系列之如何保证数据库和缓存双写一致性</h1><h2 id="1-什么是数据库缓存双写一致性呢？"><a href="#1-什么是数据库缓存双写一致性呢？" class="headerlink" title="1.什么是数据库缓存双写一致性呢？"></a>1.什么是数据库缓存双写一致性呢？</h2><p>一般为了加快查询响应速度等，我们通过加缓存来提高接口的QPS，例如redis缓存、JVM缓存等。</p>
+<p>数据是 <strong>缓存和数据库共享的</strong>。在 <strong>高并发场景下更新数据</strong> 时，因为数据库和缓存都要更新，就很可能会有数据一致性问题，其实也是分布式场景下数据一致性的问题</p>
+<blockquote>
+<p>什么时候会发生数据库缓存双写不一致的情况呢？</p>
+</blockquote>
+<p>例如：高并发场景下，先更新数据库，再删除缓存之后，另外一个线程把旧数据存入缓存</p>
+<h2 id="2-选择更新缓存还是删除缓存？"><a href="#2-选择更新缓存还是删除缓存？" class="headerlink" title="2.选择更新缓存还是删除缓存？"></a>2.选择更新缓存还是删除缓存？</h2><p>这里就需要提到<strong>Cache Aside Pattern</strong>，也是我们日常编码中一般会采取的策略 </p>
+<ol>
+<li>读取数据时，先读缓存，缓存不存在再读数据库，然后把结果存入缓存</li>
+<li>更新数据时，先更新数据库，再删除缓存</li>
+</ol>
+<p><strong>为什么是删除缓存不是更新缓存呢？</strong></p>
+<p>假如为 <strong>更新缓存</strong></p>
 <ul>
-<li><p>JDK1.8之前：采用分段锁的机制，整个数组被分为对个段（segment），每一段都有一个锁，段与段之间可以并发访问，但是多个线程同时访问同一段时，需要获取锁才能进行访问，提升了一定的性能，但是高并发下性能还是不够强</p>
-</li>
-<li><p>JDK1.8之后：取消分段锁机制，回归一个大数组的方式，采用CAS + synchronized，数据结构和Hashmap一样，使用数组 + 链表 + 红黑树</p>
-</li>
+<li>如果数据更新频繁，则每一次都需要更新缓存，如果加上还是联表查询，则更新缓存的代价就很大</li>
+<li>如果数据不会被频繁查询到（冷数据），这时候频繁更新缓存则是在浪费资源（例如数据A一分钟内被更新20次，但是只查询了一次）</li>
+<li>还可能存在更新缓存失败的情况</li>
+</ul>
+<p>假如为 <strong>删除缓存</strong></p>
+<ul>
+<li>数据在删除后，第一次被访问时，会从数据库读取（类似懒加载方式），保证了只有被用到才去操作，减少了资源浪费</li>
 </ul>
 <blockquote>
-<p>【分析】：JDK1.8之后，锁的粒度控制到了数组的每一个元素，当多线程对数组同一个元素进行操作比如put等，会先通过 CAS 的方式让同一时间只有一个线程A成功执行 CAS ，然后进行put ，其他线程就会使用synchronized 关键字对这个数组元素对象加锁，串行的等待线程A执行完毕后继续获取锁，进行后续操作</p>
+<p>所以当之无愧，选择 <strong>删除缓存</strong></p>
 </blockquote>
-<p>【总结】：JDK1.8之后的ConcurrentHashMap，当多个线程对数组不同位置的元素进行操作时，可以并发操作；如果多个线程对数组统一位置元素进行操作时，则加锁串行化处理</p>
+<h2 id="3-先更新数据库，还是先删除缓存？"><a href="#3-先更新数据库，还是先删除缓存？" class="headerlink" title="3.先更新数据库，还是先删除缓存？"></a>3.先更新数据库，还是先删除缓存？</h2><ol>
+<li><strong>先删除缓存，删除成功后去更新数据库</strong>。会出现问题：高并发场景下，删除成功后，可能另外一个请求查询后又把旧数据存入缓存中。这时候要么采用 <strong>延迟双删</strong>，也就是睡眠一定时间后再次删除一次，要么选择下一种做法</li>
+<li><strong>先更新数据库，再删除缓存</strong>。会出现问题：高并发下，在删除成功后，可能其他线程把旧数据再存入缓存中的问题。也会出现数据不一致的情况（影响相对较小所以可以接受）</li>
+</ol>
+<h2 id="4-具体落地的解决策略有哪些？"><a href="#4-具体落地的解决策略有哪些？" class="headerlink" title="4.具体落地的解决策略有哪些？"></a>4.具体落地的解决策略有哪些？</h2><p><strong>（1）延时双删策略</strong></p>
+<ul>
+<li>a. 删除缓存 </li>
+<li>b. 更新数据库 </li>
+<li>c. 睡眠一段时间，具体多长有业务决定（mysql读写分离的话还需要加上主从同步时间）</li>
+<li>d. 再删除缓存（吞吐量降低的话使用 <strong>异步</strong>）</li>
+</ul>
+<p><strong>（2）更新数据库、后删缓存</strong></p>
+<p><strong>（3）串行化思维保证两者的最终一致性</strong></p>
+<p><img src="https://xuyk-picture-bed.oss-cn-beijing.aliyuncs.com/interview-redis-binlog-mq.jpg" alt=""></p>
+<p>利用binlog天然的顺序性用来做同步操作，顺序删除缓存，删除缓存失败则使用消息队列的同步性重试删除缓存</p>
+<p><strong>（4）强一致性</strong></p>
 <blockquote>
-<p>【参考链接】：<br>1：<a href="https://mp.weixin.qq.com/s/XajTc9dqNNi_ByLR2B_J3A">为什么ConcurrentHashMap的读操作不需要加锁？</a><br>2：<a href="https://mp.weixin.qq.com/s/wZWPg2ldcG1QwHbk6oPOWQ">面试官邪魅一笑: 你说说 Java8 的 ConcurrentHashMap ？</a></p>
+<p>如果需要保证强一致性，那么是否还有添加缓存的必要（没有海量qps的情况下）？</p>
+</blockquote>
+<p>可以参考这篇文章：<a href="https://blog.kido.site/2018/12/09/db-and-cache-04/">缓存与数据库一致性系列-04 - Kido的博客 | Kido’s Blog</a></p>
+<blockquote>
+<p>【参考链接】<br>1：<a href="https://zhuanlan.zhihu.com/p/59167071">Redis与Mysql双写一致性方案解析</a><br>2：<a href="https://blog.kido.site/2018/12/08/db-and-cache-03/">缓存与数据库一致性系列-03</a><br>3：<a href="https://blog.kido.site/2018/12/09/db-and-cache-04/">缓存与数据库一致性系列-04</a></p>
 </blockquote>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -646,8 +680,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/ConcurrentHashMap/">
-                                    <span class="chip bg-color">ConcurrentHashMap</span>
+                                <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%92%8C%E7%BC%93%E5%AD%98%E5%8F%8C%E5%86%99%E4%B8%80%E8%87%B4%E6%80%A7/">
+                                    <span class="chip bg-color">数据库和缓存双写一致性</span>
                                 </a>
                             
                         </div>
@@ -957,46 +991,48 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-            <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
                 <div class="article-badge left-badge text-color">
-                    <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                    <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+                </div>
                 <div class="card">
-                    <a href="/posts/interview-CAS.html">
+                    <a href="/posts/interview-redis-database-writeConsistency.html">
                         <div class="card-image">
                             
                                 
-                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/12.jpg" class="responsive-img" alt="并发编程灵魂拷问系列之如何理解CAS">
+                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/24.jpg" class="responsive-img" alt="redis灵魂拷问系列之如何保证数据库和缓存双写一致性">
                             
-                            <span class="card-title">并发编程灵魂拷问系列之如何理解CAS</span>
+                            <span class="card-title">redis灵魂拷问系列之如何保证数据库和缓存双写一致性</span>
                         </div>
                     </a>
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                初识CAS
+                                分布式应用场景下数据库和缓存如何保证数据一致
                             
                         </div>
                         <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2021-01-15
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-09
+                            </span>
                             <span class="publish-author">
                                 
                                     <i class="fa fa-bookmark fa-fw icon-category"></i>
                                     
-                                        <a href="/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E7%81%B5%E9%AD%82%E6%8B%B7%E9%97%AE%E7%B3%BB%E5%88%97/" class="post-category">
-                                    并发编程灵魂拷问系列
+                                        <a href="/categories/Redis%E7%81%B5%E9%AD%82%E6%8B%B7%E9%97%AE%E7%B3%BB%E5%88%97/" class="post-category">
+                                    Redis灵魂拷问系列
                                 </a>
                                     
                                 
                             </span>
                         </div>
                     </div>
+
                     
                         <div class="card-action article-tags">
                             
-                                <a href="/tags/CAS/">
-                                    <span class="chip bg-color">CAS</span>
+                                <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%92%8C%E7%BC%93%E5%AD%98%E5%8F%8C%E5%86%99%E4%B8%80%E8%87%B4%E6%80%A7/">
+                                    <span class="chip bg-color">数据库和缓存双写一致性</span>
                                 </a>
                             
                         </div>
@@ -1010,31 +1046,31 @@
                     下一篇&nbsp;<i class="fa fa-chevron-right"></i>
                 </div>
                 <div class="card">
-                    <a href="/posts/interview-synchronized.html">
+                    <a href="/posts/interview-redis-data-expireAndStore.html">
                         <div class="card-image">
                             
                                 
-                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/3.jpg" class="responsive-img" alt="并发编程灵魂拷问系列之说说synchronized">
+                                <img src="https://cdn.jsdelivr.net/gh/xuyikai1/xuyikai1.github.io/medias/featureimages/8.jpg" class="responsive-img" alt="Redis灵魂拷问系列之过期策略与数据持久化">
                             
-                            <span class="card-title">并发编程灵魂拷问系列之说说synchronized</span>
+                            <span class="card-title">Redis灵魂拷问系列之过期策略与数据持久化</span>
                         </div>
                     </a>
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                心里盘算一下synchronized
+                                redis怎么处理数据过期和存储的
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-01-10
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-02
                             </span>
                             <span class="publish-author">
                                 
                                     <i class="fa fa-bookmark fa-fw icon-category"></i>
                                     
-                                        <a href="/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E7%81%B5%E9%AD%82%E6%8B%B7%E9%97%AE%E7%B3%BB%E5%88%97/" class="post-category">
-                                    并发编程灵魂拷问系列
+                                        <a href="/categories/Redis%E7%81%B5%E9%AD%82%E6%8B%B7%E9%97%AE%E7%B3%BB%E5%88%97/" class="post-category">
+                                    Redis灵魂拷问系列
                                 </a>
                                     
                                 
@@ -1044,8 +1080,12 @@
                     
                         <div class="card-action article-tags">
                             
-                                <a href="/tags/synchronized/">
-                                    <span class="chip bg-color">synchronized</span>
+                                <a href="/tags/Redis%E8%BF%87%E6%9C%9F%E7%AD%96%E7%95%A5/">
+                                    <span class="chip bg-color">Redis过期策略</span>
+                                </a>
+                            
+                                <a href="/tags/Redis%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96/">
+                                    <span class="chip bg-color">Redis数据持久化</span>
                                 </a>
                             
                         </div>
